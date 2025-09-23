@@ -8,6 +8,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularMaterialDemo } from '../AngularMaterialDemo';
 import { PostCategoryComponent } from './components/post-category/post-category.component';
+import { PostProductComponent } from './components/post-product/post-product.component';
+import { MatIconModule } from '@angular/material/icon';
 
 
 
@@ -15,7 +17,8 @@ import { PostCategoryComponent } from './components/post-category/post-category.
   declarations: [
     AdminComponent,
     DashboardComponent,
-    PostCategoryComponent
+    PostCategoryComponent,
+    PostProductComponent,
   ],
   imports: [
     CommonModule,
@@ -23,7 +26,8 @@ import { PostCategoryComponent } from './components/post-category/post-category.
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AngularMaterialDemo
+    AngularMaterialDemo,
+    MatIconModule
   ]
 })
 export class AdminModule { }
