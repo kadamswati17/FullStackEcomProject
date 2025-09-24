@@ -57,6 +57,12 @@ export class PostProductComponent {
     );
   }
 
+  clicked() {
+    if (this.categories == null || this.categories.length == 0) {
+      this.getAllCategories();
+    }
+  }
+
   addProduct(): void {
     if (this.productForm.valid) {
       const formData = new FormData();

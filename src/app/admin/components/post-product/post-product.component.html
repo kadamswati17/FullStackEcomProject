@@ -20,7 +20,7 @@
     <!-- Category -->
     <mat-form-field class="form-field" appearance="outline">
       <mat-label>Select a Category</mat-label>
-      <mat-select formControlName="categoryId" required>
+      <mat-select (click)="clicked()" formControlName="categoryId" required>
         <mat-option *ngFor="let category of categories" [value]="category.id">
           {{ category.name }}
         </mat-option>

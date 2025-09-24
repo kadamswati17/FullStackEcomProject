@@ -1,4 +1,17 @@
+
+
+<form  [formGroup]="searchProductForm" class="search-form" (Submit)="submitForm()">
+    <mat-form-field class="search-input">
+        <mat-label>  Enter Keyword to Search Products</mat-label>
+        <input matInput formControlName="title" placeholder="Enter product name">
+        <button mat-icon-button matSuffix color="primary" [disabled]="searchProductForm.invalid" >
+            <mat-icon>search</mat-icon>
+        </button>
+    </mat-form-field>
+</form>
 <div class="product-list">
+
+
     <mat-card class="product-card" *ngFor="let product of products">
       <div class="product-image">
         <img [src]="product.processedImg" alt=" product.name ">
@@ -14,7 +27,8 @@
             </div>
             <div class="info-row">
                 <span class="info-label">Category:</span>
-                <span class="info-value">{{ product.category.name }}</span>
+                <!-- <span class="info-value">{{ product.category.name }}</span> -->
+                 <span class="info-value">{{ product.categoryName }}</span>
             </div>
         </div>
 
@@ -28,8 +42,7 @@
                     [routerLink]="['/admin/update-product', product.id]">
                     Update
                 </button>
-                <button mat-raised-button color="warn" class="delete-button"
-                   >
+                <button mat-raised-button color="warn" class="delete-button" (click)="deleteProduct(product.id)">
                     Delete
                 </button>
             </div>
