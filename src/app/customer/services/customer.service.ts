@@ -38,6 +38,26 @@ export class CustomerService {
 
   }
 
+
+  getCartByUserId(): Observable<any> {
+    const UserId = UserStorageService.getUserId();
+    return this.http.get(BASIC_URL + `api/customer/cart/${UserId}`, {
+      headers: this.createAuthorizationHeader(),
+    });
+
+  }
+
+
+  applyCoupon(code: string): Observable<any> {
+    const userId = UserStorageService.getUserId();
+    return this.http.get(`${BASIC_URL}api/customer/coupon/${userId}/${code}`, {
+      headers: this.createAuthorizationHeader(),
+    });
+  }
+
+
+
+
   private createAuthorizationHeader(): HttpHeaders {
     return new HttpHeaders().set('Authorization', 'Bearer ' + UserStorageService.getToken());
   }

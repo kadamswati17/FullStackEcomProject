@@ -1,0 +1,49 @@
+.container {
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+}
+
+mat-card {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px black;
+}
+
+
+table {
+    width: 100%;
+}
+
+th.mat-header-cell {
+    font-weight: bolder;
+    color: blue;
+    padding: 10px;
+}
+
+td.mat-cell,
+td.bold-cell {
+    padding: 10px;
+}
+
+td.bold-cell {
+    font-weight: bold;
+}
+
+.mat-elevation-z8 {
+    box-shadow: 0 4px 8px black;
+}
+
+.mat-row:hover {
+    background-color: whitesmoke;
+}
+
+.mat-header-row {
+    background-color: white;
+}
+
+.mat-paginator {
+    background-color: white;
+    border-radius: 0 0 10px 10px;
+    margin-top: 16px;
+}
