@@ -64,35 +64,46 @@ export class PostProductComponent {
   }
 
   addProduct(): void {
+    console.log("Form values:", this.productForm.value);
+
     if (this.productForm.valid) {
       const formData = new FormData();
-      formData.append('img', this.selectedFile);
-      formData.append('categoryId', this.productForm.get('categoryId').value);
-      formData.append('name', this.productForm.get('name').value);
-      formData.append('price', this.productForm.get('price').value);
-      formData.append('description', this.productForm.get('description').value);
 
-      this.adminService.addProduct(formData).subscribe(
-        (res) => {
-          if (res.id != null) {
-            this.snackbar.open('Product added successfully', 'Close', {
-              duration: 5000
-            });
-            this.router.navigateByUrl('/admin/dashboard');
-          } else {
-            this.snackbar.open(res.message, 'ERROR', {
-              duration: 5000
-            });
-
-          }
-        }
-      );
-    }
-    else {
-      for (const i in this.productForm.controls) {
-        this.productForm.controls[i].markAsDirty();
-        this.productForm.controls[i].updateValueAndValidity();
+      if (this.selectedFile) {
+        formData.append('img', this.selectedFile, this.selectedFile.name);
+      } else {
+        console.warn("No file selected");
       }
+
+      formData.append('categoryId', this.productForm.get('categoryId')?.value);
+      formData.append('name', this.productForm.get('name')?.value);
+      formData.append('price', this.productForm.get('price')?.value);
+      formData.append('description', this.productForm.get('description')?.value);
+
+      console.log("FormData contents:");
+      formData.forEach((value, key) => {
+        console.log(key, value); // This will correctly print all appended values
+      });
+
+      this.adminService.addProduct(formData).subscribe({
+        next: (res) => {
+          console.log("res", res);
+          this.snackbar.open('Product added successfully', 'Close', { duration: 5000 });
+          this.router.navigateByUrl('/admin/dashboard');
+        },
+        error: (err) => {
+          console.error("Error adding product:", err);
+        }
+      });
+    } else {
+      console.warn("Form is invalid");
+      Object.keys(this.productForm.controls).forEach(field => {
+        const control = this.productForm.get(field);
+        control?.markAsDirty();
+        control?.updateValueAndValidity();
+      });
     }
   }
+
+
 }

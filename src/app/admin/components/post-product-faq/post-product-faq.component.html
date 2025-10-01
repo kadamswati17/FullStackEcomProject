@@ -1,0 +1,26 @@
+<div class="container">
+    <h2>Post FAQ</h2>
+
+    <form [formGroup]="FAQForm" (ngSubmit)="postFAQ()" class="faq-form">
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Question</mat-label>
+            <textarea matInput placeholder="Enter your question" formControlName="question"></textarea>
+            <mat-error *ngIf="FAQForm.get('question')?.hasError('required')">
+                This field is required
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Answer</mat-label>
+            <textarea matInput placeholder="Enter your answer" formControlName="answer"></textarea>
+            <mat-error *ngIf="FAQForm.get('answer')?.hasError('required')">
+                This field is required
+            </mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit" class="submit-btn">
+            Post FAQ
+        </button>
+    </form>
+</div>

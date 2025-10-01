@@ -18,12 +18,18 @@ import { MatCardModule } from '@angular/material/card';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { TrackOrderComponent } from './track-order/track-order.component';
+
+// Import AdminModule
+import { AdminModule } from './admin/admin.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    TrackOrderComponent
+    // ❌ Removed AnalyticsComponent
   ],
   imports: [
     BrowserModule,
@@ -31,6 +37,7 @@ import { SignupComponent } from './signup/signup.component';
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
+    HttpClientModule,
     MatToolbarModule,
     MatFormFieldModule,
     MatInputModule,
@@ -38,8 +45,7 @@ import { SignupComponent } from './signup/signup.component';
     MatSnackBarModule,
     MatIconModule,
     MatCardModule,
-    AppRoutingModule,
-    HttpClientModule
+    AdminModule // ✅ Keep AdminModule here
   ],
   providers: [],
   bootstrap: [AppComponent]

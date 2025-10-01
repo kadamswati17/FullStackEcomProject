@@ -2,6 +2,7 @@
 
 <form  [formGroup]="searchProductForm" class="search-form" (Submit)="submitForm()">
     <mat-form-field class="search-input">
+        
         <mat-label>  Enter Keyword to Search Products</mat-label>
         <input matInput formControlName="title" placeholder="Enter product name">
         <button mat-icon-button matSuffix color="primary" [disabled]="searchProductForm.invalid" >
@@ -15,9 +16,10 @@
     <mat-card class="product-card" *ngFor="let product of products">
       <div class="product-image">
         <img [src]="product.processedImg" alt=" product.name ">
+        alert("working...........");
       </div>
       <div class="product-details">
-        <h2 class="product-name">{{ product.name }}</h2>
+        <h2 class="product-name " routerLink="/customer/product/{{product.id}}">{{ product.name }}</h2>
         <p class="product-description">{{ product.description }}</p>
         <mat-divider></mat-divider>
         <div class="product-info">

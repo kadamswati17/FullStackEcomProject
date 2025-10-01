@@ -28,14 +28,32 @@ export class AdminService {
     });
   }
 
-  addProduct(productDto: any): Observable<any> {
+  addProduct(productDto: FormData): Observable<any> {
+    console.log("FormData contents in service:");
+    productDto.forEach((value, key) => {
+      console.log(key, value);
+    });
+
     return this.http.post(BASIC_URL + 'api/admin/product', productDto, {
+      headers: this.createAuthorizationHeader() // no Content-Type set
+    });
+  }
+
+
+  updateProduct(productId: any, productDto: any): Observable<any> {
+    return this.http.put(BASIC_URL + `api/admin/product/${productId}`, productDto, {
       headers: this.createAuthorizationHeader(),
     });
   }
 
   getAllProducts(): Observable<any> {
     return this.http.get(BASIC_URL + 'api/admin/products', {
+      headers: this.createAuthorizationHeader(),
+    });
+  }
+
+  getProductById(productId): Observable<any> {
+    return this.http.get(BASIC_URL + `api/admin/product/${productId}`, {
       headers: this.createAuthorizationHeader(),
     });
   }
@@ -65,7 +83,44 @@ export class AdminService {
     });
   }
 
-  private createAuthorizationHeader(): HttpHeaders {
-    return new HttpHeaders().set('Authorization', 'Bearer ' + UserStorageService.getToken());
+  getPlacedOrders(): Observable<any> {
+    return this.http.get(BASIC_URL + 'api/admin/placedOrders', {
+      headers: this.createAuthorizationHeader(),
+    });
   }
+
+  getAnalytics(): Observable<any> {
+    return this.http.get(BASIC_URL + 'api/admin/placedOrders', {
+      headers: this.createAuthorizationHeader(),
+    });
+  }
+
+  // changeOrderStatus(orderId: number, status: string): Observable<any> {
+  //   return this.http.post(BASIC_URL + 'api/admin/order/analytics', {
+  //     headers: this.createAuthorizationHeader(),
+  //   })
+  // }
+
+
+  changeOrderStatus(orderId: number, status: string): Observable<any> {
+    return this.http.put(`${BASIC_URL}api/admin/order/${orderId}/${status}`, {}, {
+      headers: this.createAuthorizationHeader(),
+    })
+  }
+
+
+
+  postFAQ(productId: number, faqDto: any): Observable<any> {
+    return this.http.post(BASIC_URL + `api/admin/product/${productId}/faq`, faqDto, {
+      headers: this.createAuthorizationHeader(),
+    })
+  }
+
+
+  private createAuthorizationHeader(): HttpHeaders {
+    return new HttpHeaders({
+      Authorization: 'Bearer ' + UserStorageService.getToken()
+    });
+  }
+
 }

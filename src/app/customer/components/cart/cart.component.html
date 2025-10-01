@@ -14,13 +14,14 @@
 
             </div>
             <div class="quantity-controls">
-                <button mat-icon-button [disabled]="item.quantity == 1" >
+                <button mat-icon-button (click)="decreaseQuantity(item.id)" >
                     <mat-icon>remove_circle_outline</mat-icon>
 
                 </button>
                 <span class="quantity">{{ item.quantity }}</span>
                  <div class="quantity-controls">
-                <button mat-icon-button [disabled]="item.quantity == 1" >
+              <button mat-icon-button (click)="increaseQuantity(item.id)">
+
                     <mat-icon>add_circle_outline</mat-icon>
 
                 </button>
@@ -44,7 +45,7 @@
   </div>
 
   <div >
-   <button mat-raised-button color="primary">place Order</button>
+   <button mat-raised-button color="primary"  (click)="placeOrder()">place Order</button>
   </div>
 </div>
 

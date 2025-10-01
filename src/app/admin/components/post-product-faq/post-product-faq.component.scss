@@ -1,0 +1,52 @@
+.container {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #1976d2;
+    /* Angular Material primary color */
+}
+
+.faq-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.full-width {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+textarea {
+    min-height: 100px;
+}
+
+.submit-btn {
+    align-self: center;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 15px;
+        margin: 20px;
+    }
+
+    .submit-btn {
+        width: 100%;
+    }
+}
