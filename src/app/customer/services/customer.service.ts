@@ -53,6 +53,28 @@ export class CustomerService {
   // }
 
 
+  // increaseProductQuantity(productId: any): Observable<any> {
+  //   const userId = UserStorageService.getUserId();
+  //   console.log("service uid", userId);
+
+  //   return this.http.post(`${BASIC_URL}api/customer/cart/increase/${userId}/${productId}`,
+  //     {},
+  //     { headers: this.createAuthorizationHeader() }
+  //   );
+  // }
+
+  // decreaseProductQuantity(productId: number): Observable<any> {
+  //   const userId = UserStorageService.getUserId();
+
+  //   console.log("service uid", userId);
+  //   return this.http.post(`${BASIC_URL}api/customer/cart/decrease/${userId}/${productId}`,
+  //     {},
+  //     { headers: this.createAuthorizationHeader() }
+  //   );
+  // }
+
+
+
   increaseProductQuantity(productId: any): Observable<any> {
     const userId = UserStorageService.getUserId();
     console.log("service uid", userId);
@@ -72,7 +94,6 @@ export class CustomerService {
       { headers: this.createAuthorizationHeader() }
     );
   }
-
   getCartByUserId(): Observable<any> {
     const userId = UserStorageService.getUserId();
     return this.http.get(BASIC_URL + `api/customer/cart/${userId}`, {
@@ -107,14 +128,23 @@ export class CustomerService {
     });
   }
 
-  giveReview(reviewDto: any): Observable<any> {
-    reviewDto.forEach((value, key) => {
-      console.log(`${key}:`, value);
-    });
-    return this.http.post(BASIC_URL + `api/customer/review`, reviewDto, {
-      headers: this.createAuthorizationHeader(),
+  // giveReview(reviewDto: any): Observable<any> {
+  //   reviewDto.forEach((value, key) => {
+  //     console.log(`${key}:`, value);
+  //   });
+  //   return this.http.post(BASIC_URL + `api/customer/review`, reviewDto, {
+  //     headers: this.createAuthorizationHeader(),
+  //   });
+  // }
+
+  giveReview(formData: FormData): Observable<any> {
+    console.log("📌 giveReview service called");
+    return this.http.post(BASIC_URL + `api/customer/review`, formData, {
+      headers: this.createAuthorizationHeader()
     });
   }
+
+
 
 
   addProductToWishlist(wishListDto: any): Observable<any> {
@@ -130,7 +160,14 @@ export class CustomerService {
     });
   }
 
-  getProductDetails(productId: number): Observable<any> {
+  // getProductDetailById(productId: number): Observable<any> {
+  //   return this.http.get(BASIC_URL + `api/customer/product/${productId}`, {
+  //     headers: this.createAuthorizationHeader(),
+  //   });
+  // }
+
+
+  getProductDetailById(productId: number): Observable<any> {
     return this.http.get(BASIC_URL + `api/customer/product/${productId}`, {
       headers: this.createAuthorizationHeader(),
     });

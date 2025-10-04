@@ -1,28 +1,27 @@
 <div class="container" *ngIf="product">
   <div class="product-card">
     <div class="product-image">
-      <img [src]="product.processedImg" alt="{{product.name}} Image">
+      <img [src]="product?.processedImg" alt="{{product.name}} Image">
     </div>
     <div class="product-details">
       <h2>{{product.name}}</h2>
       <p class="description">{{product.description}}</p>
-      <p class="price">{{product.price}}</p>
-      <p class="category">{{product.category}}</p>
+      <p class="price">₹{{product.price}}</p>
+      <p class="category">{{product.categoryName}}</p>
       <mat-icon class="heart-icon" (click)="addToWishlist()" style="cursor: pointer; margin-top: 10px;">
-   favorite_border
+        favorite_border
       </mat-icon>
     </div>
   </div>
 </div>
 
 <!-- Reviews Section -->
-<h1 class="section-heading" *ngIf="reviews.length > 0">Customer Reviews</h1>
-<div class="review-list" *ngIf="reviews.length > 0">
+<h1 class="section-heading" *ngIf="reviews.length >0">Customer Reviews</h1>
+<div class="review-list" *ngIf="reviews">
   <div class="center-container">
-    <!-- ✅ Corrected to *ngFor -->
     <div class="review-card" *ngFor="let review of reviews">
       <div class="review-image">
-        <img [src]="review.processedImg" *ngIf="review.processedImg" alt="{{review.description}}" class="small-image">
+        <img [src]="review?.processedImg" *ngIf="review.processedImg" alt="{{review.description}}" class="small-image">
       </div>
       <div class="review-details">
         <h2>{{review.description}}</h2>
@@ -36,8 +35,8 @@
 </div>
 
 <!-- FAQs Section -->
-<h1 class="section-heading" *ngIf="FAQS.length > 0">Frequently Asked Questions</h1>
-<div class="faq-list" *ngIf="FAQS.length > 0">
+<h1 class="section-heading">Frequently Asked Questions</h1>
+<div class="faq-list" *ngIf="FAQS">
   <div class="center-container">
     <div class="faq-card" *ngFor="let faq of FAQS">
       <p class="question">Question:</p>

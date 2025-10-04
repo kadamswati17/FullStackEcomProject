@@ -53,41 +53,46 @@ export class ReviewOrderedProductComponent implements OnInit {
   }
 
   submitForm(): void {
+    console.log("📌 submitForm called");
+
     if (!this.reviewForm.valid) {
+      console.log("❌ Form invalid");
       this.snackBar.open('Please fill all required fields', 'close', { duration: 3000 });
       return;
     }
 
     const formData: FormData = new FormData();
-    if (this.selectedFile) {
-      formData.append('img', this.selectedFile);
-    }
+
+    console.log("🔹 productId:", this.productId);
+    console.log("🔹 userId:", UserStorageService.getUser()?.id || UserStorageService.getUserId());
+    console.log("🔹 rating:", this.reviewForm.get('rating')?.value);
+    console.log("🔹 description:", this.reviewForm.get('description')?.value);
+
     formData.append('productId', this.productId.toString());
-    // formData.append('userId', UserStorageService.getUser().toString());
+    formData.append('userId', (UserStorageService.getUser()?.id || UserStorageService.getUserId()).toString());
     formData.append('rating', this.reviewForm.get('rating')?.value);
     formData.append('description', this.reviewForm.get('description')?.value);
 
-    formData.forEach((value, key) => {
-      console.log(`${key}:`, value);
-    });
-    let userId: any = UserStorageService.getUser();
-
-    if (typeof userId == 'object' && userId.id) {
-      userId = userId.id;
+    if (this.selectedFile) {
+      console.log("🔹 Image selected:", this.selectedFile.name, this.selectedFile.size);
+      formData.append('img', this.selectedFile);
     } else {
-      userId = UserStorageService.getUserId();
+      console.log("⚠️ No image selected");
     }
 
-    formData.append('userId', userId.toString());
-
-
     this.customerService.giveReview(formData).subscribe(res => {
+      console.log("📌 Review API response:", res);
       if (res?.id != null) {
+        console.log("✅ Review posted successfully");
         this.snackBar.open('Review Posted Successfully', 'close', { duration: 5000 });
         this.router.navigateByUrl('customer/my_orders');
       } else {
+        console.log("❌ Error posting review");
         this.snackBar.open('Something went wrong', 'ERROR', { duration: 5000 });
       }
     });
   }
+
+
+
 }

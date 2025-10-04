@@ -16,7 +16,7 @@
     <mat-card class="product-card" *ngFor="let product of products">
       <div class="product-image">
         <img [src]="product.processedImg" alt=" product.name ">
-        alert("working...........");
+       
       </div>
       <div class="product-details">
         <h2 class="product-name " routerLink="/customer/product/{{product.id}}">{{ product.name }}</h2>

@@ -182,6 +182,49 @@ export class CartComponent {
 
   }
 
+  // increaseQuantity(productId: any) {
+  //   console.log("Increasing quantity for productId:", productId);
+
+  //   if (!productId) {
+  //     console.error("Product ID is undefined!");
+  //     return;
+  //   }
+
+  //   this.customerService.increaseProductQuantity(productId).subscribe({
+  //     next: (res) => {
+  //       console.log("Quantity increased", res);
+  //       this.snackbar.open('Product quantity increased.', 'Close', { duration: 500 });
+  //       this.getCart();
+  //     },
+  //     error: (err) => {
+  //       console.error("Error increasing quantity", err);
+  //       this.snackbar.open('Error increasing quantity.', 'Close', { duration: 3500 });
+  //     }
+  //   });
+  // }
+
+  // decreaseQuantity(productId: any) {
+  //   console.log(" Decreasing quantity for productId:", productId);
+
+  //   if (!productId) {
+  //     console.error("Product ID is undefined!");
+  //     return;
+  //   }
+
+  //   this.customerService.decreaseProductQuantity(productId).subscribe({
+  //     next: (res) => {
+  //       console.log("Quantity decreased", res);
+  //       this.snackbar.open('Product quantity decreased.', 'Close', { duration: 500 });
+  //       this.getCart();
+  //     },
+  //     error: (err) => {
+  //       console.error("Error decreasing quantity", err);
+  //       this.snackbar.open('Error decreasing quantity.', 'Close', { duration: 3500 });
+  //     }
+  //   });
+  // }
+
+
   increaseQuantity(productId: any) {
     console.log("Increasing quantity for productId:", productId);
 
