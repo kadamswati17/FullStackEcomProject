@@ -1,91 +1,122 @@
-<!-- <mat-toolbar color="primary" class="navbar">
-  <Span class="navbar-brand">E-Commerce</Span>
-  <span class="spacer"></span>
-  <button mat-button routerLink="/order">Track Order</button>
-  <button mat-button routerLink="/register">Register</button>
-  <button mat-button routerLink="/login">Login</button>
-</mat-toolbar>
-
-<router-outlet></router-outlet> -->
-
-<!-- <div *ngIf="!isCustomerLoggedIn && !isAdminLoggedIn">
-<mat-toolbar color="primary" class="navbar">
-  <span class="navbar-brand">E-Commerce</span>
-  <span class="spacer"></span>
-  <button mat-button routerLink="/order">Track Order</button>
-  <button mat-button routerLink="/register">Register</button>
-  <button mat-button routerLink="/login">Login</button>
-</mat-toolbar>
-</div>
-
-<div *ngIf="isAdminLoggedIn">
-<mat-toolbar color="primary" class="navbar">
-  <span class="navbar-brand">E-Commerce</span>
-  <span class="spacer"></span>
-  <button mat-button routerLink="/admin/dashboard" routerLinkActive="active"> Dashboard</button>
-  <button mat-button routerLink="/admin/analytics" routerLinkActive="active">Analytics</button>
-  <button mat-button routerLink="/admin/products" routerLinkActive="active"> Products</button>
-  <button mat-button routerLink="/admin/orders" routerLinkActive="active"> Orders</button>
-  <button mat-button routerLink="/admin/category" routerLinkActive="active">Category</button>
-  <button mat-button routerLink="/admin/post-coupon" routerLinkActive="active"> Post Coupon</button>
-  <button mat-button routerLink="/admin/coupons" routerLinkActive="active"> Coupons</button>
-  <button mat-button routerLinkActive="active" (click)="logOut()">Logout</button>
-</mat-toolbar>
-</div>
-
-<div *ngIf="isCustomerLoggedIn">
-
-<mat-toolbar color="primary" class="navbar">
-  <span class="navbar-brand">E-Commerce</span>
-  <button mat-button routerLink="/customer/dashboard" routerLinkActive="active"> Dashboard</button>
-  <button mat-button routerLink="/customer/cart" routerLinkActive="active">Cart</button>
-  <button mat-button routerLink="/customer/my_orders" routerLinkActive="active"> MY Orders</button>
-  <button mat-button routerLink="/customer/orders" routerLinkActive="active"> Orders</button>
-  <button mat-button routerLink="/customer/wishlist" routerLinkActive="active">Wishlist</button>
-  <button mat-button routerLink="/customer/profile" routerLinkActive="active"> Profile</button>
-  
-  <button mat-button routerLinkActive="active" (click)="logOut()">Logout</button>
-</mat-toolbar>
-</div>
-<router-outlet></router-outlet> -->
-
-
+<!-- Guest Navbar -->
 <div *ngIf="!isCustomerLoggedIn && !isAdminLoggedIn">
-  <mat-toolbar color="primary" class="navbar">
-    <span class="navbar-brand">E-Commerce</span>
-    <span class="spacer"></span>
-    <button mat-button routerLink="/order">Track Order</button>
-    <button mat-button routerLink="/register">Register</button>
-    <button mat-button routerLink="/login">Login</button>
-  </mat-toolbar>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top shadow-sm">
+    <div class="container-fluid">
+      <button class="btn btn-light me-3 d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar">
+        ☰
+      </button>
+
+      <a class="navbar-brand fw-bold text-white" routerLink="/home">Ecome</a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarGuest">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarGuest">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" routerLink="/home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" routerLink="/login">Cart</a></li>
+         <li class="nav-item">
+           <a class="nav-link" routerLink="/login" (click)="showWishlistAlert($event)">Wishlist</a>
+          </li>
+
+          <li class="nav-item"><a class="nav-link" routerLink="/register">Register</a></li>
+          <li class="nav-item"><a class="nav-link" routerLink="/login">Login</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 </div>
 
+<!-- Admin Navbar -->
 <div *ngIf="isAdminLoggedIn">
-  <mat-toolbar color="primary" class="navbar">
-    <span class="navbar-brand">E-Commerce</span>
-    <span class="spacer"></span>
-    <button mat-button routerLink="/admin/dashboard" routerLinkActive="active">Admin Dashboard</button>
-    <button mat-button routerLink="/admin/analytics" routerLinkActive="active">Analytics</button>
-    <button mat-button routerLink="/admin/products" routerLinkActive="active">Products</button>
-    <button mat-button routerLink="/admin/orders" routerLinkActive="active">Orders</button>
-    <button mat-button routerLink="/admin/category" routerLinkActive="active">Category</button>
-    <button mat-button routerLink="/admin/post-coupon" routerLinkActive="active">Post Coupon</button>
-    <button mat-button routerLink="/admin/coupons" routerLinkActive="active">Coupons</button>
-    <button mat-button routerLinkActive="active" (click)="logOut()">Logout</button>
-  </mat-toolbar>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm">
+    <div class="container-fluid">
+      <button class="btn btn-light me-3 d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar">
+        ☰
+      </button>
+
+      <a class="navbar-brand fw-bold text-warning" routerLink="/admin/dashboard">Admin Panel</a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarAdmin">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarAdmin">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" routerLink="/admin/dashboard">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" routerLink="/admin/analytics">Analytics</a></li>
+          <li class="nav-item"><a class="nav-link" routerLink="/admin/products">Products</a></li>
+          <li class="nav-item"><a class="nav-link" routerLink="/admin/orders">Orders</a></li>
+          <li class="nav-item"><a class="nav-link" routerLink="/admin/category">Category</a></li>
+          <li class="nav-item">
+  <a class="nav-link" routerLink="/admin/post-coupon">Add Coupon</a>
+</li>
+
+          <li class="nav-item"><a class="nav-link" routerLink="/admin/coupons">Coupons</a></li>
+          <li class="nav-item">
+            <button class="btn btn-outline-light ms-lg-3" (click)="logOut()">Logout</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 </div>
 
+<!-- Customer Navbar -->
 <div *ngIf="isCustomerLoggedIn">
-  <mat-toolbar color="primary" class="navbar">
-    <span class="navbar-brand">E-Commerce</span>
-      <span class="spacer"></span>
-    <button mat-button routerLink="/customer/dashboard" routerLinkActive="active"> Customer Dashboard</button>
-    <button mat-button routerLink="/customer/cart" routerLinkActive="active">Cart</button>
-    <button mat-button routerLink="/customer/orders" routerLinkActive="active">Orders</button>
-    <button mat-button routerLink="/customer/wishlist" routerLinkActive="active">Wishlist</button>
-    <button mat-button routerLink="/customer/profile" routerLinkActive="active">Profile</button>
-    <button mat-button routerLinkActive="active" (click)="logOut()">Logout</button>
-  </mat-toolbar>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top shadow-sm">
+    <div class="container-fluid">
+      <button class="btn btn-light me-3 d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar">
+        ☰
+      </button>
+
+      <a class="navbar-brand fw-bold text-white" routerLink="/customer/dashboard">Ecome</a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCustomer">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarCustomer">
+        <form class="d-flex ms-auto my-2 my-lg-0">
+          <input class="form-control me-2 rounded-pill" type="search" placeholder="Search products">
+          <button class="btn btn-light rounded-pill" type="submit">Search</button>
+        </form>
+
+        <ul class="navbar-nav ms-3 mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" routerLink="/customer/dashboard">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" routerLink="/customer/cart">Cart</a></li>
+          <li class="nav-item"><a class="nav-link" routerLink="/customer/orders">Orders</a></li>
+          <li class="nav-item"><a class="nav-link" routerLink="/customer/wishlist">Wishlist</a></li>
+          <li class="nav-item"><a class="nav-link" routerLink="/customer/profile">Profile</a></li>
+          <li class="nav-item">
+            <button class="btn btn-outline-light ms-lg-3" (click)="logOut()">Logout</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 </div>
 
-<router-outlet></router-outlet>
+<!-- Sidebar -->
+<div class="offcanvas offcanvas-start sidebar-custom" tabindex="-1" id="sidebar">
+  <div class="offcanvas-header border-bottom bg-light">
+    <h5 class="offcanvas-title fw-bold">Categories</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body p-0">
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item list-group-item-action">Mobiles</li>
+      <li class="list-group-item list-group-item-action">Laptops</li>
+      <li class="list-group-item list-group-item-action">Fashion</li>
+      <li class="list-group-item list-group-item-action">Home</li>
+      <li class="list-group-item list-group-item-action">Appliances</li>
+      <li class="list-group-item list-group-item-action">Books</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Page Content -->
+<div class="container my-4">
+  <router-outlet></router-outlet>
+</div>

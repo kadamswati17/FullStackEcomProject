@@ -1,15 +1,23 @@
 <p>view-wishlist works!</p>
 <div class="center-container">
-    <div class="product-card" *ngFor="let product of products">
-     <div class="product-image">
-        <img [src]="product.processedImg" *ngIf="product.processedImg" alt="{{product.name}} Image">
-     </div>
+  <div class="product-card" *ngFor="let product of products" style="position: relative;">
 
-     <div class="product-details">
-        <h2>{{product.productName}}</h2>
-        <p class="description">{{product.productDescription}}</p>
-        <p class="price">{{product.price}}</p>
+    <div class="product-image" style="position: relative;">
+      <img [src]="product.processedImg" *ngIf="product.processedImg" alt="{{product.productName}} Image">
 
-     </div>
+      <!-- Heart Icon to remove from wishlist -->
+      <mat-icon class="heart-icon wishlist-active" (click)="removeFromWishlist(product.productId)"
+        style="position: absolute; top: 8px; right: 8px; font-size: 28px; color: red; cursor: pointer;">
+        favorite
+      </mat-icon>
+
+
     </div>
+
+    <div class="product-details">
+      <h2>{{product.productName}}</h2>
+      <p class="description">{{product.productDescription}}</p>
+      <p class="price">₹{{product.price}}</p>
+    </div>
+  </div>
 </div>

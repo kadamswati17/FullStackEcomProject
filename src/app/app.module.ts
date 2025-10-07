@@ -22,13 +22,16 @@ import { TrackOrderComponent } from './track-order/track-order.component';
 
 // Import AdminModule
 import { AdminModule } from './admin/admin.module';
+import { HomeComponent } from './home/home.component';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     SignupComponent,
-    TrackOrderComponent
+    TrackOrderComponent,
+    HomeComponent
     // ❌ Removed AnalyticsComponent
   ],
   imports: [
@@ -44,6 +47,7 @@ import { AdminModule } from './admin/admin.module';
     MatButtonModule,
     MatSnackBarModule,
     MatIconModule,
+    MatDividerModule,
     MatCardModule,
     AdminModule // ✅ Keep AdminModule here
   ],

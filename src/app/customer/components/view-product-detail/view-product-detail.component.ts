@@ -66,6 +66,8 @@ export class ViewProductDetailComponent implements OnInit {
     });
   }
 
+  isInWishlist: boolean = false;
+
   addToWishlist() {
     const wishListDto = {
       productId: this.productId,
@@ -76,6 +78,7 @@ export class ViewProductDetailComponent implements OnInit {
       next: (res) => {
         if (res.id != null) {
           this.snackBar.open('Product added to Wishlist successfully', 'Close', { duration: 5000 });
+          this.isInWishlist = true;
         } else {
           this.snackBar.open("Already in Wishlist", 'Error', { duration: 5000 });
         }
@@ -86,4 +89,5 @@ export class ViewProductDetailComponent implements OnInit {
       }
     });
   }
+
 }

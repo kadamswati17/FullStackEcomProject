@@ -119,7 +119,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserStorageService } from '../../../services/storage/user-storage.service';
 import { PlaceOrderComponent } from '../place-order/place-order.component';
-import { log } from 'node:console';
+import { error, log } from 'node:console';
 // import { PlaceOrderComponent } from '../../../admin/components/place-order/place-order.component';
 
 @Component({
@@ -149,24 +149,39 @@ export class CartComponent {
   }
 
 
-  applyCoupon() {
-    const code = this.couponForm.get('code')?.value;
+  // applyCoupon() {
+  //   const code = this.couponForm.get('code')?.value;
 
-    if (!code) {
-      this.snackbar.open("Please enter a coupon code", 'Close', { duration: 3000 });
-      return;
+  //   if (!code) {
+  //     this.snackbar.open("Please enter a coupon code", 'Close', { duration: 3000 });
+  //     return;
+  //   }
+
+  //   this.customerService.applyCoupon(code).subscribe({
+  //     next: (res) => {
+  //       this.snackbar.open("Coupon applied successfully", 'Close', { duration: 5000 });
+  //     },
+  //     error: () => {
+  //       this.snackbar.open("Invalid coupon code", 'Close', { duration: 3000 });
+  //     }
+  //   });
+  // }
+
+
+  applyCoupon() {
+    this.customerService.applyCoupon(this.couponForm.get(['code'])!.value).subscribe(res => {
+      this.snackbar.open("Coupon AppliedmSuccessfully", 'close', {
+        duration: 5000
+      });
+      this.getCart();
+    }, error => {
+      this.snackbar.open(error.error, 'Close', {
+        duration: 5000
+      });
     }
 
-    this.customerService.applyCoupon(code).subscribe({
-      next: (res) => {
-        this.snackbar.open("Coupon applied successfully", 'Close', { duration: 5000 });
-      },
-      error: () => {
-        this.snackbar.open("Invalid coupon code", 'Close', { duration: 3000 });
-      }
-    });
+    )
   }
-
 
   getCart() {
     this.cartItems = [];   // 👈 updated

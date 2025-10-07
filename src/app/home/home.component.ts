@@ -1,17 +1,15 @@
 import { Component } from '@angular/core';
+import { UserStorageService } from '../services/storage/user-storage.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AdminService } from '../../../admin/service/admin.service';
-import { CustomerService } from '../../services/customer.service';
-import { UserStorageService } from '../../../services/storage/user-storage.service';
+import { CustomerService } from '../customer/services/customer.service';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss']
 })
-export class DashboardComponent {
-
+export class HomeComponent {
   products: any[] = [];
   searchProductForm!: FormGroup;
 

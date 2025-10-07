@@ -24,5 +24,10 @@ export class AppComponent {
     UserStorageService.signOut();
     this.router.navigateByUrl('login');
   }
+
+  showWishlistAlert(event: Event) {
+    alert("Please Login or Register to see your Wishlist");
+  }
+
 }
 

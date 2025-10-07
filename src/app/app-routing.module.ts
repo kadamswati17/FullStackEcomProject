@@ -3,27 +3,22 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { TrackOrderComponent } from './track-order/track-order.component';
+// import { DashboardComponent } from './admin/components/dashboard/dashboard.component';
+import { HomeComponent } from './home/home.component';
 
-// ✅ Export the routes so main.ts can use them
-// ✅ Export the routes
-// export const routes: Routes = [
-//   { path: '', redirectTo: '/login', pathMatch: 'full' },
-//   { path: "login", component: LoginComponent },
-//   { path: "register", component: SignupComponent },
-//   { path: 'customer', loadChildren: () => import('./customer/customer.module').then(m => m.CustomerModule) },
-//   { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
-//   { path: '**', redirectTo: '/login' }
-// ];
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  // { path: '', redirectTo: '/login', pathMatch: 'full' },
+  // { path: '', component: DashboardComponent },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
   { path: "login", component: LoginComponent },
   { path: "register", component: SignupComponent },
   { path: "order", component: TrackOrderComponent },
 
   { path: 'customer', loadChildren: () => import('./customer/customer.module').then(m => m.CustomerModule) },
   { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
-  { path: '**', redirectTo: '/login' }
+  // { path: '**', redirectTo: '/login' }
 ];
 
 
