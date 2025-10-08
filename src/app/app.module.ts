@@ -24,6 +24,7 @@ import { TrackOrderComponent } from './track-order/track-order.component';
 import { AdminModule } from './admin/admin.module';
 import { HomeComponent } from './home/home.component';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { MatDividerModule } from '@angular/material/divider';
     MatIconModule,
     MatDividerModule,
     MatCardModule,
-    AdminModule // ✅ Keep AdminModule here
+    AdminModule, // ✅ Keep AdminModule here
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

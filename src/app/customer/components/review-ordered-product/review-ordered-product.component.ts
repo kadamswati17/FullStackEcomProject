@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomerService } from '../../services/customer.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserStorageService } from '../../../services/storage/user-storage.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-review-ordered-product',
@@ -22,7 +23,9 @@ export class ReviewOrderedProductComponent implements OnInit {
     private snackBar: MatSnackBar,
     private customerService: CustomerService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private dialogRef: MatDialogRef<ReviewOrderedProductComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { productId: number }
   ) { }
 
   ngOnInit(): void {
@@ -93,6 +96,8 @@ export class ReviewOrderedProductComponent implements OnInit {
     });
   }
 
-
+  closeDialog(): void {
+    this.dialogRef.close();
+  }
 
 }

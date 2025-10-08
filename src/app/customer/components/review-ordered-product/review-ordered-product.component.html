@@ -1,4 +1,10 @@
+<!-- <h2 mat-dialog-title>Write a Review</h2> -->
+<button mat-icon-button class="close-btn" (click)="closeDialog()" style="float: right;">
+  <mat-icon>close</mat-icon>
+</button>
+
 <form [formGroup]="reviewForm" class="review-form">
+
 
   <!-- File Upload -->
   <div class="file-upload-container">
@@ -33,11 +39,7 @@
   <!-- Description -->
   <mat-form-field appearance="outline">
     <mat-label>Description</mat-label>
-    <textarea
-      matInput
-      formControlName="description"
-      placeholder="Description"
-      rows="5">
+    <textarea matInput formControlName="description" placeholder="Description" rows="5">
     </textarea>
     <mat-error *ngIf="reviewForm.get('description')?.invalid && reviewForm.get('description')?.touched">
       This input is required!
@@ -45,8 +47,11 @@
   </mat-form-field>
 
   <!-- Submit -->
+  <!-- <div class="flex justify-end gap-2"> -->
+  <!-- <button mat-stroked-button color="warn" (click)="closeDialog()">Cancel</button> -->
   <button mat-raised-button color="primary" type="submit" (click)="submitForm()">
     Submit
   </button>
+  <!-- </div> -->
 
 </form>

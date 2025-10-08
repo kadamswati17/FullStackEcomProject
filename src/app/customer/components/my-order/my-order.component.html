@@ -1,5 +1,10 @@
 <mat-table class="mat-elevation-z8" [dataSource]="myOrders">
 
+  <ng-container matColumnDef="id">
+    <mat-header-cell *matHeaderCellDef style="font-weight: bolder; color: blue;">Order ID</mat-header-cell>
+    <mat-cell *matCellDef="let myOrder">{{ myOrder.id }}</mat-cell>
+  </ng-container>
+
   <!-- User Name -->
   <ng-container matColumnDef="userName">
     <mat-header-cell *matHeaderCellDef style="font-weight: bolder; color: blue;">User</mat-header-cell>
@@ -43,19 +48,21 @@
   </ng-container>
 
   <!-- Action -->
-<!-- Action -->
-<ng-container matColumnDef="action">
-  <mat-header-cell *matHeaderCellDef style="font-weight: bolder; color: blue;">Action</mat-header-cell>
-  <mat-cell *matCellDef="let myOrder">
-    <!-- Trim and lowercase to avoid mismatches -->
-    <span *ngIf="myOrder.orderStatus?.trim().toLowerCase() === 'delivered'">
-      <button mat-raised-button color="primary"
-              [routerLink]="['/customer/review', myOrder.id]">
-        Review
-      </button>
-    </span>
-  </mat-cell>
-</ng-container>
+  <!-- Action -->
+  <ng-container matColumnDef="action">
+    <mat-header-cell *matHeaderCellDef style="font-weight: bolder; color: blue;">Action</mat-header-cell>
+    <mat-cell *matCellDef="let myOrder">
+      <!-- Trim and lowercase to avoid mismatches -->
+      <span *ngIf="myOrder.orderStatus?.trim().toLowerCase() === 'delivered'">
+        <!-- <button mat-raised-button color="primary" [routerLink]="['/customer/review', myOrder.id]">
+          Review
+        </button> -->
+        <button mat-raised-button color="primary" (click)="openReviewDialog(myOrder)">
+          Review
+        </button>
+      </span>
+    </mat-cell>
+  </ng-container>
 
 
   <!-- Header Row -->
