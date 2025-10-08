@@ -2,13 +2,13 @@
     max-width: 600px;
     margin: 0 auto;
     padding: 20px;
-    margin-top: 90px;
+    margin-top: 20px;
+    position: relative;
 
     h2 {
         text-align: center;
         margin-bottom: 20px;
         color: blue;
-
     }
 
     form {
@@ -25,13 +25,19 @@
 
             .mat-form-field-outline {
                 color: blue;
-
             }
         }
 
         button {
             align-self: center;
         }
+    }
+
+    .close-btn {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        color: red;
     }
 }
 

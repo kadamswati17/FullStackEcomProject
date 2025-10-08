@@ -1,4 +1,9 @@
 <div class="container">
+  <button mat-icon-button class="close-btn" (click)="closeDialog()">
+    <mat-icon>close</mat-icon>
+  </button>
+
+
   <h2>Add Product</h2>
   <form [formGroup]="productForm" (ngSubmit)="addProduct()" class="product-form">
 

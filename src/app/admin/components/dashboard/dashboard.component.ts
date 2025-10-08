@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { AdminService } from '../../service/admin.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { PostProductComponent } from '../post-product/post-product.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,31 +11,29 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
-
   products: any[] = [];
   searchProductForm!: FormGroup;
 
-  constructor(private adminService: AdminService,
+  constructor(
+    private adminService: AdminService,
     private fb: FormBuilder,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
     this.getAllProducts();
-
     this.searchProductForm = this.fb.group({
       title: [null, [Validators.required]]
     });
     this.searchProductForm.get('title')?.valueChanges.subscribe(value => {
       if (!value) {
-        // if input is empty, reset the product list
         this.getAllProducts();
       } else {
         this.search(value);
       }
     });
   }
-
 
   getAllProducts() {
     this.products = [];
@@ -53,32 +53,21 @@ export class DashboardComponent {
         element.processedImg = 'data:image/jpeg;base64,' + element.byteImg;
         this.products.push(element);
       });
-      console.log(this.products);
     });
   }
 
   deleteProduct(productId: any) {
     this.adminService.deleteProduct(productId).subscribe(res => {
-      console.log("ewsa", res);
       if (res.body == null) {
-        console.log("ewsqqqa", res);
-
-        this.snackbar.open(res.message, 'Close', {
-          duration: 3000,
-        });
+        this.snackbar.open(res.message, 'Close', { duration: 3000 });
+        this.getAllProducts();
+      } else {
+        this.snackbar.open(res.message, 'Close', { duration: 3000, panelClass: 'error-snackbar' });
         this.getAllProducts();
       }
-      else {
-        console.log("ewsqqqwwa", res);
-        this.snackbar.open(res.message, 'Close', {
-          duration: 3000,
-          panelClass: 'error-snackbar'
-        });
-        this.getAllProducts();
-      }
-
-    })
+    });
   }
+
   search(value: string) {
     if (!value) {
       this.getAllProducts();
@@ -87,8 +76,17 @@ export class DashboardComponent {
     const filteredProducts = this.products.filter(product =>
       product.name.toLowerCase().includes(value.toLowerCase())
     );
-
     this.products = filteredProducts;
   }
 
+  openAddProductModal(): void {
+    const dialogRef = this.dialog.open(PostProductComponent, {
+      width: '550px',
+      panelClass: 'custom-dialog-container'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.getAllProducts(); // refresh products after modal close
+    });
+  }
 }

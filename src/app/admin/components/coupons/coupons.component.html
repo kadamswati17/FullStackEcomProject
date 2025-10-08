@@ -1,36 +1,40 @@
-<div class="container" style="padding: 30px;">
-    <mat-card-content>
-        <table  mat-table [dataSource]="coupons" class="mat-elevation-z8">
-            <ng-container matColumnDef="id">
-               <th mat-header-cell *matHeaderCellDef>Coupon ID</th>
-               <td mat-cell *matCellDef="let coupon">{{coupon.id}}</td>
-            </ng-container>
+<div class="container" style="padding: 30px; position: relative;">
+   <button mat-raised-button color="primary" style="position: absolute; top: 20px; right: 20px;"
+      (click)="openAddCouponModal()">
+      + Add Coupon
+   </button>
 
-            <ng-container matColumnDef="name">
-               <th mat-header-cell *matHeaderCellDef>Name</th>
-               <td mat-cell *matCellDef="let coupon">{{coupon.name}}</td>
-            </ng-container>
+   <mat-card-content>
+      <table mat-table [dataSource]="coupons" class="mat-elevation-z8" style="cursor:pointer;">
+         <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>Coupon ID</th>
+            <td mat-cell *matCellDef="let coupon" (dblclick)="selectCoupon(coupon)">{{coupon.id}}</td>
+         </ng-container>
 
-            <ng-container matColumnDef="discount">
-               <th mat-header-cell *matHeaderCellDef>Discount</th>
-               <td mat-cell *matCellDef="let coupon">{{coupon.discount}}</td>
-            </ng-container>
+         <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let coupon" (dblclick)="selectCoupon(coupon)">{{coupon.name}}</td>
+         </ng-container>
 
+         <ng-container matColumnDef="discount">
+            <th mat-header-cell *matHeaderCellDef>Discount</th>
+            <td mat-cell *matCellDef="let coupon" (dblclick)="selectCoupon(coupon)">{{coupon.discount}}</td>
+         </ng-container>
 
-            <ng-container matColumnDef="code">
-               <th mat-header-cell *matHeaderCellDef>Code</th>
-               <td mat-cell *matCellDef="let coupon">{{coupon.code}}</td>
-            </ng-container>
+         <ng-container matColumnDef="code">
+            <th mat-header-cell *matHeaderCellDef>Code</th>
+            <td mat-cell *matCellDef="let coupon" (dblclick)="selectCoupon(coupon)">{{coupon.code}}</td>
+         </ng-container>
 
-            <ng-container matColumnDef="expirationDate">
-               <th mat-header-cell *matHeaderCellDef>Expiration Date</th>
-               <td mat-cell *matCellDef="let coupon">{{coupon.expirationDate | date: 'dd/MM/yyyy'}}</td>
-            </ng-container>
+         <ng-container matColumnDef="expirationDate">
+            <th mat-header-cell *matHeaderCellDef>Expiration Date</th>
+            <td mat-cell *matCellDef="let coupon" (dblclick)="selectCoupon(coupon)">
+               {{coupon.expirationDate | date: 'dd/MM/yyyy'}}
+            </td>
+         </ng-container>
 
-            
-           <tr mat-header-row *matHeaderRowDef="['id','name','discount','code','expirationDate']"></tr>
-           <tr mat-row *matRowDef="let row; columns:['id','name','discount','code','expirationDate']"></tr>
-           
-        </table>
-    </mat-card-content>
+         <tr mat-header-row *matHeaderRowDef="['id','name','discount','code','expirationDate']"></tr>
+         <tr mat-row *matRowDef="let row; columns:['id','name','discount','code','expirationDate']"></tr>
+      </table>
+   </mat-card-content>
 </div>

@@ -1,7 +1,12 @@
 <div class="container">
-  <h2>Add Coupon</h2>
-  <form [formGroup]="couponForm" (ngSubmit)="addCoupon()">
+  <!-- Close Button -->
+  <button mat-icon-button class="close-btn" (click)="closeDialog()">
+    <mat-icon>close</mat-icon>
+  </button>
 
+  <h2>Add Coupon</h2>
+
+  <form [formGroup]="couponForm" (ngSubmit)="addCoupon()">
     <mat-form-field class="form-field" appearance="outline">
       <mat-label>Name</mat-label>
       <input type="text" matInput placeholder="Name" formControlName="name" />
