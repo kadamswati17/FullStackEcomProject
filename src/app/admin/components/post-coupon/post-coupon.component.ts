@@ -51,4 +51,5 @@ export class PostCouponComponent implements OnInit {
   closeDialog() {
     this.dialogRef.close();
   }
+
 }

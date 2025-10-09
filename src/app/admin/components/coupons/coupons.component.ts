@@ -61,4 +61,9 @@ export class CouponsComponent {
       this.dialogRef.close(coupon);
     }
   }
+
+  closeDialog() {
+    this.dialogRef.close();
+  }
+
 }

@@ -1,15 +1,17 @@
 <div class="container">
-  <!-- Close Button -->
-  <button mat-icon-button class="close-btn" (click)="closeDialog()">
-    <mat-icon>close</mat-icon>
-  </button>
+  <div class="header-buttons">
+    <!-- Close Button -->
+    <button mat-icon-button class="close-btn" (click)="closeDialog()">
+      <mat-icon>close</mat-icon>
+    </button>
 
-  <h2>Add Coupon</h2>
+    <h2>Add Coupon</h2>
+  </div>
 
-  <form [formGroup]="couponForm" (ngSubmit)="addCoupon()">
+  <form [formGroup]="couponForm" (ngSubmit)="addCoupon()" class="coupon-form">
     <mat-form-field class="form-field" appearance="outline">
       <mat-label>Name</mat-label>
-      <input type="text" matInput placeholder="Name" formControlName="name" />
+      <input type="text" matInput placeholder="Enter coupon name" formControlName="name" />
       <mat-error *ngIf="couponForm.get('name')?.hasError('required')">
         This input is required
       </mat-error>
@@ -17,7 +19,7 @@
 
     <mat-form-field class="form-field" appearance="outline">
       <mat-label>Code</mat-label>
-      <input type="text" matInput placeholder="Code" formControlName="code" />
+      <input type="text" matInput placeholder="Enter coupon code" formControlName="code" />
       <mat-error *ngIf="couponForm.get('code')?.hasError('required')">
         This input is required
       </mat-error>
@@ -25,7 +27,7 @@
 
     <mat-form-field class="form-field" appearance="outline">
       <mat-label>Discount %</mat-label>
-      <input type="number" matInput placeholder="Discount" formControlName="discount" />
+      <input type="number" matInput placeholder="Enter discount percentage" formControlName="discount" />
       <mat-error *ngIf="couponForm.get('discount')?.hasError('required')">
         This input is required
       </mat-error>
@@ -33,8 +35,7 @@
 
     <mat-form-field class="form-field" appearance="outline">
       <mat-label>Expiration Date</mat-label>
-      <input matInput [matDatepicker]="picker" formControlName="expirationDate" />
-      <mat-hint>MM/DD/YYYY</mat-hint>
+      <input matInput [matDatepicker]="picker" formControlName="expirationDate" placeholder="MM/DD/YYYY" />
       <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
       <mat-error *ngIf="couponForm.get('expirationDate')?.hasError('required')">
@@ -42,6 +43,8 @@
       </mat-error>
     </mat-form-field>
 
-    <button mat-raised-button color="primary">Add Coupon</button>
+    <button mat-raised-button color="primary" type="submit" class="submit-btn">
+      Add Coupon
+    </button>
   </form>
 </div>

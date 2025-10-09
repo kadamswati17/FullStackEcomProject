@@ -73,8 +73,20 @@ mat-form-field {
     }
 }
 
+.close-btn {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    /* Move button to left side */
+    color: red;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
 button[type="submit"] {
-    width: 100%;
+    width: auto;
+    /* Avoid full width for buttons except submit */
     font-size: 18px;
-    margin-top: 20px
+    margin-top: 20px;
 }

@@ -1,6 +1,6 @@
 .container {
     max-width: 600px;
-    max-height: 550px;
+    max-height: 600px;
     overflow: auto;
     margin: 0 auto;
     padding: 20px;
@@ -8,10 +8,11 @@
     border-radius: 12px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 
-    .close-btn {
+    .container .close-btn {
         position: absolute;
         top: 5px;
-        right: 20px;
+        left: 20px;
+        /* move button to left side */
         color: red;
     }
 
@@ -80,7 +81,7 @@
 
         mat-form-field {
             width: 100%;
-            margin-bottom: 20px;
+            margin-bottom: 5px;
 
             input,
             textarea {
