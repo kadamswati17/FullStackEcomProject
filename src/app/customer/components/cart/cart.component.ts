@@ -10,6 +10,7 @@ import { UserStorageService } from '../../../services/storage/user-storage.servi
 import { PlaceOrderComponent } from '../place-order/place-order.component';
 import { error, log } from 'node:console';
 import { CouponsComponent } from '../../../admin/components/coupons/coupons.component';
+import { Coupon } from '../../../models/coupon.model';
 // import { PlaceOrderComponent } from '../../../admin/components/place-order/place-order.component';
 
 @Component({
@@ -120,18 +121,18 @@ export class CartComponent {
     this.dialog.open(PlaceOrderComponent);
   }
 
-  openCoupenModal(): void {
-    const dialogRef = this.dialog.open(CouponsComponent, {
-      width: '550px',
-      panelClass: 'custom-dialog-container'
-    });
+  openCouponModal(): void {
+    this.customerService.getPublicCoupons().subscribe(coupons => {
+      const dialogRef = this.dialog.open(CouponsComponent, {
+        width: '550px',
+        data: { coupons }
+      });
 
-    dialogRef.afterClosed().subscribe((selectedCoupon) => {
-      if (selectedCoupon) {
-        console.log("Selected Coupon:", selectedCoupon);
-        this.couponForm.patchValue({ code: selectedCoupon.code }); // Auto-fill coupon code
-      }
+      dialogRef.afterClosed().subscribe((selectedCoupon: Coupon) => {
+        if (selectedCoupon) {
+          this.couponForm.patchValue({ code: selectedCoupon.code });
+        }
+      });
     });
   }
-
 }

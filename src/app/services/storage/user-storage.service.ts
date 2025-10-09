@@ -1,77 +1,7 @@
-// import { Injectable } from '@angular/core';
-
-// const TOKEN = 'ecom-token';
-// const USER = 'ecom-user';
-
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class UserStorageService {
-
-//   constructor() { }
-
-//   public saveToken(token: string): void {
-//     window.sessionStorage.removeItem(TOKEN);
-//     window.sessionStorage.setItem(TOKEN, token);
-//   }
-
-//   public saveUser(user): void {
-//     window.sessionStorage.removeItem(USER);
-//     window.sessionStorage.setItem(USER, JSON.stringify(user));
-//   }
-
-//   static getToken(): string {
-//     return localStorage.getItem(TOKEN);
-//   }
-
-//   static getUser(): any {
-//     return JSON.parse(localStorage.getItem(USER));
-//   }
-
-//   static getUserId(): string {
-//     const user = this.getUser();
-//     if (user) {
-//       return '';
-//     }
-//     return user.userId;
-//   }
-
-
-//   static getUserRole(): string {
-//     const user = this.getUser();
-//     if (user) {
-//       return '';
-//     }
-//     return user.role;
-//   }
-
-//   static isAdminLoggedIn(): boolean {
-//     if (this.getToken === null) {
-//       return false;
-//     }
-//     const role: string = this.getUserRole();
-//     return role === 'ADMIN';
-//   }
-
-//   static isCustomerLoggedIn(): boolean {
-//     if (this.getToken === null) {
-//       return false;
-//     }
-//     const role: string = this.getUserRole();
-//     return role === 'CUSTOMER';
-//   }
-
-//   static signOut(): void {
-//     window.localStorage.removeItem(TOKEN);
-//     window.localStorage.removeItem(USER);
-//   }
-
-// }
-
 import { Injectable } from '@angular/core';
 
-const TOKEN = 'ecom-token';
-const USER = 'ecom-user';
+const TOKEN_KEY = 'ecom-token';
+const USER_KEY = 'ecom-user';
 
 @Injectable({
   providedIn: 'root'
@@ -80,48 +10,62 @@ export class UserStorageService {
 
   constructor() { }
 
+  // Save token and user
   public saveToken(token: string): void {
-    window.sessionStorage.setItem(TOKEN, token);
+    if (token) {
+      window.sessionStorage.setItem(TOKEN_KEY, token);
+    }
   }
 
   public saveUser(user: any): void {
-    window.sessionStorage.setItem(USER, JSON.stringify(user));
+    if (user) {
+      window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
+    }
   }
 
-  static getToken(): string | null {
-    return window.sessionStorage.getItem(TOKEN);
+  // Get token
+  public static getToken(): string | null {
+    return window.sessionStorage.getItem(TOKEN_KEY);
   }
 
-  static getUser(): any {
-    const user = window.sessionStorage.getItem(USER);
-    return user ? JSON.parse(user) : null;
+  // Get user object
+  public static getUser(): any {
+    const user = window.sessionStorage.getItem(USER_KEY);
+    try {
+      return user ? JSON.parse(user) : null;
+    } catch (error) {
+      console.error('Error parsing user from storage:', error);
+      return null;
+    }
   }
 
-  static getUserId(): string | null {
+  // Get individual values
+  public static getUserId(): string | null {
     const user = this.getUser();
-    return user ? user.userId : null;
+    return user && user.userId ? user.userId : null;
   }
 
-  static getUserRole(): string | null {
+  public static getUserRole(): string | null {
     const user = this.getUser();
-    return user ? user.role : null;
+    return user && user.role ? user.role : null;
   }
 
-  static isAdminLoggedIn(): boolean {
+  // Role checks
+  public static isAdminLoggedIn(): boolean {
     const token = this.getToken();
     const role = this.getUserRole();
-    return token != null && role === 'ADMIN';
+    return !!token && role === 'ADMIN';
   }
 
-  static isCustomerLoggedIn(): boolean {
+  public static isCustomerLoggedIn(): boolean {
     const token = this.getToken();
     const role = this.getUserRole();
-    return token != null && role === 'CUSTOMER';
+    return !!token && role === 'CUSTOMER';
   }
 
-  static signOut(): void {
-    window.sessionStorage.removeItem(TOKEN);
-    window.sessionStorage.removeItem(USER);
+  // Clear session (on logout)
+  public static signOut(): void {
+    window.sessionStorage.removeItem(TOKEN_KEY);
+    window.sessionStorage.removeItem(USER_KEY);
   }
-
 }
