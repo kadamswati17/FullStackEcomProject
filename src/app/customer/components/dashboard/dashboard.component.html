@@ -62,13 +62,8 @@
 
       <!-- Wishlist Heart Icon -->
       <mat-icon class="heart-icon" [ngClass]="{'wishlist-active': isInWishlist(product.id)}"
-        (click)="toggleWishlist(product.id)" style="
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    font-size: 28px;
-    cursor: pointer;
-  ">
+        (click)="toggleWishlist(product.id)"
+        style="position: absolute; top: 8px; right: 8px; font-size: 28px; cursor: pointer;">
         favorite
       </mat-icon>
 

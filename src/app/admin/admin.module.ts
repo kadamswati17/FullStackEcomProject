@@ -15,8 +15,7 @@ import { PostProductFaqComponent } from './components/post-product-faq/post-prod
 import { UpdateProductComponent } from './components/update-product/update-product.component';
 import { AnalyticsComponent } from './components/analytics/analytics.component';
 import { OrderByStatusComponent } from './components/analytics/order-by-status/order-by-status.component';
-
-import { AngularMaterialDemo } from '../AngularMaterialDemo';
+import { CategoryComponent } from './components/category/category.component';
 
 // Angular Material Modules
 import { MatIconModule } from '@angular/material/icon';
@@ -34,6 +33,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';  // ✅ added
 
 @NgModule({
   declarations: [
@@ -46,8 +46,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     OrdersComponent,
     PostProductFaqComponent,
     UpdateProductComponent,
-    AnalyticsComponent, // ✅ Keep here
-    OrderByStatusComponent
+    AnalyticsComponent,
+    OrderByStatusComponent,
+    CategoryComponent
   ],
   imports: [
     CommonModule,
@@ -55,7 +56,6 @@ import { MatDialogModule } from '@angular/material/dialog';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AngularMaterialDemo,
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
@@ -63,14 +63,15 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatNativeDateModule,
     MatButtonModule,
     MatMenuModule,
-    MatTableModule,
-    MatCardModule,
+    MatTableModule,   // ✅ for mat-table
+    MatCardModule,    // ✅ for mat-card & mat-card-content
     MatSelectModule,
     MatToolbarModule,
     MatPaginatorModule,
     MatSortModule,
     MatSnackBarModule,
-    MatDialogModule
+    MatDialogModule,
+    MatDividerModule  // ✅ for mat-divider
   ],
   providers: [MatDatepickerModule]
 })

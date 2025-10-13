@@ -21,14 +21,26 @@
     }
 }
 
+// .heart-icon {
+//     color: white;
+//     width: 28px;
+//     height: 28px;
+// }
+
+// .wishlist-active {
+//     color: red;
+// }
+
+
 .heart-icon {
     color: white;
-    width: 28px;
-    height: 28px;
+    /* default color */
+    transition: color 0.3s;
 }
 
-.wishlist-active {
+.heart-icon.wishlist-active {
     color: red;
+    /* when product is in wishlist */
 }
 
 

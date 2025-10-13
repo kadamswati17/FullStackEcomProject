@@ -85,7 +85,7 @@ export class DashboardComponent {
       panelClass: 'custom-dialog-container'
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(() => {
       this.getAllProducts(); // refresh products after modal close
     });
   }
