@@ -56,24 +56,21 @@
 
 <div class="product-list">
   <mat-card class="product-card" *ngFor="let product of products" style="position: relative;">
-    
+
     <div class="product-image" style="position: relative;">
       <img [src]="product.processedImg" alt="{{ product.name }}" class="product-img">
 
       <!-- Wishlist Heart Icon -->
-     <mat-icon
-  class="heart-icon"
-  [ngClass]="{'wishlist-active': isInWishlist(product.id)}"
-  (click)="toggleWishlist(product.id)"
-  style="
+      <mat-icon class="heart-icon" [ngClass]="{'wishlist-active': isInWishlist(product.id)}"
+        (click)="toggleWishlist(product.id)" style="
     position: absolute;
     top: 8px;
     right: 8px;
     font-size: 28px;
     cursor: pointer;
   ">
-  favorite
-</mat-icon>
+        favorite
+      </mat-icon>
 
     </div>
 

@@ -135,6 +135,16 @@ export class CustomerService {
   }
 
 
+  getCouponsForCustomernew(): Observable<any> {
+    const userId = UserStorageService.getUserId();
+    return this.http.get(`${this.BASE_URL}/Couponlist/${userId}`, {
+      headers: this.createAuthorizationHeader(),
+    });
+  }
+  // private createAuthorizationHeader(): HttpHeaders {
+  //   return new HttpHeaders().set('Authorization', 'Bearer ' + UserStorageService.getToken());
+  // }
+
   private createAuthorizationHeader(): HttpHeaders {
     return new HttpHeaders().set('Authorization', 'Bearer ' + UserStorageService.getToken());
   }

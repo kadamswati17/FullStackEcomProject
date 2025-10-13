@@ -1,4 +1,4 @@
-<p>view-wishlist works!</p>
+<!-- <p>Login to see Wishlist</p> -->
 <div class="center-container">
   <div class="product-card" *ngFor="let product of products" style="position: relative;">
 
@@ -7,7 +7,7 @@
 
       <!-- Heart Icon to remove from wishlist -->
       <mat-icon class="heart-icon wishlist-active" (click)="removeFromWishlist(product.productId)"
-        style="position: absolute; top: 8px; right: 8px; font-size: 28px; color: red; cursor: pointer;">
+        style="position: absolute; width: 28px; top: 8px; right: 8px; font-size: 28px; color: red; cursor: pointer;">
         favorite
       </mat-icon>
 

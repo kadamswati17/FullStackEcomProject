@@ -22,7 +22,11 @@ export class OrdersComponent {
 
   getPlacedOrders() {
     this.adminService.getPlacedOrders().subscribe(res => {
-      this.orders = res;
+      // this.orders = res;
+      console.log("Placed Orders:", res);
+      this.orders = res.sort((a: any, b: any) => b.id - a.id);
+      console.log("Sorted Orders:", this.orders);
+
     });
   }
 

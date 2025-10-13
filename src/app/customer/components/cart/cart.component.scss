@@ -6,11 +6,13 @@
 }
 
 .cart-items-scroll {
-    max-height: 350px;
-    /* limit height */
+    max-height: 580px;
     overflow-y: auto;
-    /* vertical scroll */
     padding-right: 10px;
+}
+
+.flex-fill {
+    padding: 25px 15px;
 }
 
 .cart-items-scroll::-webkit-scrollbar {
@@ -38,6 +40,9 @@
     display: flex;
     align-items: center;
     width: 100%;
+    background-color: rgb(228, 225, 225);
+    padding: 10px 10px;
+    border-radius: 15px;
 }
 
 .product-img {
@@ -106,7 +111,9 @@
 }
 
 .order-section {
-    background: #f8f9fa;
+    margin-top: 12px;
+    background-color: rgb(228, 225, 225);
+    height: 385px;
 }
 
 .total-price {

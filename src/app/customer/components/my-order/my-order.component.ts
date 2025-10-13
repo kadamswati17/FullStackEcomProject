@@ -33,7 +33,9 @@ export class MyOrderComponent {
   getMyOrders() {
     this.customerService.getOrderByUserId().subscribe(res => {
       this.myOrders = res;
-      console.log("this.myOrders", this.myOrders);
+      console.log("Placed Orders:", res);
+      this.myOrders = res.sort((a: any, b: any) => b.id - a.id);
+      console.log("Sorted Orders:", this.myOrders);
     });
   }
   openReviewDialog(order: any) {

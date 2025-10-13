@@ -37,6 +37,7 @@ export class CartComponent {
       code: [null, [Validators.required]]
     })
     this.getCart();
+    this.getCartCouponlist();
   }
 
 
@@ -134,5 +135,18 @@ export class CartComponent {
         }
       });
     });
+  }
+
+  Clist: any;
+  getCartCouponlist() {
+    this.cartItems = [];   // 👈 updated
+    this.customerService.getCouponsForCustomernew().subscribe(res => {
+      this.Clist = res;
+      //console.log("this.Clisi88t");
+      console.log("this.Clisi88t", res);
+
+    });
+
+    //console.log("this.Clist999"); 
   }
 }

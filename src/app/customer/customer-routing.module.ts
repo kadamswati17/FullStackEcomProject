@@ -18,6 +18,7 @@ const routes: Routes = [
   { path: 'review/:productId', component: ReviewOrderedProductComponent },
   { path: 'product/:productId', component: ViewProductDetailComponent },
   { path: 'wishlist', component: ViewWishlistComponent },
+
   // [routerLink]="['/customer/ordered_products', myOrder.id]">
   //   ReviewOrderedProductComponent
 
