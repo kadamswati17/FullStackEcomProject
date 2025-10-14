@@ -6,8 +6,8 @@
 
         <!-- Order ID -->
         <ng-container matColumnDef="id">
-          <mat-header-cell *matHeaderCellDef style="font-weight: bolder; color: blue;">Order ID</mat-header-cell>
-          <mat-cell *matCellDef="let order">{{ order.id }}</mat-cell>
+          <mat-header-cell *matHeaderCellDef>Order ID</mat-header-cell>
+          <mat-cell *matCellDef=" let order">{{ order.id }}</mat-cell>
         </ng-container>
 
         <!-- User Name -->

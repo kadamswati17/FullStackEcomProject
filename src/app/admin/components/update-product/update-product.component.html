@@ -1,72 +1,77 @@
-<div class="container">
-  <div class="update-product-wrapper">
-    <!-- Left Column -->
-    <div class="left-column">
-      <h2>Update Product</h2>
+<div class="update-product-wrapper container">
+  <!-- Left Side — Product Info -->
+  <div class="left-column">
+    <!-- <h2>Update Product</h2> -->
+    <form [formGroup]="productForm" (ngSubmit)="updateProduct()" class="product-form">
 
-      <!-- File Upload -->
-      <div class="file-upload-container">
-        <label class="file-upload-label">
-          <span>Select A File</span>
-          <input type="file" id="fileInput" (change)="onFileSelected($event)" hidden>
-          <mat-icon>attach_file</mat-icon>
-        </label>
+      <!-- Category -->
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Select a Category</mat-label>
+        <mat-select (click)="clicked()" formControlName="categoryId" required>
+          <mat-option *ngFor="let category of categories" [value]="category.id">
+            {{ category.name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="productForm.get('categoryId')?.hasError('required')">
+          This Input is required
+        </mat-error>
+      </mat-form-field>
 
-        <!-- Image Preview -->
-        <div *ngIf="selectedFile" class="image-preview">
-          <div class="circle-image">
-            <img [src]="imagePreview" alt="Selected Image" class="preview-image">
-          </div>
+      <!-- Name -->
+      <mat-form-field class="form-field">
+        <mat-label>Name</mat-label>
+        <input type="text" matInput formControlName="name" placeholder="Name">
+        <mat-error *ngIf="productForm.get('name')?.hasError('required')">
+          This Input is required
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Price -->
+      <mat-form-field class="form-field">
+        <mat-label>Price</mat-label>
+        <input type="text" matInput formControlName="price" placeholder="Price">
+        <mat-error *ngIf="productForm.get('price')?.hasError('required')">
+          This Input is required
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Description -->
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description" placeholder="Description"></textarea>
+        <mat-error *ngIf="productForm.get('description')?.hasError('required')">
+          This Input is required
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Submit -->
+      <button mat-raised-button color="primary" type="submit">Update Product</button>
+    </form>
+  </div>
+
+  <!-- Right Side — File Upload + Image -->
+  <div class="right-column">
+    <h2>Update Product</h2>
+    <div class="file-upload-container">
+      <label class="file-upload-label">
+        <span>Select A File</span>
+        <input type="file" id="fileInput" (change)="onFileSelected($event)" hidden>
+        <mat-icon>attach_file</mat-icon>
+      </label>
+
+      <!-- New Image Preview -->
+      <div *ngIf="selectedFile" class="image-preview">
+        <div class="circle-image">
+          <img [src]="imagePreview" alt="Selected Image" class="preview-image">
         </div>
       </div>
-    </div>
 
-    <!-- Right Column -->
-    <div class="right-column">
-      <form [formGroup]="productForm" (ngSubmit)="updateProduct()" class="product-form">
-        <!-- Category -->
-        <mat-form-field class="form-field" appearance="outline">
-          <mat-label>Select a Category</mat-label>
-          <mat-select (click)="clicked()" formControlName="categoryId" required>
-            <mat-option *ngFor="let category of categories" [value]="category.id">
-              {{ category.name }}
-            </mat-option>
-          </mat-select>
-          <mat-error *ngIf="productForm.get('categoryId')?.hasError('required')">
-            This Input is required
-          </mat-error>
-        </mat-form-field>
-
-        <!-- Name -->
-        <mat-form-field class="form-field">
-          <mat-label>Name</mat-label>
-          <input type="text" matInput formControlName="name" placeholder="Name">
-          <mat-error *ngIf="productForm.get('name')?.hasError('required')">
-            This Input is required
-          </mat-error>
-        </mat-form-field>
-
-        <!-- Price -->
-        <mat-form-field class="form-field">
-          <mat-label>Price</mat-label>
-          <input type="text" matInput formControlName="price" placeholder="Price">
-          <mat-error *ngIf="productForm.get('price')?.hasError('required')">
-            This Input is required
-          </mat-error>
-        </mat-form-field>
-
-        <!-- Description -->
-        <mat-form-field class="form-field" appearance="outline">
-          <mat-label>Description</mat-label>
-          <textarea matInput formControlName="description" placeholder="Description"></textarea>
-          <mat-error *ngIf="productForm.get('description')?.hasError('required')">
-            This Input is required
-          </mat-error>
-        </mat-form-field>
-
-        <!-- Submit -->
-        <button mat-raised-button color="primary" type="submit">Update Product</button>
-      </form>
+      <!-- Existing Image Preview -->
+      <div *ngIf="!selectedFile && existingImage" class="image-preview">
+        <div class="circle-image">
+          <img [src]="existingImage" alt="Existing Image" class="preview-image">
+        </div>
+      </div>
     </div>
   </div>
 </div>

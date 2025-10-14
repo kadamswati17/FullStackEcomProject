@@ -1,6 +1,6 @@
 .mat-elevation-Z8 {
     width: 80%;
-    margin: 0 auto;
+    margin: 10px;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 8px black;
@@ -31,4 +31,8 @@
 
 .mat-progress-spinner circle {
     stroke: blue;
+}
+
+at-header-row {
+    margin-top: 60px;
 }

@@ -5,8 +5,20 @@ body {
     font-family: "Roboto", "Helvetica Neue", sans-serif;
 }
 
+/* =========================
+   Navbar Styles
+   ========================= */
 .navbar {
     padding: 0.8rem 1rem;
+    position: fixed;
+    /* fixed so it stays on top */
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1050;
+    /* higher than other content */
+    width: 100%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .navbar-brand {
@@ -14,40 +26,42 @@ body {
     font-weight: bold;
 }
 
-
 .navbar-nav .nav-link {
     font-size: 1.2rem;
-    /* Increase font size */
-
-    /* Make it bold */
     color: white;
+    font-weight: 500;
+    transition: color 0.3s;
 }
 
+.navbar-nav .nav-link:hover {
+    color: #ffc107;
+}
 
+/* =========================
+   Sidebar Styles
+   ========================= */
 .offcanvas-start {
     width: 250px;
     background-color: #343a40;
-    /* dark background for sidebar */
+    /* dark background */
 }
 
 .list-group-item {
     cursor: pointer;
     transition: background-color 0.2s;
     font-size: 1.2rem;
-    /* increased font size */
     color: white !important;
-    /* default white text */
     background-color: transparent;
-    /* keep transparent unless hovered */
 }
 
 .list-group-item:hover {
     background-color: #495057;
-    /* slightly lighter dark */
     color: #ffc107 !important;
-    /* hover color */
 }
 
+/* =========================
+   Product Card Styles
+   ========================= */
 .product-card img {
     transition: transform 0.3s ease;
     width: 100%;
@@ -68,8 +82,32 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-
+/* =========================
+   Dialog Styles
+   ========================= */
 .custom-dialog-container {
     border-radius: 40px;
     overflow: hidden;
+}
+
+/* =========================
+   Page Content Spacing
+   ========================= */
+body,
+.container.my-4 {
+    margin-top: 70px;
+    /* space for sticky navbar */
+}
+
+@media (max-width: 768px) {
+
+    body,
+    .container.my-4 {
+        margin-top: 100px;
+        /* adjust for taller mobile navbar */
+    }
+
+    .navbar-brand {
+        font-size: 1.1rem;
+    }
 }

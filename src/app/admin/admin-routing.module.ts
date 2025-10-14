@@ -12,22 +12,39 @@ import { UpdateProductComponent } from './components/update-product/update-produ
 import { AnalyticsComponent } from './components/analytics/analytics.component';
 import { CategoryComponent } from './components/category/category.component';
 
+// const routes: Routes = [
+//     { path: '', redirectTo: 'analytics', pathMatch: 'full' },
+//   { path: '', component: AdminComponent },
+//   { path: 'dashboard', component: DashboardComponent },
+//   // { path: 'category', component: PostCategoryComponent },
+//   { path: 'category', component: CategoryComponent },
+//   { path: 'products', component: PostProductComponent },
+//   { path: 'products/:productId', component: UpdateProductComponent },
+
+//   { path: 'post-coupon', component: PostCouponComponent },
+//   { path: 'coupons', component: CouponsComponent },
+//   { path: 'orders', component: OrdersComponent },
+//   { path: 'faq/:productId', component: PostProductFaqComponent },
+//   { path: 'update-product/:productId', component: UpdateProductComponent },
+//   { path: 'analytics', component: AnalyticsComponent },
+
+// ];
+
+
 const routes: Routes = [
-  { path: '', component: AdminComponent },
+  { path: '', redirectTo: 'analytics', pathMatch: 'full' }, // 👈 redirect root /admin to /admin/analytics
   { path: 'dashboard', component: DashboardComponent },
-  // { path: 'category', component: PostCategoryComponent },
   { path: 'category', component: CategoryComponent },
   { path: 'products', component: PostProductComponent },
   { path: 'products/:productId', component: UpdateProductComponent },
-
   { path: 'post-coupon', component: PostCouponComponent },
   { path: 'coupons', component: CouponsComponent },
   { path: 'orders', component: OrdersComponent },
   { path: 'faq/:productId', component: PostProductFaqComponent },
   { path: 'update-product/:productId', component: UpdateProductComponent },
   { path: 'analytics', component: AnalyticsComponent },
-
 ];
+
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

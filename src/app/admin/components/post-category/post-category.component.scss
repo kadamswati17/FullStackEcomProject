@@ -1,4 +1,10 @@
 /* CATEGORY LIST */
+
+.cat {
+    border-radius: 30px !important;
+
+}
+
 .category-container {
     max-width: 900px;
     margin: 40px auto;
@@ -23,7 +29,7 @@
 
 .category-card {
     padding: 20px;
-    border-radius: 12px;
+    // border-radius: 52px;
 
     table {
         width: 100%;
@@ -41,11 +47,12 @@
 
 /* ADD CATEGORY MODAL */
 .modal-container {
-    max-width: 500px;
-    padding: 30px;
-    background: #ffffff;
-    border-radius: 12px;
+
+    // background: #ffffff;
+    // border-radius: 50px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    padding: 20px 40px;
+
 }
 
 .modal-header {

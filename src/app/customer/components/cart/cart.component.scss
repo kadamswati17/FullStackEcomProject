@@ -1,5 +1,5 @@
 .cart-container {
-    margin-top: 40px;
+    margin-top: 80px;
     background: #fff;
     border-radius: 8px;
     font-family: Arial, sans-serif;
@@ -68,11 +68,13 @@
 }
 
 .quantity-controls {
-    max-width: 130px;
+    max-height: 34px;
+
+    max-width: 120px;
     display: inline-flex;
     align-items: center;
     background-color: #e0f7fa;
-    border-radius: 6px;
+    border-radius: 25px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
