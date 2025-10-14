@@ -18,6 +18,7 @@ button {
     color: white;
     text-transform: uppercase;
     margin-left: 8px;
+    background-color: #a2aef5;
 }
 
 button.active {
@@ -31,7 +32,6 @@ button.active {
 .cart-icon {
     padding-top: 5px;
     padding-left: 5px;
-
     font-size: 28px;
     cursor: pointer;
     color: white;
@@ -48,4 +48,38 @@ button.active {
     font-size: 28px;
     cursor: pointer;
     transition: color 0.3s;
+}
+
+/* Sidebar (admin/customer) */
+.sidebar-custom {
+    width: 250px;
+    background-color: #f8f9fa;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Home Sidebar */
+.custom-home-sidebar {
+    width: 250px;
+    background-color: #a2aef5;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Sidebar category items */
+.custom-home-sidebar .list-group-item,
+.sidebar-custom .list-group-item {
+    border: none;
+    padding: 12px 20px;
+    font-weight: 500;
+    transition: background 0.2s ease;
+    cursor: pointer;
+}
+
+.custom-home-sidebar .list-group-item:hover,
+.sidebar-custom .list-group-item:hover {
+    background-color: #e9ecef;
+}
+
+/* Sidebar overlay dim */
+.offcanvas-backdrop.show {
+    opacity: 0.4;
 }

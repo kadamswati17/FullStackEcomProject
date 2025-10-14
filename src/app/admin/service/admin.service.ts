@@ -22,11 +22,16 @@ export class AdminService {
 
 
   // ✅ Get all categories
+  // getAllCategory(): Observable<any> {
+  //   return this.http.get(BASIC_URL + 'api/admin/categories', {
+  //     headers: this.createAuthorizationHeader(),
+  //   });
+  // }
   getAllCategory(): Observable<any> {
-    return this.http.get(BASIC_URL + 'api/admin/categories', {
-      headers: this.createAuthorizationHeader(),
-    });
+    return this.http.get(BASIC_URL + 'api/public/categories');
   }
+
+
 
   addProduct(productDto: FormData): Observable<any> {
     console.log("FormData contents in service:");

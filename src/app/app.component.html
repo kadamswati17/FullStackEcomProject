@@ -2,17 +2,16 @@
 <div *ngIf="!isCustomerLoggedIn && !isAdminLoggedIn">
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top shadow-sm">
     <div class="container-fluid">
-      <button class="btn btn-light me-3 d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar">
+      <!-- Sidebar Toggle for Home -->
+      <button class="btn btn-light me-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#homeSidebar"
+        aria-controls="homeSidebar">
         ☰
       </button>
 
-      <!-- <a class="navbar-brand fw-bold text-white" routerLink="/home"> ☰</a> -->
-
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
       <a class="navbar-brand fw-bold text-white" routerLink="/home">
         <i class="bi bi-house-door-fill"></i>
       </a>
-
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarGuest">
         <span class="navbar-toggler-icon"></span>
@@ -21,21 +20,12 @@
       <div class="collapse navbar-collapse" id="navbarGuest">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item"><a class="nav-link" routerLink="/home">Home</a></li>
-          <!-- <li class="nav-item">
-            <a class="nav-link p-0" routerLink="/customer/cart">
-              <mat-icon style="font-size:28px; cursor:pointer;">
-                shopping_cart
-              </mat-icon>
-            </a>
-          </li> -->
 
           <li class="nav-item">
-
-            <mat-icon style="max-width: 28px; max-height: 28px;" class="heart-icon" (click)="showWishlistAlert($event)">
-            </mat-icon>
+            <mat-icon style="max-width: 28px; max-height: 28px;" class="heart-icon"
+              (click)="showWishlistAlert($event)"></mat-icon>
           </li>
 
-          <!-- <li class="nav-item"><a class="nav-link" routerLink="/register">Register</a></li> -->
           <li class="nav-item"><a class="nav-link" routerLink="/login">Login</a></li>
         </ul>
       </div>
@@ -59,18 +49,25 @@
 
       <div class="collapse navbar-collapse" id="navbarAdmin">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link" routerLink="/admin/analytics">Dashboard</a></li>
-          <!-- <li class="nav-item"><a class="nav-link" routerLink="/admin/analytics">Analytics</a></li> -->
-          <li class="nav-item"><a class="nav-link" routerLink="/admin/dashboard">Products</a></li>
-          <li class="nav-item"><a class="nav-link" routerLink="/admin/orders">Orders</a></li>
-          <li class="nav-item"><a class="nav-link" routerLink="/admin/category">Category</a></li>
-          <!-- <li class="nav-item">
-            <a class="nav-link" routerLink="/admin/post-coupon">Add Coupon</a>
-          </li> -->
-
-          <li class="nav-item"><a class="nav-link" routerLink="/admin/coupons">Coupons</a></li>
           <li class="nav-item">
-            <button class="btn btn-outline-light ms-lg-3" (click)="logOut()">Logout</button>
+            <a class="nav-link" routerLink="/admin/analytics">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/admin/dashboard">Products</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/admin/orders">Orders</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/admin/category">Category</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/admin/coupons">Coupons</a>
+          </li>
+          <li class="nav-item">
+            <button class="btn btn-outline-light ms-lg-3" (click)="logOut()">
+              Logout
+            </button>
           </li>
         </ul>
       </div>
@@ -86,7 +83,9 @@
         ☰
       </button>
 
-      <a class="navbar-brand fw-bold text-white" routerLink="/customer/dashboard"> ☰</a>
+      <a class="navbar-brand fw-bold text-white" routerLink="/customer/dashboard">
+        ☰
+      </a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCustomer">
         <span class="navbar-toggler-icon"></span>
@@ -94,36 +93,44 @@
 
       <div class="collapse navbar-collapse" id="navbarCustomer">
         <form class="d-flex ms-auto my-2 my-lg-0">
-          <input
-            style="border-radius: 10px !important; font-size: 13px; padding: 4px; background-color: #cbdffd; text-align: center;"
-            class="form-control" type="search" placeholder="Search products">
-          <!-- <button class="btn btn-light rounded-pill" type="submit">Search</button> -->
+          <input style="
+              border-radius: 10px !important;
+              font-size: 13px;
+              padding: 4px;
+              background-color: #cbdffd;
+              text-align: center;
+            " class="form-control" type="search" placeholder="Search products" />
         </form>
 
         <ul class="navbar-nav ms-3 mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link" routerLink="/customer/dashboard">Dashboard</a></li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/customer/dashboard">Dashboard</a>
+          </li>
           <li class="nav-item">
             <a class="nav-link p-0" routerLink="/customer/cart">
-              <mat-icon class="cart-icon">
-                shopping_cart
-              </mat-icon>
+              <mat-icon class="cart-icon"> shopping_cart </mat-icon>
             </a>
           </li>
 
-          <li class="nav-item"><a class="nav-link" routerLink="/customer/orders">Orders</a></li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/customer/orders">Orders</a>
+          </li>
 
           <li class="nav-item">
             <a class="nav-link p-0" routerLink="/customer/wishlist">
-              <mat-icon class="heart-icon" style="font-size:28px; cursor:pointer;">
+              <mat-icon class="heart-icon" style="font-size: 28px; cursor: pointer">
                 favorite
               </mat-icon>
             </a>
           </li>
 
-
-          <li class="nav-item"><a class="nav-link" routerLink="/customer/profile">Profile</a></li>
           <li class="nav-item">
-            <button class="btn btn-outline-light ms-lg-3" (click)="logOut()">Logout</button>
+            <a class="nav-link" routerLink="/customer/profile">Profile</a>
+          </li>
+          <li class="nav-item">
+            <button class="btn btn-outline-light ms-lg-3" (click)="logOut()">
+              Logout
+            </button>
           </li>
         </ul>
       </div>
@@ -131,7 +138,7 @@
   </nav>
 </div>
 
-<!-- Sidebar -->
+<!-- Sidebar for Admin/Customer (unchanged) -->
 <div class="offcanvas offcanvas-start sidebar-custom" tabindex="-1" id="sidebar">
   <div class="offcanvas-header border-bottom bg-light">
     <h5 class="offcanvas-title fw-bold">Categories</h5>
@@ -148,6 +155,27 @@
     </ul>
   </div>
 </div>
+
+<!-- Sidebar for Home Page (Guest users) -->
+<div class="offcanvas offcanvas-start custom-home-sidebar" tabindex="-1" id="homeSidebar">
+  <div class="offcanvas-header border-bottom">
+    <h5 class="offcanvas-title fw-bold text-primary">Categories</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+  </div>
+
+  <div class="offcanvas-body p-0">
+    <ul class="list-group list-group-flush">
+      <li *ngFor="let category of categories" class="list-group-item list-group-item-action">
+        {{ category.name }}
+      </li>
+    </ul>
+    <!-- Optional: show a message if categories are empty -->
+    <div *ngIf="categories.length === 0" class="text-center text-muted my-2">
+      No categories available
+    </div>
+  </div>
+</div>
+
 
 <!-- Page Content -->
 <div class="container my-4">
