@@ -36,3 +36,27 @@
 at-header-row {
     margin-top: 60px;
 }
+
+.table-heading {
+    text-align: center;
+    /* Center the heading */
+    font-size: 2rem;
+    /* Larger font size */
+    font-weight: 400;
+    /* Bold text */
+    color: #1976d2;
+    /* Primary blue color */
+    margin-bottom: 20px;
+    margin-top: 20px;
+    /* Space below heading */
+    text-transform: uppercase;
+    /* Optional: uppercase letters */
+    letter-spacing: 1px;
+    /* Slight spacing between letters */
+    // border-bottom: 3px solid #1976d2;
+    /* Optional underline */
+    display: inline-block;
+    /* Underline fits text width */
+    // padding-bottom: 5px;
+    /* Space between text and underline */
+}

@@ -1,26 +1,31 @@
 .container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     padding-top: 50px;
 }
 
-
-.close-btn {
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    /* changed from right to left */
-    color: red;
-    background: transparent;
-    border: none;
-    cursor: pointer;
+.coupons-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    /* space between toolbar and table */
 }
 
-.close-btn mat-icon {
-    font-size: 20px;
+.coupons-heading {
+    font-size: 28px;
+    font-weight: bold;
+    color: #1976d2;
+    margin: 0;
 }
 
+button[mat-raised-button] {
+    height: 40px;
+    font-weight: 600;
+}
 
+/* Table Styling */
 mat-card {
     width: 100%;
     border-radius: 10px;
@@ -55,7 +60,8 @@ td.bold-cell {
 }
 
 .mat-header-row {
-    background-color: white;
+    background-color: aqua;
+    /* same as before */
 }
 
 .mat-paginator {

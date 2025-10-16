@@ -1,14 +1,18 @@
-<div class="container" style="padding: 30px; position: relative;">
+<div class="container" style="padding: 30px;">
 
-   <button *ngIf="isAdmin" mat-raised-button color="primary" style="position: absolute; top: 20px; right: 20px;"
-      (click)="openAddCouponModal()">
-      + Add Coupon
-   </button>
+   <!-- Heading + Add Button Toolbar -->
+   <div class="coupons-toolbar">
+      <h2 class="coupons-heading">Coupons</h2>
 
+      <button *ngIf="isAdmin" mat-raised-button color="primary" (click)="openAddCouponModal()">
+         + Add Coupon
+      </button>
+   </div>
 
-
+   <!-- Table -->
    <mat-card-content>
       <table mat-table [dataSource]="coupons" class="mat-elevation-z8" style="cursor:pointer;">
+
          <ng-container matColumnDef="id">
             <th mat-header-cell style="background-color: aqua;" *matHeaderCellDef>Coupon ID</th>
             <td mat-cell *matCellDef="let coupon" (dblclick)="selectCoupon(coupon)">{{coupon.id}}</td>

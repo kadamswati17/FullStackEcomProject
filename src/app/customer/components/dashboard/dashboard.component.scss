@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 80px;
+    // margin-top: 80px;
 
     .search-input {
         width: 325px;
@@ -20,6 +20,31 @@
         }
     }
 }
+
+.page-title {
+    margin-top: 20px;
+    text-align: center;
+    /* Center the heading */
+    font-size: 2.0rem;
+    /* Large font size */
+    font-weight: 400;
+    /* Bold text */
+    color: #1976d2;
+    /* Primary blue color */
+    // margin-bottom: 30px;
+    /* Space below the heading */
+    text-transform: uppercase;
+    /* Optional: uppercase letters */
+    letter-spacing: 1px;
+    /* Slight spacing between letters */
+    // border-bottom: 3px solid #1976d2;
+    /* Optional underline */
+    display: inline-block;
+    /* Makes underline fit text width */
+    // padding-bottom: 5px;
+    /* Space between text and underline */
+}
+
 
 // .heart-icon {
 //     color: white;

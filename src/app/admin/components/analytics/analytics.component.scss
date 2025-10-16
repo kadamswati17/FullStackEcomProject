@@ -78,3 +78,21 @@
         align-items: center;
     }
 }
+
+.analytics-heading {
+    text-align: center;
+    /* Center the heading */
+    font-size: 2rem;
+    /* Bigger font size */
+    font-weight: 700;
+    /* Bold text */
+    color: #1976d2;
+    /* Primary blue color */
+    margin-bottom: 20px;
+    margin-top: 100px;
+    /* Space below heading */
+    text-transform: uppercase;
+    /* Optional uppercase */
+    letter-spacing: 1px;
+    /* Slight letter spacing */
+}
