@@ -1,14 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CustomerService } from '../../services/customer.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ReviewOrderedProductComponent } from '../review-ordered-product/review-ordered-product.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-my-order',
   templateUrl: './my-order.component.html',
   styleUrls: ['./my-order.component.scss']
 })
-export class MyOrderComponent {
+export class MyOrderComponent implements OnInit {
   myOrders: any[] = [];
   displayedColumns: string[] = [
     'id',
@@ -24,20 +25,31 @@ export class MyOrderComponent {
 
   constructor(
     private customerService: CustomerService,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.getMyOrders();
   }
 
   getMyOrders() {
-    this.customerService.getOrderByUserId().subscribe(res => {
-      this.myOrders = res;
-      console.log("Placed Orders:", res);
-      this.myOrders = res.sort((a: any, b: any) => b.id - a.id);
-      console.log("Sorted Orders:", this.myOrders);
+    this.customerService.getOrderByUserId().subscribe({
+      next: (res) => {
+        this.myOrders = res.sort((a: any, b: any) => b.id - a.id);
+        console.log("📦 Sorted Orders:", this.myOrders);
+      },
+      error: (err) => {
+        console.error("❌ Error fetching orders:", err);
+      }
     });
   }
+
+  viewOrderDetails(orderId: number) {
+    this.router.navigate(['/order', orderId]); // match the route path
+  }
+
+
   openReviewDialog(order: any) {
     const dialogRef = this.dialog.open(ReviewOrderedProductComponent, {
       width: '500px',
@@ -48,7 +60,6 @@ export class MyOrderComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'submitted') {
-        // You can refresh orders or show a toast
         console.log('✅ Review submitted, refreshing...');
       }
     });

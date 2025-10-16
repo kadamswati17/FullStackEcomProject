@@ -27,6 +27,7 @@ import { MatTableModule } from '@angular/material/table';
 import { AngularMaterialDemo } from '../AngularMaterialDemo';
 import { ViewProductDetailComponent } from './components/view-product-detail/view-product-detail.component';
 import { ViewWishlistComponent } from './components/view-wishlist/view-wishlist.component';
+import { OrderDetailsComponent } from './customer/order-details/order-details.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { ViewWishlistComponent } from './components/view-wishlist/view-wishlist.
     MyOrderComponent,
     PlaceOrderComponent,
     ViewProductDetailComponent,
-    ViewWishlistComponent
+    ViewWishlistComponent,
+    OrderDetailsComponent
   ],
   imports: [
     CommonModule,

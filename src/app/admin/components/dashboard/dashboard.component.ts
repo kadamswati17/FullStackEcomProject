@@ -5,6 +5,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { PostProductComponent } from '../post-product/post-product.component';
 
+declare var bootstrap: any; // For controlling offcanvas programmatically
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -13,6 +15,7 @@ import { PostProductComponent } from '../post-product/post-product.component';
 export class DashboardComponent {
   products: any[] = [];
   searchProductForm!: FormGroup;
+  categories: any[] = []; // store categories for sidebar
 
   constructor(
     private adminService: AdminService,
@@ -23,15 +26,17 @@ export class DashboardComponent {
 
   ngOnInit(): void {
     this.getAllProducts();
+    this.loadCategories();
+
     this.searchProductForm = this.fb.group({
-      title: [null, [Validators.required]]
+      title: [null, Validators.required],
+      category: [null]
     });
+
+    // Search by title live
     this.searchProductForm.get('title')?.valueChanges.subscribe(value => {
-      if (!value) {
-        this.getAllProducts();
-      } else {
-        this.search(value);
-      }
+      if (!value) this.getAllProducts();
+      else this.search(value);
     });
   }
 
@@ -46,8 +51,8 @@ export class DashboardComponent {
   }
 
   submitForm() {
-    this.products = [];
     const title = this.searchProductForm.get('title')?.value;
+    this.products = [];
     this.adminService.getAllProductsByName(title).subscribe(res => {
       res.forEach(element => {
         element.processedImg = 'data:image/jpeg;base64,' + element.byteImg;
@@ -58,25 +63,17 @@ export class DashboardComponent {
 
   deleteProduct(productId: any) {
     this.adminService.deleteProduct(productId).subscribe(res => {
-      if (res.body == null) {
-        this.snackbar.open(res.message, 'Close', { duration: 3000 });
-        this.getAllProducts();
-      } else {
-        this.snackbar.open(res.message, 'Close', { duration: 3000, panelClass: 'error-snackbar' });
-        this.getAllProducts();
-      }
+      this.snackbar.open(res.message, 'Close', { duration: 3000 });
+      this.getAllProducts();
     });
   }
 
   search(value: string) {
-    if (!value) {
-      this.getAllProducts();
-      return;
-    }
-    const filteredProducts = this.products.filter(product =>
-      product.name.toLowerCase().includes(value.toLowerCase())
+    if (!value) return this.getAllProducts();
+    const filtered = this.products.filter(p =>
+      p.name.toLowerCase().includes(value.toLowerCase())
     );
-    this.products = filteredProducts;
+    this.products = filtered;
   }
 
   openAddProductModal(): void {
@@ -85,8 +82,26 @@ export class DashboardComponent {
       panelClass: 'custom-dialog-container'
     });
 
-    dialogRef.afterClosed().subscribe(() => {
-      this.getAllProducts(); // refresh products after modal close
+    dialogRef.afterClosed().subscribe(() => this.getAllProducts());
+  }
+
+  // ✅ Load categories for sidebar
+  loadCategories() {
+    this.adminService.getAllCategory().subscribe({
+      next: (res) => this.categories = res,
+      error: (err) => console.error('Failed to load categories', err)
     });
+  }
+
+  // ✅ When user selects a category
+  selectCategory(category: any) {
+    this.searchProductForm.patchValue({ category: category.name });
+
+    // Close sidebar
+    const offcanvasEl = document.getElementById('adminCategorySidebar');
+    if (offcanvasEl) {
+      const bsOffcanvas = bootstrap.Offcanvas.getInstance(offcanvasEl);
+      bsOffcanvas?.hide();
+    }
   }
 }

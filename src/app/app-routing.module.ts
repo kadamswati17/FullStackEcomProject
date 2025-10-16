@@ -5,6 +5,7 @@ import { SignupComponent } from './signup/signup.component';
 import { TrackOrderComponent } from './track-order/track-order.component';
 // import { DashboardComponent } from './admin/components/dashboard/dashboard.component';
 import { HomeComponent } from './home/home.component';
+import { OrderDetailsComponent } from './customer/customer/order-details/order-details.component';
 
 
 export const routes: Routes = [
@@ -15,6 +16,8 @@ export const routes: Routes = [
   { path: "login", component: LoginComponent },
   { path: "register", component: SignupComponent },
   { path: "order", component: TrackOrderComponent },
+  { path: 'order/:id', component: OrderDetailsComponent },
+
 
   { path: 'customer', loadChildren: () => import('./customer/customer.module').then(m => m.CustomerModule) },
   { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },

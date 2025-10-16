@@ -5,16 +5,24 @@
 
     <form [formGroup]="searchProductForm" class="search-form" (submit)="submitForm()">
         <mat-form-field class="search-input">
-            <mat-label>Enter Keyword to Search Products</mat-label>
+            <mat-label>Search Products</mat-label>
             <input matInput formControlName="title" placeholder="Enter product name">
             <button mat-icon-button matSuffix color="primary" [disabled]="searchProductForm.invalid">
                 <mat-icon>search</mat-icon>
             </button>
         </mat-form-field>
+
+        <!-- Select Category Button -->
+        <button mat-raised-button color="accent" type="button" data-bs-toggle="offcanvas"
+            data-bs-target="#adminCategorySidebar" aria-controls="adminCategorySidebar">
+            <mat-icon>category</mat-icon>
+            Select Category
+        </button>
+
     </form>
 </div>
 
-
+<!-- Product List -->
 <div class="product-list">
     <mat-card class="product-card" *ngFor="let product of products">
         <div class="product-image">
@@ -23,7 +31,9 @@
         <div class="product-details">
             <h2 class="product-name">{{ product.name }}</h2>
             <p class="product-description">{{ product.description }}</p>
+
             <mat-divider></mat-divider>
+
             <div class="product-info">
                 <div class="info-row">
                     <span class="info-label">Price:</span>
@@ -34,20 +44,36 @@
                     <span class="info-value">{{ product.categoryName }}</span>
                 </div>
             </div>
+
             <mat-divider></mat-divider>
+
             <div class="actions">
-                <button mat-raised-button color="primary" class="action-button"
-                    [routerLink]="['/admin/faq', product.id]">
-                    FAQ
-                </button>
-                <button mat-raised-button color="accent" class="update-button"
-                    [routerLink]="['/admin/update-product', product.id]">
-                    Update
-                </button>
-                <button mat-raised-button color="warn" class="delete-button" (click)="deleteProduct(product.id)">
-                    Delete
-                </button>
+                <button mat-raised-button color="primary" [routerLink]="['/admin/faq', product.id]">FAQ</button>
+                <button mat-raised-button color="accent"
+                    [routerLink]="['/admin/update-product', product.id]">Update</button>
+                <button mat-raised-button color="warn" (click)="deleteProduct(product.id)">Delete</button>
             </div>
         </div>
     </mat-card>
+</div>
+
+<!-- Admin Category Sidebar (Right Side) -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="adminCategorySidebar"
+    aria-labelledby="adminCategorySidebarLabel">
+    <div class="offcanvas-header border-bottom bg-light">
+        <h1 id="adminCategorySidebarLabel" class="fw-bold text-primary">Categories</h1>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+
+    <div class="offcanvas-body p-0">
+        <ul class="list-group list-group-flush">
+            <li *ngFor="let category of categories" class="list-group-item list-group-item-action"
+                (click)="selectCategory(category)">
+                {{ category.name }}
+            </li>
+        </ul>
+        <div *ngIf="categories.length === 0" class="text-center text-muted my-2">
+            No categories available
+        </div>
+    </div>
 </div>

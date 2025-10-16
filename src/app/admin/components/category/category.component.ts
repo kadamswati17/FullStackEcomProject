@@ -6,12 +6,13 @@ import { PostCategoryComponent } from '../post-category/post-category.component'
 
 @Component({
   selector: 'app-category',
-  templateUrl: './category.component.html',  // ✅ match actual file name
+  templateUrl: './category.component.html',
   styleUrls: ['./category.component.scss']
 })
 export class CategoryComponent {
   categories: any[] = [];
   isAdmin: boolean = UserStorageService.getUserRole() === 'ADMIN';
+  showAddButton: boolean = true; // default true
 
   constructor(
     private adminService: AdminService,
@@ -22,7 +23,12 @@ export class CategoryComponent {
 
   ngOnInit(): void {
     this.getCategories();
+
+    if (this.data && this.data.showAddButton === false) {
+      this.showAddButton = false;
+    }
   }
+
 
   getCategories(): void {
     this.adminService.getAllCategory().subscribe({
@@ -30,7 +36,6 @@ export class CategoryComponent {
       error: (err) => console.error('Error fetching categories:', err)
     });
   }
-
 
   openAddCategoryModal() {
     const dialogRef = this.dialog.open(PostCategoryComponent, {
@@ -46,9 +51,9 @@ export class CategoryComponent {
     });
   }
 
-  closeDialog() {
+  closeDialog(selectedCategory?: any) {
     if (this.dialogRef) {
-      this.dialogRef.close();
+      this.dialogRef.close(selectedCategory);
     }
   }
 }

@@ -2,8 +2,13 @@
 
   <ng-container matColumnDef="id">
     <mat-header-cell *matHeaderCellDef style="font-weight: bolder; color: blue;">Order ID</mat-header-cell>
-    <mat-cell *matCellDef="let myOrder">{{ myOrder.id }}</mat-cell>
+    <mat-cell *matCellDef="let myOrder">
+      <!-- <a href="#" (click)="viewOrderDetails(myOrder.id)">{{ myOrder.id }}</a> -->
+      <a [routerLink]="['/order', myOrder.id]">{{ myOrder.id }}</a>
+
+    </mat-cell>
   </ng-container>
+
 
   <!-- User Name -->
   <ng-container matColumnDef="userName">
