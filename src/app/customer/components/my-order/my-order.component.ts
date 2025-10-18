@@ -64,4 +64,25 @@ export class MyOrderComponent implements OnInit {
       }
     });
   }
+
+  cartItems: any[] = [];
+  order: any;
+
+
+  getOrderDetailsByIdts(orderId: number) {
+
+    this.cartItems = [];   // 👈 updated
+    this.order = 1;
+    this.customerService.getOrderDetailsById(orderId).subscribe(res => {
+      this.cartItems = res.data;
+
+      console.log("this.cartItems");
+      console.log(this.cartItems);
+
+      // res.cartItems.forEach((element: any) => {
+      //   element.processedImg = 'data:image/jpeg;base64,' + element.returnedImg;
+      //   this.cartItems.push(element);  // 👈 updated
+      // });
+    });
+  }
 }

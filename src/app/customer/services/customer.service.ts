@@ -153,6 +153,11 @@ export class CustomerService {
   }
 
 
+  getOrderDetailsById(orderId: number): Observable<any> {
+    return this.http.get(`${this.BASE_URL}/OrderDetail/${orderId}`, {
+      headers: this.createAuthorizationHeader(),
+    });
+  }
 
 
   private createAuthorizationHeader(): HttpHeaders {

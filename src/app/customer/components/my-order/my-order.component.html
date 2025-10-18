@@ -5,10 +5,14 @@
   <ng-container matColumnDef="id">
     <mat-header-cell *matHeaderCellDef>Order ID</mat-header-cell>
     <mat-cell *matCellDef="let myOrder">
-      <a [routerLink]="['/order', myOrder.id]">{{ myOrder.id }}</a>
+      <a href="#" (click)="getOrderDetailsByIdts(myOrder.id)" data-bs-toggle="modal"
+        data-bs-target="#orderDetailsModal">
+        {{ myOrder.id }}
+      </a>
     </mat-cell>
   </ng-container>
 
+  <!-- Other columns remain unchanged -->
   <ng-container matColumnDef="userName">
     <mat-header-cell *matHeaderCellDef>User</mat-header-cell>
     <mat-cell *matCellDef="let myOrder">{{ myOrder.userName }}</mat-cell>
@@ -55,5 +59,83 @@
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-
 </mat-table>
+
+
+<!-- Order Details Modal -->
+<div class="modal fade" id="orderDetailsModal" tabindex="-1" aria-labelledby="orderDetailsModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="orderDetailsModalLabel">Order Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <!-- Summary Heading Fields (3 per row) -->
+        <div *ngIf="cartItems.length > 0" class="mb-4">
+          <div class="row">
+            <div class="col-md-4 mb-2">
+              <strong>Order ID:</strong> {{ cartItems[0].orderId }}
+            </div>
+            <div class="col-md-4 mb-2">
+              <strong>Order Date:</strong> {{ cartItems[0].orderDate | date:'dd/MM/yyyy' }}
+            </div>
+            <div class="col-md-4 mb-2">
+              <strong>Status:</strong> {{ cartItems[0].orderStatus }}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 mb-2">
+              <strong>User ID:</strong> {{ cartItems[0].userId }}
+            </div>
+            <div class="col-md-4 mb-2">
+              <strong>Email:</strong> {{ cartItems[0].email }}
+            </div>
+            <div class="col-md-4 mb-2">
+              <strong>Total Amount:</strong> ${{ cartItems[0].totalAmount }}
+            </div>
+          </div>
+        </div>
+
+        <!-- No Orders Message -->
+        <div *ngIf="cartItems.length === 0">
+          <p>No order details found.</p>
+        </div>
+
+        <!-- Table for line items -->
+        <div class="table-responsive" *ngIf="cartItems.length > 0">
+          <table class="table table-bordered table-hover">
+            <thead class="table-dark">
+              <tr>
+                <th>#</th>
+                <th>Product Image</th>
+                <th>Product Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Amount</th> <!-- ✅ New column -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of cartItems; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>
+                  <img *ngIf="item.productImg" [src]="'data:image/jpeg;base64,' + item.productImg" alt="Product Image"
+                    style="height: 80px; width: auto; object-fit: contain;" />
+                </td>
+                <td>{{ item.productName }}</td>
+                <td>${{ item.productPrice }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>${{ item.productPrice * item.quantity }}</td> <!-- ✅ Amount calculation -->
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

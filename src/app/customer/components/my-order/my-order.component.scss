@@ -60,3 +60,9 @@ at-header-row {
     // padding-bottom: 5px;
     /* Space between text and underline */
 }
+
+.modal-body strong {
+    color: #343a40;
+    /* Darker for better contrast */
+    font-weight: 600;
+}
