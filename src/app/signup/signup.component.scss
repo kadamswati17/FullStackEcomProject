@@ -72,3 +72,31 @@
         font-size: 13px;
     }
 }
+
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.signup-card {
+  width: 400px;
+  padding: 20px;
+}
+
+.signup-toggle {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+
+  button {
+    font-weight: 600;
+  }
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}

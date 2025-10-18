@@ -1,6 +1,6 @@
 /* Common Sidebar Styling */
 .offcanvas.custom-home-sidebar {
-    width: auto;
+    width: 20%;
     background-color: #0d6efd !important;
     color: white !important;
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
@@ -31,6 +31,8 @@
     transition: background-color 0.3s, color 0.3s;
     font-weight: 500;
     cursor: pointer;
+    margin-top: 5px;
+
 }
 
 .list-group-item:hover {
@@ -39,9 +41,34 @@
 }
 
 /* Close Button */
-.btn-close {
-    filter: invert(1);
+// .btn-close {
+//     filter: invert(1);
+// }
+
+/* Custom close button styling */
+.btn-close.custom-close-btn {
+//   background: linear-gradient(135deg, #ff6b6b, #f06595);
+  border-radius: 100%;
+  width: 20px;
+  height: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
+
+/* Add User button styling */
+.add-user-btn {
+  font-weight: bold;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  background: linear-gradient(to right, #4caf50, #81c784);
+  color: white;
+}
+
+.add-user-btn:hover {
+  background: linear-gradient(to right, #388e3c, #66bb6a);
+  transform: scale(1.05);
+  transition: 0.3s;
+}
+
 
 /* Overlay (dim background) */
 .offcanvas-backdrop.show {
@@ -57,7 +84,7 @@ button.btn-light {
 
 .offcanvas#adminSidebar,
 .offcanvas#customerSidebar {
-    width: auto !important;
+    width: 20%;
     top: 56px;
     /* Adjust based on navbar height */
     height: calc(100% - 56px);

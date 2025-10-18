@@ -1,69 +1,108 @@
-import { Component } from '@angular/core';
+import { Component, Inject, Optional, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../services/auth/auth-service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from '../services/auth/auth-service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { UserStorageService } from '../services/storage/user-storage.service';
 
 @Component({
-	selector: 'app-signup',
-	templateUrl: './signup.component.html',
-	styleUrls: ['./signup.component.scss']
+  selector: 'app-signup',
+  templateUrl: './signup.component.html',
+  styleUrls: ['./signup.component.scss']
 })
-export class SignupComponent {
-	signupForm!: FormGroup;
-	hidePassword = true;
+export class SignupComponent implements OnInit {
+  signupForm!: FormGroup;
+  hidePassword = true;
+  isCustomer = true;
 
-	constructor(
-		private fb: FormBuilder,
-		private snackBar: MatSnackBar,
-		private authService: AuthService,
-		private router: Router
-	) { }
+  constructor(
+    private fb: FormBuilder,
+    private snackBar: MatSnackBar,
+    private authService: AuthService,
+    private router: Router,
 
-	ngOnInit(): void {
-		this.signupForm = this.fb.group({
-			name: [null, [Validators.required]],
-			email: [null, [Validators.required, Validators.email]],
-			password: [null, [Validators.required]],
-			confirmPassword: [null, [Validators.required]],
-		});
-	}
+    // ✅ Marked as @Optional so it works even if not opened via MatDialog
+    @Optional() public dialogRef?: MatDialogRef<SignupComponent>,
+    @Optional() @Inject(MAT_DIALOG_DATA) public data?: any
+  ) {}
 
-	togglePasswordVisibility() {
-		this.hidePassword = !this.hidePassword;
-	}
+  ngOnInit(): void {
+    this.buildForm();
 
-	onSubmit(): void {
-		const password = this.signupForm.get('password')?.value;
-		const confirmPassword = this.signupForm.get('confirmPassword')?.value;
+    // If opened by admin modal, you can detect it here
+    if (this.data?.createdBy) {
+      this.isCustomer = false; // example: show admin role
+    }
+  }
 
-		if (password !== confirmPassword) {
-			this.snackBar.open('Passwords do not match.', 'Close', {
-				duration: 5000,
-				panelClass: ['error-snackbar']
-			});
-			return;
-		}
+  buildForm(): void {
+    this.signupForm = this.fb.group({
+      name: [null, [Validators.required]],
+      email: [null, [Validators.required, Validators.email]],
+      password: [null, [Validators.required]],
+      confirmPassword: [null, [Validators.required]]
+    });
+  }
 
-		// Only send required fields to backend
-		const { name, email } = this.signupForm.value;
-		const signupRequest = { name, email, password };
+  switchRole(isCustomer: boolean): void {
+    this.isCustomer = isCustomer;
+  }
 
-		console.log('Sending signup request:', signupRequest);
+  togglePasswordVisibility(): void {
+    this.hidePassword = !this.hidePassword;
+  }
 
-		this.authService.register(signupRequest).subscribe(
-			(response) => {
-				this.snackBar.open('Sign up successful!', 'Close', { duration: 5000 });
-				this.router.navigateByUrl('/login');
-			},
-			(error) => {
-				// Show backend error message if available
-				const errMsg = error?.error?.message || 'Sign up failed. Please try again.';
-				this.snackBar.open(errMsg, 'Close', {
-					duration: 5000,
-					panelClass: ['error-snackbar']
-				});
-			}
-		);
-	}
+  onSubmit(): void {
+    if (this.signupForm.invalid) {
+      this.snackBar.open('Please fill in all required fields.', 'Close', { duration: 3000 });
+      return;
+    }
+
+    const password = this.signupForm.get('password')?.value;
+    const confirmPassword = this.signupForm.get('confirmPassword')?.value;
+    if (password !== confirmPassword) {
+      this.snackBar.open('Passwords do not match.', 'Close', { duration: 4000, panelClass: ['error-snackbar'] });
+      return;
+    }
+
+    const { name, email } = this.signupForm.value;
+
+    // ✅ Decide "createdBy" dynamically
+    const signupRequest: any = {
+      name,
+      email,
+      password,
+      role: this.isCustomer ? 'CUSTOMER' : 'PARENT_ADMIN',
+      createdBy: this.data?.createdBy || UserStorageService.getUserId() || null
+    };
+
+    console.log('Signup Request:', signupRequest);
+
+    this.authService.register(signupRequest).subscribe({
+      next: () => {
+        this.snackBar.open('Sign up successful!', 'Close', { duration: 3000 });
+
+        // ✅ Close dialog if opened as modal
+        if (this.dialogRef) {
+          this.dialogRef.close('success');
+        } else {
+          // ✅ Else navigate (if opened via route)
+          this.router.navigateByUrl('/login');
+        }
+      },
+      error: (err) => {
+        const errMsg = err?.error?.message || 'Sign up failed. Please try again.';
+        this.snackBar.open(errMsg, 'Close', { duration: 4000, panelClass: ['error-snackbar'] });
+      }
+    });
+  }
+
+  onCancel(): void {
+    if (this.dialogRef) {
+      this.dialogRef.close('cancel');
+    } else {
+      this.router.navigateByUrl('/');
+    }
+  }
 }

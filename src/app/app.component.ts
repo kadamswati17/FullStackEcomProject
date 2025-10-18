@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { SignupComponent } from './signup/signup.component';
 import { UserStorageService } from './services/storage/user-storage.service';
 import { Router } from '@angular/router';
 import { AdminService } from './admin/service/admin.service';
@@ -15,7 +17,11 @@ export class AppComponent implements OnInit {
   isAdminLoggedIn: boolean = UserStorageService.isAdminLoggedIn();
   categories: any[] = [];
 
-  constructor(private router: Router, private adminService: AdminService) { }
+  constructor(
+    private router: Router,
+    private adminService: AdminService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.router.events.subscribe(() => {
@@ -23,20 +29,15 @@ export class AppComponent implements OnInit {
       this.isAdminLoggedIn = UserStorageService.isAdminLoggedIn();
     });
 
-    // Load categories when component initializes
     this.loadCategories();
   }
 
   loadCategories(): void {
-    console.log('Calling getAllCategory API...');
     this.adminService.getAllCategory().subscribe({
       next: (response) => {
-        console.log('Categories fetched:', response); // check response here
         this.categories = response;
       },
-      error: (err) => {
-        console.error('Failed to load categories', err);
-      }
+      error: (err) => console.error('Failed to load categories', err)
     });
   }
 
@@ -48,5 +49,24 @@ export class AppComponent implements OnInit {
 
   showWishlistAlert(event: Event): void {
     alert('Please Login or Register to see your Wishlist');
+  }
+
+  // Open Add User Modal
+  openAddUserModal(): void {
+    const dialogRef = this.dialog.open(SignupComponent, {
+      width: '550px',
+      height:'600px',
+      disableClose: true,
+      data: {
+        createdBy: UserStorageService.getUserId(), // send admin userId to modal
+      }
+      
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'success') {
+        console.log('User added successfully');
+      }
+    });
   }
 }
