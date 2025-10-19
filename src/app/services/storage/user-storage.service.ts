@@ -54,7 +54,7 @@ export class UserStorageService {
   public static isAdminLoggedIn(): boolean {
     const token = this.getToken();
     const role = this.getUserRole();
-    return !!token && role === 'ADMIN';
+    return !!token && role === 'ADMIN' || role === 'PARENT_ADMIN';
   }
 
   public static isCustomerLoggedIn(): boolean {

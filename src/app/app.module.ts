@@ -25,7 +25,7 @@ import { AdminModule } from './admin/admin.module';
 import { HomeComponent } from './home/home.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatDialogModule } from '@angular/material/dialog';
-
+import { NgxImageCompressService } from 'ngx-image-compress';
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,7 +53,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     AdminModule, // ✅ Keep AdminModule here
     MatDialogModule,
   ],
-  providers: [],
+  providers: [NgxImageCompressService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
