@@ -63,6 +63,13 @@ export class UserStorageService {
     return !!token && role === 'CUSTOMER';
   }
 
+  public static isparentuserLoggedIn(): boolean {
+    const token = this.getToken();
+    const role = this.getUserRole();
+    console.log("role", role);
+    return !!token && role == 'PARENT_ADMIN';
+  }
+
   // Clear session (on logout)
   public static signOut(): void {
     window.sessionStorage.removeItem(TOKEN_KEY);

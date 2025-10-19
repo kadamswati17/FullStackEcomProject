@@ -1,7 +1,6 @@
 <h2 class="table-heading">My Orders</h2>
 
 <mat-table class="mat-elevation-z8" [dataSource]="myOrders">
-
   <ng-container matColumnDef="id">
     <mat-header-cell *matHeaderCellDef>Order ID</mat-header-cell>
     <mat-cell *matCellDef="let myOrder">
@@ -12,7 +11,6 @@
     </mat-cell>
   </ng-container>
 
-  <!-- Other columns remain unchanged -->
   <ng-container matColumnDef="userName">
     <mat-header-cell *matHeaderCellDef>User</mat-header-cell>
     <mat-cell *matCellDef="let myOrder">{{ myOrder.userName }}</mat-cell>
@@ -40,7 +38,7 @@
 
   <ng-container matColumnDef="date">
     <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>
-    <mat-cell *matCellDef="let myOrder">{{ myOrder.date | date:'dd/MM/yyyy' }}</mat-cell>
+    <mat-cell *matCellDef="let myOrder">{{ myOrder.date | date: 'dd/MM/yyyy' }}</mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="orderStatus">
@@ -51,42 +49,47 @@
   <ng-container matColumnDef="action">
     <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
     <mat-cell *matCellDef="let myOrder">
-      <span *ngIf="myOrder.orderStatus?.trim().toLowerCase() === 'delivered'">
-        <button mat-raised-button color="primary" (click)="openReviewDialog(myOrder)">Review</button>
-      </span>
+      <button mat-raised-button color="primary" (click)="openReviewDialog(myOrder)"
+        [disabled]="myOrder.orderStatus?.trim().toLowerCase() !== 'delivered'">
+        Review
+      </button>
     </mat-cell>
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
 </mat-table>
 
-
-<!-- Order Details Modal -->
+<!-- ================= ORDER DETAILS MODAL ================= -->
 <div class="modal fade" id="orderDetailsModal" tabindex="-1" aria-labelledby="orderDetailsModalLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-xl modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="orderDetailsModalLabel">Order Details</h5>
+        <button class="btn btn-sm btn-success" (click)="downloadInvoicePDF()">Download PDF</button>
+
+
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
       </div>
 
-      <div class="modal-body">
-
-        <!-- Summary Heading Fields (3 per row) -->
+      <!-- Wrap body for PDF -->
+      <div class="modal-body" id="invoice-content">
+        <!-- Summary Fields -->
         <div *ngIf="cartItems.length > 0" class="mb-4">
           <div class="row">
             <div class="col-md-4 mb-2">
               <strong>Order ID:</strong> {{ cartItems[0].orderId }}
             </div>
             <div class="col-md-4 mb-2">
-              <strong>Order Date:</strong> {{ cartItems[0].orderDate | date:'dd/MM/yyyy' }}
+              <strong>Order Date:</strong> {{ cartItems[0].orderDate | date: 'dd/MM/yyyy' }}
             </div>
             <div class="col-md-4 mb-2">
               <strong>Status:</strong> {{ cartItems[0].orderStatus }}
             </div>
           </div>
+
           <div class="row">
             <div class="col-md-4 mb-2">
               <strong>User ID:</strong> {{ cartItems[0].userId }}
@@ -100,12 +103,12 @@
           </div>
         </div>
 
-        <!-- No Orders Message -->
-        <div *ngIf="cartItems.length === 0">
-          <p>No order details found.</p>
+        <!-- No Orders -->
+        <div *ngIf="cartItems.length === 0" class="text-center text-muted">
+          No order details found.
         </div>
 
-        <!-- Table for line items -->
+        <!-- Order Items Table -->
         <div class="table-responsive" *ngIf="cartItems.length > 0">
           <table class="table table-bordered table-hover">
             <thead class="table-dark">
@@ -115,7 +118,7 @@
                 <th>Product Name</th>
                 <th>Price</th>
                 <th>Quantity</th>
-                <th>Amount</th> <!-- ✅ New column -->
+                <th>Amount</th>
               </tr>
             </thead>
             <tbody>
@@ -123,19 +126,17 @@
                 <td>{{ i + 1 }}</td>
                 <td>
                   <img *ngIf="item.productImg" [src]="'data:image/jpeg;base64,' + item.productImg" alt="Product Image"
-                    style="height: 80px; width: auto; object-fit: contain;" />
+                    style="height: 80px; width: auto; object-fit: contain" />
                 </td>
                 <td>{{ item.productName }}</td>
                 <td>${{ item.productPrice }}</td>
                 <td>{{ item.quantity }}</td>
-                <td>${{ item.productPrice * item.quantity }}</td> <!-- ✅ Amount calculation -->
+                <td>${{ item.productPrice * item.quantity }}</td>
               </tr>
             </tbody>
           </table>
-
         </div>
-
-      </div>
+      </div> <!-- /modal-body -->
     </div>
   </div>
 </div>

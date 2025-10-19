@@ -3,6 +3,8 @@ import { CustomerService } from '../../services/customer.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ReviewOrderedProductComponent } from '../review-ordered-product/review-ordered-product.component';
 import { Router } from '@angular/router';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-my-order',
@@ -23,6 +25,9 @@ export class MyOrderComponent implements OnInit {
     'action'
   ];
 
+  cartItems: any[] = [];
+  order: any;
+
   constructor(
     private customerService: CustomerService,
     private dialog: MatDialog,
@@ -37,18 +42,30 @@ export class MyOrderComponent implements OnInit {
     this.customerService.getOrderByUserId().subscribe({
       next: (res) => {
         this.myOrders = res.sort((a: any, b: any) => b.id - a.id);
-        console.log("📦 Sorted Orders:", this.myOrders);
+        console.log('📦 Sorted Orders:', this.myOrders);
       },
       error: (err) => {
-        console.error("❌ Error fetching orders:", err);
+        console.error('❌ Error fetching orders:', err);
       }
     });
   }
 
-  viewOrderDetails(orderId: number) {
-    this.router.navigate(['/order', orderId]); // match the route path
-  }
+  // viewOrderDetails(orderId: number) {
+  //   this.router.navigate(['/order', orderId]); // match the route path
+  // }
 
+  getOrderDetailsByIdts(orderId: number) {
+    this.cartItems = [];
+    this.customerService.getOrderDetailsById(orderId).subscribe({
+      next: (res) => {
+        this.cartItems = res.data;
+        console.log('🧾 Order details:', this.cartItems);
+      },
+      error: (err) => {
+        console.error('❌ Error loading order details:', err);
+      }
+    });
+  }
 
   openReviewDialog(order: any) {
     const dialogRef = this.dialog.open(ReviewOrderedProductComponent, {
@@ -65,24 +82,17 @@ export class MyOrderComponent implements OnInit {
     });
   }
 
-  cartItems: any[] = [];
-  order: any;
+  downloadInvoicePDF() {
+    const invoiceElement = document.getElementById('invoice-content');
+    if (!invoiceElement) return;
 
-
-  getOrderDetailsByIdts(orderId: number) {
-
-    this.cartItems = [];   // 👈 updated
-    this.order = 1;
-    this.customerService.getOrderDetailsById(orderId).subscribe(res => {
-      this.cartItems = res.data;
-
-      console.log("this.cartItems");
-      console.log(this.cartItems);
-
-      // res.cartItems.forEach((element: any) => {
-      //   element.processedImg = 'data:image/jpeg;base64,' + element.returnedImg;
-      //   this.cartItems.push(element);  // 👈 updated
-      // });
+    html2canvas(invoiceElement, { scale: 2 }).then(canvas => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      pdf.save(`invoice_${this.cartItems[0]?.orderId || 'order'}.pdf`);
     });
   }
 }
