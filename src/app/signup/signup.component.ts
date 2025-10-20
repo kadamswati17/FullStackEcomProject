@@ -21,8 +21,6 @@ export class SignupComponent implements OnInit {
     private snackBar: MatSnackBar,
     private authService: AuthService,
     private router: Router,
-
-    // ✅ Marked as @Optional so it works even if not opened via MatDialog
     @Optional() public dialogRef?: MatDialogRef<SignupComponent>,
     @Optional() @Inject(MAT_DIALOG_DATA) public data?: any
   ) {}
@@ -30,9 +28,9 @@ export class SignupComponent implements OnInit {
   ngOnInit(): void {
     this.buildForm();
 
-    // If opened by admin modal, you can detect it here
-    if (this.data?.createdBy) {
-      this.isCustomer = false; // example: show admin role
+    // ✅ If opened from parent admin → for adding child admin
+    if (this.data?.role === 'CHILD_ADMIN') {
+      this.isCustomer = false;
     }
   }
 
@@ -68,12 +66,16 @@ export class SignupComponent implements OnInit {
 
     const { name, email } = this.signupForm.value;
 
-    // ✅ Decide "createdBy" dynamically
+    // ✅ Dynamically assign correct role
     const signupRequest: any = {
       name,
       email,
       password,
-      role: this.isCustomer ? 'CUSTOMER' : 'PARENT_ADMIN',
+      role: this.data?.role
+        ? this.data.role // e.g., CHILD_ADMIN (from parent admin)
+        : this.isCustomer
+        ? 'CUSTOMER'
+        : 'PARENT_ADMIN',
       createdBy: this.data?.createdBy || UserStorageService.getUserId() || null
     };
 
@@ -87,7 +89,7 @@ export class SignupComponent implements OnInit {
         if (this.dialogRef) {
           this.dialogRef.close('success');
         } else {
-          // ✅ Else navigate (if opened via route)
+          // ✅ Navigate if opened via route
           this.router.navigateByUrl('/login');
         }
       },

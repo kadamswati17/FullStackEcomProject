@@ -15,6 +15,7 @@ export class AppComponent implements OnInit {
   title = 'ECommerceApp';
   isCustomerLoggedIn: boolean = UserStorageService.isCustomerLoggedIn();
   isAdminLoggedIn: boolean = UserStorageService.isAdminLoggedIn();
+  userRole: string | null = UserStorageService.getUserRole(); // ✅ new property
   categories: any[] = [];
 
   constructor(
@@ -27,6 +28,7 @@ export class AppComponent implements OnInit {
     this.router.events.subscribe(() => {
       this.isCustomerLoggedIn = UserStorageService.isCustomerLoggedIn();
       this.isAdminLoggedIn = UserStorageService.isAdminLoggedIn();
+      this.userRole = UserStorageService.getUserRole(); // ✅ update dynamically
     });
 
     this.loadCategories();
@@ -51,19 +53,23 @@ export class AppComponent implements OnInit {
     alert('Please Login or Register to see your Wishlist');
   }
 
-  // Open Add User Modal
+  // ✅ Enhanced Add User / Child Admin Modal
   openAddUserModal(): void {
+    const role = this.userRole === 'PARENT_ADMIN' ? 'CHILD_ADMIN' : null;
+
     const dialogRef = this.dialog.open(SignupComponent, {
       width: '550px',
-      height:'600px',
+      height: '600px',
       disableClose: true,
       data: {
-        createdBy: UserStorageService.getUserId(), // send admin userId to modal
+        createdBy: UserStorageService.getUserId(), // who created
+        title: role ? 'Add Child Admin' : 'Sign Up',
+        role: role // pass CHILD_ADMIN if parent admin
       }
       
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result === 'success') {
         console.log('User added successfully');
       }

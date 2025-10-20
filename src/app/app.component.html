@@ -81,9 +81,15 @@
 <div class="offcanvas offcanvas-start sidebar-custom" tabindex="-1" id="adminSidebar">
   <div class="offcanvas-header border-bottom bg-light d-flex flex-column align-items-start">
     <h2 class="offcanvas-title fw-bold text-dark">Admin Menu</h2>
-    <button mat-raised-button color="accent" class="mt-2 add-user-btn" (click)="openAddUserModal()">
-      + Add User
-    </button>
+  <button
+  mat-raised-button
+  color="accent"
+  class="mt-2 add-user-btn"
+  (click)="openAddUserModal()"
+>
+  {{ userRole === 'PARENT_ADMIN' ? '+ Child Admin' : '+ Add User' }}
+</button>
+
   </div>
   <div class="offcanvas-body p-0">
     <ul class="list-group list-group-flush">
