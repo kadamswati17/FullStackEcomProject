@@ -54,7 +54,7 @@ export class UserStorageService {
   public static isAdminLoggedIn(): boolean {
     const token = this.getToken();
     const role = this.getUserRole();
-    return !!token && role === 'ADMIN' || role === 'PARENT_ADMIN';
+    return !!token && role === 'ADMIN' || role == 'CHILD_ADMIN' || role == 'PARENT_ADMIN';
   }
 
   public static isCustomerLoggedIn(): boolean {
@@ -68,6 +68,12 @@ export class UserStorageService {
     const role = this.getUserRole();
     console.log("role", role);
     return !!token && role == 'PARENT_ADMIN';
+  }
+    public static isChildUserLoggedIn(): boolean {
+    const token = this.getToken();
+    const role = this.getUserRole();
+    console.log("role", role);
+    return !!token && role == 'CHILD_ADMIN';
   }
 
   // Clear session (on logout)

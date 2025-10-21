@@ -51,11 +51,19 @@ export class AdminService {
     });
   }
 
+  // getAllProducts(): Observable<any> {
+  //   return this.http.get(BASIC_URL + 'api/admin/products', {
+  //     headers: this.createAuthorizationHeader(),
+  //   });
+  // }
+  
   getAllProducts(): Observable<any> {
-    return this.http.get(BASIC_URL + 'api/admin/products', {
+    const userId = UserStorageService.getUserId();
+    return this.http.get(BASIC_URL + `api/admin/products/${userId}`, {
       headers: this.createAuthorizationHeader(),
     });
   }
+
 
   getProductById(productId): Observable<any> {
     return this.http.get(BASIC_URL + `api/admin/product/${productId}`, {

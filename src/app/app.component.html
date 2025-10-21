@@ -82,7 +82,7 @@
   <div class="offcanvas-header border-bottom bg-light d-flex flex-column align-items-start">
     <h2 class="offcanvas-title fw-bold text-dark">Admin Menu</h2>
   <button
-  mat-raised-button
+  mat-raised-button *ngIf="userRole != 'CHILD_ADMIN'"
   color="accent"
   class="mt-2 add-user-btn"
   (click)="openAddUserModal()"

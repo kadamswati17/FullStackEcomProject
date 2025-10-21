@@ -56,6 +56,9 @@ export class LoginComponent {
         else if (UserStorageService.isparentuserLoggedIn()) {
           this.router.navigateByUrl('/admin/analytics');
         }
+          else if (UserStorageService.isChildUserLoggedIn()) {
+          this.router.navigateByUrl('/admin/analytics');
+        }
       },
       (error) => {
         this.snackBar.open('bad credentials', 'error', { duration: 5000 })

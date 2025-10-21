@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AdminService } from '../../service/admin.service';
+import { UserStorageService } from '../../../services/storage/user-storage.service';
 
 @Component({
   selector: 'app-post-product',
@@ -73,6 +74,12 @@ export class PostProductComponent {
       formData.append('name', this.productForm.get('name')?.value);
       formData.append('price', this.productForm.get('price')?.value);
       formData.append('description', this.productForm.get('description')?.value);
+      const userId = UserStorageService.getUserId();
+      if (userId) {
+        formData.append('userId', userId.toString());
+      } else {
+        console.warn('⚠️ No logged-in user found in storage!');
+      }
 
       this.adminService.addProduct(formData).subscribe({
         next: () => {
