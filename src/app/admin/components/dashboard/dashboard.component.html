@@ -1,34 +1,36 @@
 <h2 class="page-title">Products</h2>
 
-
 <div class="dashboard-header">
+    <!-- Add Product Button (Left) -->
+    <div class="header-left">
+        <button mat-raised-button color="primary" (click)="openAddProductModal()">
+            <mat-icon>add</mat-icon> Add Product
+        </button>
+    </div>
 
+    <!-- Search Form (Center) -->
+    <div class="header-center">
+        <form [formGroup]="searchProductForm" class="search-form" (submit)="submitForm()">
+            <mat-form-field class="search-input">
+                <input matInput formControlName="title" placeholder="Enter product name" />
+                <button mat-icon-button matSuffix color="primary" [disabled]="searchProductForm.invalid">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </mat-form-field>
+        </form>
+    </div>
 
-    <button mat-raised-button color="primary" (click)="openAddProductModal()">
-        <mat-icon>add</mat-icon> Add Product
-    </button>
-
-    <form [formGroup]="searchProductForm" class="search-form" (submit)="submitForm()">
-        <mat-form-field class="search-input">
-            <mat-label>Search Products</mat-label>
-            <input matInput formControlName="title" placeholder="Enter product name">
-            <button mat-icon-button matSuffix color="primary" [disabled]="searchProductForm.invalid">
-                <mat-icon>search</mat-icon>
-            </button>
-        </mat-form-field>
-
-        <!-- Select Category Button -->
+    <!-- Select Category Button (Right) -->
+    <div class="header-right">
         <button mat-raised-button color="accent" type="button" data-bs-toggle="offcanvas"
             data-bs-target="#adminCategorySidebar" aria-controls="adminCategorySidebar">
-            <mat-icon>category</mat-icon>
-            Select Category
+            <mat-icon>category</mat-icon> Select Category
         </button>
-
-    </form>
+    </div>
 </div>
 
 <!-- Product List -->
-<div class="product-list">
+<div class="product-grid">
     <mat-card class="product-card" *ngFor="let product of products">
         <div class="product-image">
             <img [src]="product.processedImg" alt="{{ product.name }}">
@@ -62,7 +64,7 @@
     </mat-card>
 </div>
 
-<!-- Admin Category Sidebar (Right Side) -->
+<!-- Admin Category Sidebar -->
 <div class="offcanvas offcanvas-end" tabindex="-1" id="adminCategorySidebar"
     aria-labelledby="adminCategorySidebarLabel">
     <div class="offcanvas-header border-bottom bg-light">

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { UserStorageService } from '../services/storage/user-storage.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomerService } from '../customer/services/customer.service';
+import { UserStorageService } from '../services/storage/user-storage.service';
 
 @Component({
   selector: 'app-home',
@@ -11,48 +11,67 @@ import { CustomerService } from '../customer/services/customer.service';
 })
 export class HomeComponent {
   products: any[] = [];
+  groupedProducts: { name: string, products: any[] }[] = [];
   searchProductForm!: FormGroup;
+  wishlistProducts: Set<number> = new Set();
 
-  wishlistProducts: Set<number> = new Set(); // ✅ Add this
-
-  constructor(private customerService: CustomerService,
+  constructor(
+    private customerService: CustomerService,
     private fb: FormBuilder,
-    private snackbar: MatSnackBar) { }
+    private snackbar: MatSnackBar
+  ) { }
 
   ngOnInit(): void {
-    this.getAllProducts();
-
     this.searchProductForm = this.fb.group({
       title: [null, [Validators.required]]
+    });
+
+    this.getAllProducts();
+
+    this.searchProductForm.get('title')?.valueChanges.subscribe(value => {
+      if (!value) this.getAllProducts();
+      else this.search(value);
     });
   }
 
   getAllProducts() {
     this.products = [];
     this.customerService.getAllProducts().subscribe(res => {
-      res.forEach(element => {
-        element.processedImg = 'data:image/jpeg;base64,' + element.byteImg;
-        this.products.push(element);
+      res.forEach(product => {
+        product.processedImg = 'data:image/jpeg;base64,' + product.byteImg;
+        this.products.push(product);
       });
+      this.groupByCategory();
     });
+  }
+
+  groupByCategory() {
+    const groups: { [key: string]: any[] } = {};
+    this.products.forEach(product => {
+      if (!groups[product.categoryName]) groups[product.categoryName] = [];
+      groups[product.categoryName].push(product);
+    });
+    this.groupedProducts = Object.keys(groups).map(key => ({
+      name: key,
+      products: groups[key]
+    }));
   }
 
   submitForm() {
-    this.products = [];
     const title = this.searchProductForm.get('title')?.value;
+    this.products = [];
     this.customerService.getAllProductsByName(title).subscribe(res => {
-      res.forEach(element => {
-        element.processedImg = 'data:image/jpeg;base64,' + element.byteImg;
-        this.products.push(element);
+      res.forEach(product => {
+        product.processedImg = 'data:image/jpeg;base64,' + product.byteImg;
+        this.products.push(product);
       });
+      this.groupByCategory();
     });
   }
 
-  addToCart(id: any) {
-    this.customerService.addToCart(id).subscribe(res => {
-      this.snackbar.open('Product added to cart successfully', 'Close', {
-        duration: 5000,
-      });
+  addToCart(productId: any) {
+    this.customerService.addToCart(productId).subscribe(res => {
+      this.snackbar.open('Product added to cart successfully', 'Close', { duration: 5000 });
     });
   }
 
@@ -61,12 +80,11 @@ export class HomeComponent {
       productId: productId,
       userId: UserStorageService.getUser()?.userId
     };
-
     this.customerService.addProductToWishlist(wishListDto).subscribe({
       next: (res) => {
         if (res.id != null) {
           this.snackbar.open('Product added to Wishlist successfully', 'Close', { duration: 5000 });
-          this.wishlistProducts.add(productId); // <-- mark as wishlist
+          this.wishlistProducts.add(productId);
         } else {
           this.snackbar.open("Already in Wishlist", 'Error', { duration: 5000 });
         }
@@ -78,16 +96,22 @@ export class HomeComponent {
     });
   }
 
+  toggleWishlist(productId: number) {
+    if (this.wishlistProducts.has(productId)) {
+      this.wishlistProducts.delete(productId);
+    } else {
+      this.addToWishlist(productId);
+    }
+  }
+
   isInWishlist(productId: number): boolean {
     return this.wishlistProducts.has(productId);
   }
 
-  toggleWishlist(productId: number) {
-    if (this.isInWishlist(productId)) {
-      this.wishlistProducts.delete(productId);
-      // Optionally call API to remove wishlist
-    } else {
-      this.addToWishlist(productId);
-    }
+  search(value: string) {
+    if (!value) return this.getAllProducts();
+    const filtered = this.products.filter(p => p.name.toLowerCase().includes(value.toLowerCase()));
+    this.products = filtered;
+    this.groupByCategory();
   }
 }
