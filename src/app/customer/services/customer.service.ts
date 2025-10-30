@@ -25,15 +25,13 @@ export class CustomerService {
     });
   }
 
-  addToCart(productId: any): Observable<any> {
-    const cartDto = {
-      productId: productId,
-      userId: UserStorageService.getUserId()
-    };
+  addToCart(cartDto: { productId: number, userId: string | null }): Observable<any> {
+    console.log('Adding to cart:', cartDto); // Optional debug log
     return this.http.post(`${this.BASE_URL}/cart`, cartDto, {
-      headers: this.createAuthorizationHeader(),
+      headers: this.createAuthorizationHeader()
     });
   }
+
 
   increaseProductQuantity(productId: any): Observable<any> {
     const userId = UserStorageService.getUserId();
