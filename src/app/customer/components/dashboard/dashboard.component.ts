@@ -11,9 +11,9 @@ import { UserStorageService } from '../../../services/storage/user-storage.servi
 })
 export class DashboardComponent implements OnInit {
 
-  products: any[] = [];
   searchProductForm!: FormGroup;
   wishlistProducts: Set<number> = new Set(); // Track wishlist products
+  groupedProducts: any[] = []; // Category grouped products
 
   constructor(
     private customerService: CustomerService,
@@ -30,26 +30,29 @@ export class DashboardComponent implements OnInit {
     this.loadUserWishlist();
   }
 
-  // Fetch all products
+  // Fetch all products & group by category
   getAllProducts() {
-    this.products = [];
     this.customerService.getAllProducts().subscribe(res => {
+      const grouped = new Map<string, any[]>();
       res.forEach(element => {
         element.processedImg = 'data:image/jpeg;base64,' + element.byteImg;
-        this.products.push(element);
+        const category = element.categoryName || 'Others';
+        if (!grouped.has(category)) grouped.set(category, []);
+        grouped.get(category)!.push(element);
       });
+      this.groupedProducts = Array.from(grouped.entries()).map(([name, products]) => ({
+        name,
+        products
+      }));
     });
   }
 
   // Search products
   submitForm() {
-    this.products = [];
     const title = this.searchProductForm.get('title')?.value;
     this.customerService.getAllProductsByName(title).subscribe(res => {
-      res.forEach(element => {
-        element.processedImg = 'data:image/jpeg;base64,' + element.byteImg;
-        this.products.push(element);
-      });
+      res.forEach(element => element.processedImg = 'data:image/jpeg;base64,' + element.byteImg);
+      this.groupedProducts = [{ name: 'Search Results', products: res }];
     });
   }
 
@@ -60,22 +63,13 @@ export class DashboardComponent implements OnInit {
       this.snackbar.open('User not logged in', 'Close', { duration: 5000 });
       return;
     }
-
     const productId = product?.id ?? product?.productId;
-
-    if (!productId) {
-      this.snackbar.open('Product ID is missing', 'Close', { duration: 5000 });
-      console.error('Product object missing ID:', product);
-      return;
-    }
+    if (!productId) return;
 
     const cartDto = { productId, userId };
     this.customerService.addToCart(cartDto).subscribe({
       next: () => this.snackbar.open('Product added to cart successfully', 'Close', { duration: 5000 }),
-      error: (err) => {
-        console.error('Add to cart failed:', err);
-        this.snackbar.open('Failed to add product to cart', 'Close', { duration: 5000 });
-      }
+      error: () => this.snackbar.open('Failed to add product to cart', 'Close', { duration: 5000 })
     });
   }
 
@@ -83,26 +77,12 @@ export class DashboardComponent implements OnInit {
   addToWishlist(product: any) {
     const userId = UserStorageService.getUser()?.userId;
     const productId = product?.id ?? product?.productId;
-
-    if (!userId || !productId) {
-      console.error('Missing userId or productId for wishlist:', { userId, product });
-      return;
-    }
+    if (!userId || !productId) return;
 
     const wishListDto = { productId, userId };
-
     this.customerService.addProductToWishlist(wishListDto).subscribe({
       next: (res) => {
-        if (res.id != null) {
-          this.snackbar.open('Product added to Wishlist successfully', 'Close', { duration: 5000 });
-          this.wishlistProducts.add(productId);
-        } else {
-          this.snackbar.open('Already in Wishlist', 'Close', { duration: 5000 });
-        }
-      },
-      error: (err) => {
-        console.error('Error adding to wishlist:', err);
-        this.snackbar.open('Something went wrong', 'Close', { duration: 5000 });
+        if (res.id != null) this.wishlistProducts.add(productId);
       }
     });
   }
@@ -111,15 +91,8 @@ export class DashboardComponent implements OnInit {
     const userId = UserStorageService.getUser()?.userId;
     if (!userId) return;
 
-    this.customerService.removeProductFromWishlist(userId, productId).subscribe({
-      next: () => {
-        this.snackbar.open('Product removed from Wishlist', 'Close', { duration: 5000 });
-        this.wishlistProducts.delete(productId);
-      },
-      error: (err) => {
-        console.error('Error removing from wishlist:', err);
-        this.snackbar.open('Something went wrong', 'Close', { duration: 5000 });
-      }
+    this.customerService.removeProductFromWishlist(userId, productId).subscribe(() => {
+      this.wishlistProducts.delete(productId);
     });
   }
 
@@ -130,12 +103,7 @@ export class DashboardComponent implements OnInit {
   toggleWishlist(product: any) {
     const productId = product?.id ?? product?.productId;
     if (!productId) return;
-
-    if (this.isInWishlist(productId)) {
-      this.removeFromWishlist(productId);
-    } else {
-      this.addToWishlist(product);
-    }
+    this.isInWishlist(productId) ? this.removeFromWishlist(productId) : this.addToWishlist(product);
   }
 
   loadUserWishlist() {

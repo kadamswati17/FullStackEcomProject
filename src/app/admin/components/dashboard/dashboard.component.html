@@ -10,7 +10,7 @@
 
     <!-- Search Form (Center) -->
     <div class="header-center">
-        <form [formGroup]="searchProductForm" class="search-form" (submit)="submitForm()">
+        <form [formGroup]="searchProductForm" class="search-form" (ngSubmit)="submitForm()">
             <mat-form-field class="search-input">
                 <input matInput formControlName="title" placeholder="Enter product name" />
                 <button mat-icon-button matSuffix color="primary" [disabled]="searchProductForm.invalid">
@@ -44,7 +44,7 @@
             <div class="product-info">
                 <div class="info-row">
                     <span class="info-label">Price:</span>
-                    <span class="info-value">{{ product.price }}</span>
+                    <span class="info-value">₹{{ product.price }}</span>
                 </div>
                 <div class="info-row">
                     <span class="info-label">Category:</span>
@@ -55,10 +55,18 @@
             <mat-divider></mat-divider>
 
             <div class="actions">
-                <button mat-raised-button color="primary" [routerLink]="['/admin/faq', product.id]">FAQ</button>
+                <!-- Safely use ID for routing -->
+                <button mat-raised-button color="primary"
+                    [routerLink]="['/admin/faq', product.id ?? product.productId]">
+                    FAQ
+                </button>
                 <button mat-raised-button color="accent"
-                    [routerLink]="['/admin/update-product', product.id]">Update</button>
-                <button mat-raised-button color="warn" (click)="deleteProduct(product.id)">Delete</button>
+                    [routerLink]="['/admin/update-product', product.id ?? product.productId]">
+                    Update
+                </button>
+                <button mat-raised-button color="warn" (click)="deleteProduct(product.id ?? product.productId)">
+                    Delete
+                </button>
             </div>
         </div>
     </mat-card>

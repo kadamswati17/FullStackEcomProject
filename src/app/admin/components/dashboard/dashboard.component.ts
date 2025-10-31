@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../../service/admin.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -12,10 +12,10 @@ declare var bootstrap: any; // For controlling offcanvas programmatically
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
   products: any[] = [];
   searchProductForm!: FormGroup;
-  categories: any[] = []; // store categories for sidebar
+  categories: any[] = [];
 
   constructor(
     private adminService: AdminService,
@@ -33,7 +33,7 @@ export class DashboardComponent {
       category: [null]
     });
 
-    // Search by title live
+    // Live search
     this.searchProductForm.get('title')?.valueChanges.subscribe(value => {
       if (!value) this.getAllProducts();
       else this.search(value);
@@ -43,36 +43,46 @@ export class DashboardComponent {
   getAllProducts() {
     this.products = [];
     this.adminService.getAllProducts().subscribe(res => {
-      res.forEach(element => {
-        element.processedImg = 'data:image/jpeg;base64,' + element.byteImg;
-        this.products.push(element);
+      res.forEach(p => {
+        p.processedImg = 'data:image/jpeg;base64,' + p.byteImg;
+        this.products.push(p);
       });
     });
   }
 
   submitForm() {
     const title = this.searchProductForm.get('title')?.value;
-    this.products = [];
+    if (!title) return this.getAllProducts();
+
     this.adminService.getAllProductsByName(title).subscribe(res => {
-      res.forEach(element => {
-        element.processedImg = 'data:image/jpeg;base64,' + element.byteImg;
-        this.products.push(element);
-      });
+      this.products = res.map(p => ({
+        ...p,
+        processedImg: 'data:image/jpeg;base64,' + p.byteImg
+      }));
     });
   }
 
   deleteProduct(productId: any) {
-    this.adminService.deleteProduct(productId).subscribe(res => {
-      this.snackbar.open(res.message, 'Close', { duration: 3000 });
-      this.getAllProducts();
+    if (!productId) {
+      this.snackbar.open('Product ID is missing!', 'Close', { duration: 3000 });
+      return;
+    }
+
+    this.adminService.deleteProduct(productId).subscribe({
+      next: (res: any) => {
+        this.snackbar.open(res.message, 'Close', { duration: 3000 });
+        this.getAllProducts();
+      },
+      error: (err) => {
+        console.error(err);
+        this.snackbar.open('Failed to delete product', 'Close', { duration: 3000 });
+      }
     });
   }
 
   search(value: string) {
     if (!value) return this.getAllProducts();
-    const filtered = this.products.filter(p =>
-      p.name.toLowerCase().includes(value.toLowerCase())
-    );
+    const filtered = this.products.filter(p => p.name.toLowerCase().includes(value.toLowerCase()));
     this.products = filtered;
   }
 
@@ -85,7 +95,6 @@ export class DashboardComponent {
     dialogRef.afterClosed().subscribe(() => this.getAllProducts());
   }
 
-  // ✅ Load categories for sidebar
   loadCategories() {
     this.adminService.getAllCategory().subscribe({
       next: (res) => this.categories = res,
@@ -93,7 +102,6 @@ export class DashboardComponent {
     });
   }
 
-  // ✅ When user selects a category
   selectCategory(category: any) {
     this.searchProductForm.patchValue({ category: category.name });
 

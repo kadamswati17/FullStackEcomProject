@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
     private router: Router,
     private adminService: AdminService,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.router.events.subscribe(() => {
@@ -66,7 +66,7 @@ export class AppComponent implements OnInit {
         title: role ? 'Add Child Admin' : 'Sign Up',
         role: role // pass CHILD_ADMIN if parent admin
       }
-      
+
     });
 
     dialogRef.afterClosed().subscribe((result) => {
