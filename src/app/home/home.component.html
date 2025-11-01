@@ -1,6 +1,8 @@
 <h2 class="page-title">Products</h2>
+
+<!-- Search Form -->
 <form [formGroup]="searchProductForm" class="search-form" (ngSubmit)="submitForm()">
-  <mat-form-field class="search-input">
+  <mat-form-field class="search-input" appearance="outline">
     <mat-label>Search Products</mat-label>
     <input matInput formControlName="title" placeholder="Enter product name" />
     <button mat-icon-button matSuffix color="primary" [disabled]="searchProductForm.invalid">
@@ -20,7 +22,7 @@
         <img [src]="product.processedImg" alt="{{ product.name }}">
         <mat-icon class="heart-icon" [ngClass]="{'wishlist-active': isInWishlist(product.id)}"
           (click)="toggleWishlist(product.id)">
-          favorite
+          {{ isInWishlist(product.id) ? 'favorite' : 'favorite_border' }}
         </mat-icon>
       </div>
 
@@ -33,7 +35,7 @@
         <div class="product-info">
           <div class="info-row">
             <span class="info-label">Price:</span>
-            <span class="info-value">{{ product.price }}</span>
+            <span class="info-value">{{ product.price | currency:'INR' }}</span>
           </div>
           <div class="info-row">
             <span class="info-label">Category:</span>

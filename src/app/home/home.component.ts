@@ -1,24 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { CustomerService } from '../customer/services/customer.service';
 import { UserStorageService } from '../services/storage/user-storage.service';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   products: any[] = [];
   groupedProducts: { name: string, products: any[] }[] = [];
   searchProductForm!: FormGroup;
   wishlistProducts: Set<number> = new Set();
+  selectedCategory: string | null = null;
+  allProducts: any[] = [];
 
   constructor(
     private customerService: CustomerService,
     private fb: FormBuilder,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private router: Router,
+    private appComponent: AppComponent
   ) { }
 
   ngOnInit(): void {
@@ -26,10 +32,16 @@ export class HomeComponent {
       title: [null, [Validators.required]]
     });
 
+    // Listen for category selection from sidebar
+    this.appComponent.categorySelected.subscribe((category: string | null) => {
+      this.selectedCategory = category;
+      this.applyCategoryFilter();
+    });
+
     this.getAllProducts();
 
     this.searchProductForm.get('title')?.valueChanges.subscribe(value => {
-      if (!value) this.getAllProducts();
+      if (!value) this.applyCategoryFilter();
       else this.search(value);
     });
   }
@@ -41,13 +53,19 @@ export class HomeComponent {
         product.processedImg = 'data:image/jpeg;base64,' + product.byteImg;
         this.products.push(product);
       });
-      this.groupByCategory();
+      this.allProducts = [...this.products];
+      this.applyCategoryFilter();
     });
   }
 
-  groupByCategory() {
+  applyCategoryFilter() {
+    let filteredProducts = this.allProducts;
+    if (this.selectedCategory) {
+      filteredProducts = filteredProducts.filter(p => p.categoryName === this.selectedCategory);
+    }
+
     const groups: { [key: string]: any[] } = {};
-    this.products.forEach(product => {
+    filteredProducts.forEach(product => {
       if (!groups[product.categoryName]) groups[product.categoryName] = [];
       groups[product.categoryName].push(product);
     });
@@ -59,39 +77,62 @@ export class HomeComponent {
 
   submitForm() {
     const title = this.searchProductForm.get('title')?.value;
-    this.products = [];
     this.customerService.getAllProductsByName(title).subscribe(res => {
       res.forEach(product => {
         product.processedImg = 'data:image/jpeg;base64,' + product.byteImg;
-        this.products.push(product);
       });
-      this.groupByCategory();
+      this.allProducts = [...res];
+      this.applyCategoryFilter();
     });
   }
 
+  // ✅ Add to Cart with login check
   addToCart(productId: any) {
-    this.customerService.addToCart(productId).subscribe(res => {
-      this.snackbar.open('Product added to cart successfully', 'Close', { duration: 5000 });
+    const user = UserStorageService.getUser();
+
+    if (!user) {
+      this.snackbar.open('Please login to add items to your cart', 'Close', { duration: 3000 });
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    this.customerService.addToCart(productId).subscribe({
+      next: () => {
+        this.snackbar.open('Product added to cart successfully', 'Close', { duration: 3000 });
+      },
+      error: (err) => {
+        console.error('Error adding to cart:', err);
+        this.snackbar.open('Something went wrong', 'Close', { duration: 3000 });
+      }
     });
   }
 
+  // ✅ Add to Wishlist with login check
   addToWishlist(productId: any) {
+    const user = UserStorageService.getUser();
+
+    if (!user) {
+      this.snackbar.open('Please login to add items to your wishlist', 'Close', { duration: 3000 });
+      this.router.navigate(['/login']);
+      return;
+    }
+
     const wishListDto = {
       productId: productId,
-      userId: UserStorageService.getUser()?.userId
+      userId: user.userId
     };
     this.customerService.addProductToWishlist(wishListDto).subscribe({
       next: (res) => {
         if (res.id != null) {
-          this.snackbar.open('Product added to Wishlist successfully', 'Close', { duration: 5000 });
+          this.snackbar.open('Product added to Wishlist successfully', 'Close', { duration: 3000 });
           this.wishlistProducts.add(productId);
         } else {
-          this.snackbar.open("Already in Wishlist", 'Error', { duration: 5000 });
+          this.snackbar.open('Already in Wishlist', 'Close', { duration: 3000 });
         }
       },
       error: (err) => {
-        console.error("Error adding to wishlist:", err);
-        this.snackbar.open("Something went wrong", 'Error', { duration: 5000 });
+        console.error('Error adding to wishlist:', err);
+        this.snackbar.open('Something went wrong', 'Close', { duration: 3000 });
       }
     });
   }
@@ -109,9 +150,9 @@ export class HomeComponent {
   }
 
   search(value: string) {
-    if (!value) return this.getAllProducts();
-    const filtered = this.products.filter(p => p.name.toLowerCase().includes(value.toLowerCase()));
-    this.products = filtered;
-    this.groupByCategory();
+    if (!value) return this.applyCategoryFilter();
+    const filtered = this.allProducts.filter(p => p.name.toLowerCase().includes(value.toLowerCase()));
+    this.allProducts = [...filtered];
+    this.applyCategoryFilter();
   }
 }

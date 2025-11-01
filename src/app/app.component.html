@@ -30,7 +30,6 @@
         ☰
       </button>
 
-
       <!-- Admin Brand -->
       <a class="navbar-brand fw-bold text-warning" routerLink="/admin/dashboard">
         Admin Panel
@@ -88,7 +87,6 @@
       (click)="openAddUserModal()">
       {{ userRole === 'PARENT_ADMIN' ? '+ Child Admin' : '+ Add User' }}
     </button>
-
   </div>
   <div class="offcanvas-body p-0">
     <ul class="list-group list-group-flush">
@@ -120,13 +118,15 @@
 <div class="offcanvas offcanvas-start custom-home-sidebar" tabindex="-1" id="homeSidebar">
   <div class="offcanvas-header border-bottom">
     <h1 class="offcanvas-title fw-bold text-primary">Categories</h1>
-    <!-- <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button> -->
   </div>
-
   <div class="offcanvas-body p-0">
     <ul class="list-group list-group-flush">
-      <li *ngFor="let category of categories" class="list-group-item list-group-item-action">
+      <li *ngFor="let category of categories" class="list-group-item list-group-item-action"
+        (click)="selectCategory(category.name)">
         {{ category.name }}
+      </li>
+      <li class="list-group-item list-group-item-action" (click)="selectCategory(null)">
+        Show All
       </li>
     </ul>
     <div *ngIf="categories.length === 0" class="text-center text-muted my-2">

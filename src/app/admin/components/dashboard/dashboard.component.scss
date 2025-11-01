@@ -94,6 +94,7 @@
 
     @media (min-width: 1024px) {
         grid-template-columns: repeat(4, 1fr);
+        padding: 5px 50px 0px 50px;
         /* laptop/desktop */
     }
 }
