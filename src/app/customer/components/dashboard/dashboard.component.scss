@@ -1,11 +1,37 @@
+/* -------------------- Header Section -------------------- */
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    /* Ensures responsiveness */
+    padding: 0px 20px;
+    // margin-top: 10px;
+    // margin-bottom: 10px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+/* Page Title (left side) */
+.page-title {
+    font-size: 2rem;
+    font-weight: 500;
+    color: #1976d2;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0px;
+}
+
+/* Search Form (right side) */
 .search-form {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
+    margin: 0;
 
     .search-input {
-        width: 325px;
-        margin-right: 5px;
+        width: 320px;
+        background: white;
+        border-radius: 8px;
 
         input {
             padding-right: 40px;
@@ -20,17 +46,7 @@
     }
 }
 
-.page-title {
-    margin-top: 20px;
-    text-align: center;
-    font-size: 2rem;
-    font-weight: 400;
-    color: #1976d2;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    display: inline-block;
-}
-
+/* -------------------- Heart Icon -------------------- */
 .heart-icon {
     color: white;
     transition: color 0.3s;
@@ -39,13 +55,13 @@
     right: 8px;
     font-size: 28px;
     cursor: pointer;
+
+    &.wishlist-active {
+        color: red;
+    }
 }
 
-.heart-icon.wishlist-active {
-    color: red;
-}
-
-/* Category Wrapper */
+/* -------------------- Product Section -------------------- */
 .category-wrapper {
     margin: 20px 0;
 
@@ -61,7 +77,6 @@
         overflow-x: auto;
         gap: 15px;
         padding: 10px 15px;
-
 
         &::-webkit-scrollbar {
             height: 8px;
@@ -146,7 +161,7 @@
     }
 }
 
-/* Empty Cart */
+/* -------------------- Empty Cart -------------------- */
 .empty-cart {
     display: flex;
     justify-content: center;
@@ -161,26 +176,37 @@
     }
 }
 
-/* Responsive Breakpoints */
+/* -------------------- Responsive Design -------------------- */
 @media (max-width: 600px) {
+    .header-container {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+        gap: 10px;
+        margin-top: 80px;
+    }
 
-    /* Mobile - 2 per row */
+    .search-form {
+        justify-content: center;
+
+        .search-input {
+            width: 100%;
+            max-width: 300px;
+        }
+    }
+
     .category-product-row .product-card {
         flex: 0 0 calc(50% - 10px);
     }
 }
 
 @media (min-width: 601px) and (max-width: 992px) {
-
-    /* Tablet - 3 per row */
     .category-product-row .product-card {
         flex: 0 0 calc(33.33% - 10px);
     }
 }
 
 @media (min-width: 993px) {
-
-    /* Desktop - 4 per row */
     .category-product-row .product-card {
         flex: 0 0 calc(25% - 10px);
     }

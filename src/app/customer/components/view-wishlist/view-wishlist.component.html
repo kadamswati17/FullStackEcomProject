@@ -1,23 +1,27 @@
-<!-- <p>Login to see Wishlist</p> -->
-<div class="center-container">
-  <div class="product-card" *ngFor="let product of products" style="position: relative;">
+<div class="container-fluid wishlist-container">
+  <div class="row g-0 justify-content-center">
 
-    <div class="product-image" style="position: relative;">
-      <img [src]="product.processedImg" *ngIf="product.processedImg" alt="{{product.productName}} Image">
+    <div class="col-6 col-md-4 col-lg-3" *ngFor="let product of products">
+      <div class="product-card position-relative">
 
-      <!-- Heart Icon to remove from wishlist -->
-      <mat-icon class="heart-icon wishlist-active" (click)="removeFromWishlist(product.productId)"
-        style="position: absolute; width: 28px; top: 8px; right: 8px; font-size: 28px; color: red; cursor: pointer;">
-        favorite
-      </mat-icon>
+        <!-- Product Image -->
+        <div class="product-image position-relative">
+          <img [src]="product.processedImg" *ngIf="product.processedImg" alt="{{ product.productName }} Image" />
 
+          <!-- Remove from Wishlist -->
+          <mat-icon class="heart-icon wishlist-active" (click)="removeFromWishlist(product.productId)">
+            favorite
+          </mat-icon>
+        </div>
 
+        <!-- Product Details -->
+        <div class="product-details">
+          <h2>{{ product.productName }}</h2>
+          <p class="description">{{ product.productDescription }}</p>
+          <p class="price">₹{{ product.price }}</p>
+        </div>
+      </div>
     </div>
 
-    <div class="product-details">
-      <h2>{{product.productName}}</h2>
-      <p class="description">{{product.productDescription}}</p>
-      <p class="price">₹{{product.price}}</p>
-    </div>
   </div>
 </div>

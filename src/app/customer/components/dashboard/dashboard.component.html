@@ -1,16 +1,16 @@
-<h2 class="page-title">Products</h2>
+<div class="header-container">
+  <h2 class="page-title">Products</h2>
 
-<!-- Search Form -->
-<form [formGroup]="searchProductForm" class="search-form" (ngSubmit)="submitForm()">
-  <mat-form-field class="search-input">
-    <mat-label>Enter Keyword to Search Products</mat-label>
-    <input matInput formControlName="title" placeholder="Enter product name" />
-    <button mat-icon-button matSuffix color="primary" [disabled]="searchProductForm.invalid">
-      <mat-icon>search</mat-icon>
-    </button>
-  </mat-form-field>
-</form>
-
+  <form [formGroup]="searchProductForm" class="search-form" (ngSubmit)="submitForm()">
+    <mat-form-field class="search-input" appearance="outline">
+      <mat-label>Enter Keyword to Search Products</mat-label>
+      <input matInput formControlName="title" placeholder="Enter product name" />
+      <button mat-icon-button matSuffix color="primary" type="submit" [disabled]="searchProductForm.invalid">
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+  </form>
+</div>
 <!-- Products by Category -->
 <div *ngFor="let category of groupedProducts" class="category-wrapper">
   <h3 class="category-title">{{ category.name }}</h3>

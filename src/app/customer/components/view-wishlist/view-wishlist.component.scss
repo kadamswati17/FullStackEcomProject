@@ -1,24 +1,21 @@
-/* Container for wishlist items */
-.center-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    padding: 20px;
+/* Wishlist container - no side margins */
+.wishlist-container {
+    padding: 0;
     background-color: #f9f9f9;
     margin-top: 60px;
 }
 
-/* Each product card */
+/* Product card styling */
 .product-card {
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    width: 280px;
+    margin: 10px;
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
     display: flex;
     flex-direction: column;
+    height: 100%;
 }
 
 /* Hover effect */
@@ -46,13 +43,28 @@
     transform: scale(1.05);
 }
 
+/* Heart icon */
+.heart-icon {
+    color: white;
+    transition: color 0.3s;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.heart-icon.wishlist-active {
+    color: red;
+}
+
 /* Details section */
 .product-details {
     padding: 15px;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
 }
 
 .product-details h2 {
@@ -73,9 +85,29 @@
     color: #e67e22;
 }
 
-/* Responsive for small screens */
-@media (max-width: 768px) {
-    .product-card {
-        width: 90%;
+/* Remove left/right whitespace */
+.container-fluid,
+.row {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Ensure 4 cards on desktop, 3 on tablet, 2 on mobile */
+@media (max-width: 575.98px) {
+    .col-6 {
+        padding: 5px;
+        margin-top: 20px;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 991.98px) {
+    .col-md-4 {
+        padding: 8px;
+    }
+}
+
+@media (min-width: 992px) {
+    .col-lg-3 {
+        padding: 10px;
     }
 }
