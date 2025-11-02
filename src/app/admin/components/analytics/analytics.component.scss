@@ -1,18 +1,71 @@
-.analytics-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    padding: 20px;
-    background-color: #f9fafb;
+/* ===== Page Heading ===== */
+.analytics-heading {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1976d2;
+    margin: 20px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
+/* ===== Chart Wrapper ===== */
+.chart-wrapper {
+    padding: 20px 30px;
+    background: #fff;
+    border-radius: 10px;
+    margin: 0 auto 20px auto;
+    width: 95%;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* ===== Grid Layout for Analytics Cards ===== */
+.analytics-grid {
+    display: grid;
+    gap: 20px;
+    padding: 20px 30px;
+    background-color: #f9fafb;
+    justify-content: center;
+}
+
+/* Responsive grid columns */
+@media (min-width: 1200px) {
+    .analytics-grid {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .analytics-grid {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 900px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 991px) and (min-width: 600px) {
+    .analytics-grid {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 15px;
+    }
+}
+
+@media (max-width: 599px) {
+    .analytics-grid {
+        grid-template-columns: 1fr;
+        padding: 10px;
+    }
+}
+
+/* ===== Analytics Card Styles ===== */
 .analytics-card {
-    width: 300px;
     background: #ffffff;
     border-radius: 12px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    padding: 10px;
 }
 
 .analytics-card:hover {
@@ -47,6 +100,7 @@
 
 .mat-card-content {
     padding: 10px 16px;
+    text-align: center;
 }
 
 .metric-value {
@@ -60,39 +114,52 @@
     color: #777;
 }
 
-/* Different avatar gradients for different metrics */
+/* Avatar gradients */
 .analytics-card:nth-child(1) .metric-avatar {
     background: linear-gradient(135deg, #ff9800, #ffb74d);
-    /* Orders: orange gradient */
 }
 
 .analytics-card:nth-child(2) .metric-avatar {
     background: linear-gradient(135deg, #4caf50, #81c784);
-    /* Earnings: green gradient */
 }
 
-/* Responsive for mobile */
-@media (max-width: 768px) {
-    .analytics-container {
-        flex-direction: column;
-        align-items: center;
+/* ===== Responsive Adjustments ===== */
+
+/* Tablets */
+@media (max-width: 992px) {
+    .metric-value {
+        font-size: 24px;
+    }
+
+    .mat-card-title {
+        font-size: 16px;
+    }
+
+    .metric-avatar {
+        width: 36px;
+        height: 36px;
+        font-size: 18px;
     }
 }
 
-.analytics-heading {
-    text-align: center;
-    /* Center the heading */
-    font-size: 2rem;
-    /* Bigger font size */
-    font-weight: 700;
-    /* Bold text */
-    color: #1976d2;
-    /* Primary blue color */
-    margin-bottom: 20px;
-    margin-top: 10px;
-    /* Space below heading */
-    text-transform: uppercase;
-    /* Optional uppercase */
-    letter-spacing: 1px;
-    /* Slight letter spacing */
+/* Mobile */
+@media (max-width: 600px) {
+    .analytics-heading {
+        font-size: 1.6rem;
+        margin: 15px 0;
+    }
+
+    .metric-value {
+        font-size: 22px;
+    }
+
+    .mat-card-content {
+        padding: 8px;
+    }
+
+    .analytics-card {
+        width: 100%;
+        max-width: 350px;
+        margin: 0 auto;
+    }
 }

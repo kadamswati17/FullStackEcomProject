@@ -1,14 +1,19 @@
 <h2 class="page-title">Products</h2>
 
 <div class="dashboard-header">
-    <!-- Add Product Button (Left) -->
+    <!-- Row 1: Add Product + Select Category -->
     <div class="header-left">
         <button mat-raised-button color="primary" (click)="openAddProductModal()">
             <mat-icon>add</mat-icon> Add Product
         </button>
+
+        <button mat-raised-button color="accent" type="button" data-bs-toggle="offcanvas"
+            data-bs-target="#adminCategorySidebar" aria-controls="adminCategorySidebar">
+            <mat-icon>category</mat-icon> Select Category
+        </button>
     </div>
 
-    <!-- Search Form (Center) -->
+    <!-- Center Search Form -->
     <div class="header-center">
         <form [formGroup]="searchProductForm" class="search-form" (ngSubmit)="submitForm()">
             <mat-form-field class="search-input">
@@ -18,14 +23,6 @@
                 </button>
             </mat-form-field>
         </form>
-    </div>
-
-    <!-- Select Category Button (Right) -->
-    <div class="header-right">
-        <button mat-raised-button color="accent" type="button" data-bs-toggle="offcanvas"
-            data-bs-target="#adminCategorySidebar" aria-controls="adminCategorySidebar">
-            <mat-icon>category</mat-icon> Select Category
-        </button>
     </div>
 </div>
 

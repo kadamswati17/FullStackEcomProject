@@ -1,10 +1,12 @@
 <h2 class="analytics-heading">Dashboard Analytics</h2>
-<div style="padding: 30px;">
-    <app-order-by-status [data]="data">
-    </app-order-by-status>
+
+<!-- Order Status Chart -->
+<div class="chart-wrapper">
+    <app-order-by-status [data]="data"></app-order-by-status>
 </div>
 
-<div class="analytics-container">
+<!-- Analytics Cards -->
+<div class="analytics-grid">
     <mat-card class="analytics-card">
         <mat-card-header>
             <div class="metric-avatar">O</div>
@@ -12,12 +14,12 @@
         </mat-card-header>
 
         <mat-card-content>
-            <div class="metric-value">{{data.currentMonthOrders}}</div>
+            <div class="metric-value">{{ data.currentMonthOrders }}</div>
             <div class="metric-subtext">Current Month</div>
         </mat-card-content>
 
         <mat-card-content>
-            <div class="metric-value">{{data.previousMonthOrders}}</div>
+            <div class="metric-value">{{ data.previousMonthOrders }}</div>
             <div class="metric-subtext">Previous Month</div>
         </mat-card-content>
     </mat-card>
@@ -29,12 +31,12 @@
         </mat-card-header>
 
         <mat-card-content>
-            <div class="metric-value">{{data.currentMonthEarnings | currency:'USD':true}}</div>
+            <div class="metric-value">{{ data.currentMonthEarnings | currency:'USD':true }}</div>
             <div class="metric-subtext">Current Month</div>
         </mat-card-content>
 
         <mat-card-content>
-            <div class="metric-value">{{data.previousMonthEarnings | currency:'USD':true}}</div>
+            <div class="metric-value">{{ data.previousMonthEarnings | currency:'USD':true }}</div>
             <div class="metric-subtext">Previous Month</div>
         </mat-card-content>
     </mat-card>

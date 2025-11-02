@@ -7,97 +7,147 @@
     color: #333;
 }
 
+/* Hide title on mobile */
+@media (max-width: 600px) {
+    .page-title {
+        display: none;
+    }
+}
+
 /* Dashboard Header */
 .dashboard-header {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     align-items: center;
     gap: 1rem;
     margin-bottom: 1.5rem;
     padding: 0 10px;
 }
 
-.dashboard-header .header-left,
-.dashboard-header .header-center,
-.dashboard-header .header-right {
+.header-section {
     display: flex;
+    justify-content: center;
     align-items: center;
 }
 
-.dashboard-header .header-left {
-    flex: 0 0 auto;
+/* Left and Right sections */
+.header-left {
+    justify-content: flex-start;
 }
 
-.dashboard-header .header-center {
-    flex: 1 1 auto;
-    justify-content: center;
-    max-width: 500px;
+.header-right {
+    justify-content: flex-end;
 }
 
-.dashboard-header .header-center .search-form {
+/* Center Search */
+.search-form {
     width: 100%;
-    display: flex;
-    justify-content: center;
+    max-width: 400px;
     position: relative;
 }
 
-.dashboard-header .header-center .search-input {
-    width: 180px;
+.search-input {
+    width: 100%;
 }
 
-@media (min-width: 768px) {
-    .dashboard-header .header-center .search-input {
-        width: 300px;
-    }
-}
-
-@media (min-width: 1024px) {
-    .dashboard-header .header-center .search-input {
-        width: 400px;
-    }
-}
-
-.dashboard-header .header-center .search-input input {
+.search-input input {
     padding-right: 40px;
 }
 
-.dashboard-header .header-center .search-input button {
+.search-input button {
     position: absolute;
     right: 8px;
     top: 50%;
     transform: translateY(-50%);
-    z-index: 1;
 }
 
-.dashboard-header .header-right {
-    flex: 0 0 auto;
-}
-
-/* Responsive adjustments */
-@media (max-width: 1023px) {
+/* ✅ Tablet view - unchanged */
+@media (min-width: 768px) and (max-width: 1024px) {
     .dashboard-header {
-        flex-direction: column;
-        align-items: stretch;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: nowrap;
+        gap: 10px;
+        padding: 0 15px;
     }
 
+    .header-section {
+        flex: 1;
+    }
+
+    .header-center {
+        flex: 2;
+        justify-content: center;
+    }
+
+    .search-form {
+        max-width: 100%;
+    }
+
+    .header-left button,
+    .header-right button {
+        white-space: nowrap;
+    }
+}
+
+/* ✅ Mobile view update:
+   Row 1: Add Product + Select Category (side-by-side)
+   Row 2: Search Form (full width) */
+@media (max-width: 767px) {
+    .dashboard-header {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 0 10px;
+    }
+
+    /* Row 1: two buttons side-by-side */
     .header-left,
-    .header-center,
     .header-right {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    /* Hide center section temporarily to reposition */
+    .header-center {
+        order: 2;
         width: 100%;
         justify-content: center;
     }
 
+    /* Place Add Product + Select Category together */
+    .header-left {
+        order: 1;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    /* Combine the category button into same row */
     .header-right {
-        margin-top: 10px;
+        display: none;
+        /* hide the duplicate right slot */
+    }
+
+    .header-left button,
+    .header-right button {
+        flex: 1;
+        white-space: nowrap;
+    }
+
+    /* Search bar full width below */
+    .search-form {
+        width: 100%;
     }
 }
 
-/* Product Grid (Responsive) */
+/* Product Grid */
 .product-grid {
     display: grid;
     gap: 20px;
-    margin: 0;
     padding: 0 10px;
     grid-template-columns: repeat(2, 1fr);
 }
