@@ -106,6 +106,8 @@ body,
     body,
     .container.my-4 {
         margin-top: 32px;
+        margin-left: 0px !important;
+        margin-right: 0px !important;
         /* adjust for taller mobile navbar */
     }
 
