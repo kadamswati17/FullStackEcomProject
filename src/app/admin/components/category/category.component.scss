@@ -29,7 +29,7 @@
         width: 100%;
 
         th {
-            background-color: #e3f2fd;
+            // background-color: #e3f2fd;
             font-weight: 600;
         }
 
@@ -43,7 +43,7 @@
 .modal-container {
     max-width: 500px;
     padding: 30px;
-    background: #ffffff;
+    // background: #ffffff;
     // border-radius: 52px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
@@ -172,4 +172,13 @@
         max-width: 90%;
         padding: 15px;
     }
+}
+
+/* Header row */
+.custom-header-row {
+    background-color: #007bff;
+    /* Blue background */
+    color: white;
+    /* White text */
+    font-weight: bold;
 }

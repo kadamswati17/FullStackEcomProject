@@ -4,10 +4,7 @@
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    /* Ensures responsiveness */
     padding: 0px 20px;
-    // margin-top: 10px;
-    // margin-bottom: 10px;
     border-bottom: 2px solid #e0e0e0;
 }
 
@@ -66,11 +63,27 @@
     margin: 20px 0;
 
     .category-title {
+        font-size: 20px;
+        font-weight: 600;
+        margin: 10px 0;
+        color: #fff;
+        /* White text for contrast */
+        text-transform: capitalize;
+        padding: 10px 20px;
+        /* Space inside the background */
+        background: linear-gradient(90deg, #4facfe, #00f2fe);
+        /* Gradient background */
+        display: inline-block;
+        /* Wrap only around text */
+        border-radius: 5px;
+        /* Rounded pill shape */
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        /* Subtle shadow */
         margin-left: 15px;
-        font-size: 1.5rem;
-        color: #1976d2;
+        /* Keep existing left margin */
         margin-bottom: 10px;
     }
+
 
     .category-product-row {
         display: flex;
@@ -118,12 +131,14 @@
                 .product-name {
                     font-size: 18px;
                     font-weight: bold;
-                    color: rgb(97, 97, 243);
+                    color: black;
                     margin-bottom: 8px;
                 }
 
                 .product-description {
                     margin-bottom: 10px;
+                    color: blue;
+                    /* updated description color */
                 }
 
                 .product-info {
@@ -139,17 +154,33 @@
 
                         .info-label {
                             margin-right: 5px;
+                            color: red;
+                            /* updated label color */
                         }
 
                         .info-value {
                             font-weight: bold;
+                            color: green;
+                            /* updated value color */
+                        }
+
+                        .price-label,
+                        .category-label {
+                            color: red;
+                            /* price/category label color */
+                        }
+
+                        .price-value,
+                        .category-value {
+                            color: green;
+                            /* price/category value color */
                         }
                     }
                 }
 
                 .actions {
                     display: flex;
-                    justify-content: flex-end;
+                    justify-content: start;
                     margin-top: 10px;
 
                     .update-button {

@@ -7,37 +7,51 @@
 
 <!-- Analytics Cards -->
 <div class="analytics-grid">
+    <!-- Orders Card -->
     <mat-card class="analytics-card">
         <mat-card-header>
-            <div class="metric-avatar">O</div>
-            <mat-card-title>Orders</mat-card-title>
+            <mat-card-title>
+                <div class="metric-title">
+                    <div class="metric-avatar small">O</div>
+                    <span>Orders</span>
+                </div>
+            </mat-card-title>
         </mat-card-header>
 
-        <mat-card-content>
-            <div class="metric-value">{{ data.currentMonthOrders }}</div>
-            <div class="metric-subtext">Current Month</div>
-        </mat-card-content>
+        <mat-card-content class="metric-details">
+            <div class="metric-row">
+                <span class="metric-subtext">Current Month</span>
+                <span class="metric-value">{{ data.currentMonthOrders }}</span>
+            </div>
 
-        <mat-card-content>
-            <div class="metric-value">{{ data.previousMonthOrders }}</div>
-            <div class="metric-subtext">Previous Month</div>
+            <div class="metric-row">
+                <span class="metric-subtext">Previous Month</span>
+                <span class="metric-value">{{ data.previousMonthOrders }}</span>
+            </div>
         </mat-card-content>
     </mat-card>
 
+    <!-- Earnings Card -->
     <mat-card class="analytics-card">
         <mat-card-header>
-            <div class="metric-avatar">E</div>
-            <mat-card-title>Earnings</mat-card-title>
+            <mat-card-title>
+                <div class="metric-title">
+                    <div class="metric-avatar small">E</div>
+                    <span>Earnings</span>
+                </div>
+            </mat-card-title>
         </mat-card-header>
 
-        <mat-card-content>
-            <div class="metric-value">{{ data.currentMonthEarnings | currency:'USD':true }}</div>
-            <div class="metric-subtext">Current Month</div>
-        </mat-card-content>
+        <mat-card-content class="metric-details">
+            <div class="metric-row">
+                <span class="metric-subtext">Current Month</span>
+                <span class="metric-value">{{ data.currentMonthEarnings | currency:'USD':true }}</span>
+            </div>
 
-        <mat-card-content>
-            <div class="metric-value">{{ data.previousMonthEarnings | currency:'USD':true }}</div>
-            <div class="metric-subtext">Previous Month</div>
+            <div class="metric-row">
+                <span class="metric-subtext">Previous Month</span>
+                <span class="metric-value">{{ data.previousMonthEarnings | currency:'USD':true }}</span>
+            </div>
         </mat-card-content>
     </mat-card>
 </div>

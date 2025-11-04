@@ -3,6 +3,8 @@
     flex-direction: column;
     justify-content: center;
     padding-top: 50px;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .coupons-toolbar {
@@ -10,7 +12,6 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
-    /* space between toolbar and table */
 }
 
 .coupons-heading {
@@ -34,6 +35,8 @@ mat-card {
 
 table {
     width: 100%;
+    min-width: 600px;
+    /* ensure table doesn't shrink too much */
 }
 
 th.mat-header-cell {
@@ -53,6 +56,8 @@ td.bold-cell {
 
 .mat-elevation-z8 {
     box-shadow: 0 4px 8px black;
+    overflow-x: auto;
+    /* enable horizontal scroll on small screens */
 }
 
 .mat-row:hover {
@@ -60,12 +65,49 @@ td.bold-cell {
 }
 
 .mat-header-row {
-    background-color: aqua;
-    /* same as before */
+    background-color: blue !important;
 }
 
 .mat-paginator {
     background-color: white;
     border-radius: 0 0 10px 10px;
     margin-top: 16px;
+}
+
+.custom-header-row {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+}
+
+/* Responsive: Mobile View */
+@media (max-width: 576px) {
+    .container {
+        padding-left: 100px;
+        padding-right: 100px;
+    }
+
+    .mat-elevation-z8 {
+        width: 100%;
+        overflow-x: auto;
+        /* scrollable table */
+    }
+
+    th.mat-header-cell,
+    td.mat-cell {
+        font-size: 12px;
+        padding: 6px 8px;
+        white-space: nowrap;
+        /* prevent wrapping */
+    }
+
+    .coupons-heading {
+        font-size: 22px;
+        text-align: center;
+    }
+
+    button[mat-raised-button] {
+        height: 35px;
+        font-size: 12px;
+    }
 }

@@ -28,10 +28,13 @@
                 <th mat-header-cell *matHeaderCellDef>Description</th>
                 <td mat-cell *matCellDef="let category">{{ category.description }}</td>
             </ng-container>
-
             <!-- Header & Row Definitions -->
-            <tr mat-header-row *matHeaderRowDef="['id', 'name', 'description']"></tr>
-            <tr mat-row *matRowDef="let row; columns: ['id', 'name', 'description'];"></tr>
+            <tr mat-header-row *matHeaderRowDef="['id', 'name', 'description']" class="custom-header-row">
+            </tr>
+
+            <tr mat-row *matRowDef="let row; columns: ['id', 'name', 'description'];" class="custom-data-row">
+            </tr>
+
         </table>
     </mat-card>
 </div>

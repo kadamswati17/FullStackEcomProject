@@ -30,10 +30,22 @@ body {
     font-size: 20px;
     font-weight: 600;
     margin: 10px 0;
-    color: #333;
+    color: #fff;
+    /* White text for contrast */
     text-transform: capitalize;
-    padding-left: 10px;
+    padding: 5px 25px;
+    /* Space inside the background */
+    background: linear-gradient(90deg, #4facfe, #00f2fe);
+    /* Gradient background */
+    display: inline-block;
+    /* Wrap only around text */
+    border-radius: 4px;
+    /* Rounded pill shape */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    /* Subtle shadow */
 }
+
+
 
 /* Scrollable Category Row */
 .category-product-row {
@@ -137,7 +149,7 @@ body {
 
 .product-card .product-details .product-description {
     font-size: 14px;
-    color: #666;
+    color: blue;
     margin-bottom: 10px;
     height: 40px;
     overflow: hidden;
@@ -158,12 +170,12 @@ body {
 
 .product-card .product-details .product-info .info-label {
     font-weight: 500;
-    color: #555;
+    color: red;
 }
 
 .product-card .product-details .product-info .info-value {
     font-weight: bold;
-    color: #111;
+    color: green;
 }
 
 /* Actions */

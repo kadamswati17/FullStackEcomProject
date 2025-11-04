@@ -4,42 +4,93 @@
     margin-top: 0px;
 }
 
-// padding-top: 50px;
+/* Scrollable table container */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    /* horizontal scroll */
+    -webkit-overflow-scrolling: touch;
+    /* smooth scroll on mobile */
+}
 
-
-// mat-card {
-//     width: 100%;
-//     border-radius: 10px;
-//     box-shadow: 0 4px 8px black;
-// }
-
+/* Table */
 table {
+    width: 100%;
+    min-width: 900px;
+    /* ensure table doesn't shrink too much */
+}
+
+/* Mat Card */
+.mat-elevation-z8 {
+    box-shadow: 0 4px 8px black;
     width: 100%;
 }
 
-th.mat-cell,
-td.bold-cell {
-    padding: 10px;
-}
-
-td.bold-cell {
+/* Header row */
+.custom-header-row {
+    background-color: #007bff;
+    color: white;
     font-weight: bold;
 }
 
-.mat-elevation-z8 {
-    box-shadow: 0 4px 8px black;
+/* Data rows */
+.custom-data-row {
+    background-color: #cce5ff;
+    color: #000;
 }
 
+.custom-data-row:nth-child(even) {
+    background-color: #e6f2ff;
+}
+
+/* Table cells */
+.mat-header-cell,
+.mat-cell {
+    padding: 10px;
+    text-align: center;
+}
+
+/* Hover effect */
 .mat-row:hover {
     background-color: wheat;
 }
 
-.mat-header-row {
-    background-color: rgb(232, 205, 155);
+/* Responsive: Mobile view */
+@media (max-width: 576px) {
+
+    .mat-header-cell,
+    .mat-cell {
+        font-size: 12px;
+        padding: 6px 8px;
+        white-space: nowrap;
+        /* prevent text wrap */
+    }
+
+    .custom-header-row {
+        font-size: 13px;
+        margin: 10px 50px;
+    }
+
+    .custom-data-row {
+        font-size: 12px;
+    }
 }
 
-.mat-paginator {
-    background-color: antiquewhite;
-    border-radius: 0 0 10px 10px;
-    margin-top: 16px;
+/* Scrollbar styling */
+.table-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.table-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }

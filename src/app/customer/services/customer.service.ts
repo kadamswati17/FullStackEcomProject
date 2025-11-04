@@ -10,8 +10,10 @@ import { Coupon } from '../../models/coupon.model';
   providedIn: 'root'
 })
 export class CustomerService {
-
-  private BASE_URL = 'http://localhost:8080/api/customer'; // ✅ Fixed base URL
+  //private BASE_URL = 'http://localhost:8081/api/customer'; // ✅ Fixed base URL
+  //private BASE_URL = 'http://localhost:8080/ecom/api/customer'; // ✅ Fixed base URL
+  //private BASE_URL = 'https://103.168.19.63:8443/ecom/api/customer'; // ✅ Fixed base URL
+  private BASE_URL = 'http://103.168.19.63:8080/ecom/api/customer'; // ✅ Fixed base URL
 
   constructor(private http: HttpClient) { }
 

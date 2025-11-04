@@ -73,14 +73,18 @@
         </ng-container>
 
         <!-- Header Row -->
+        <!-- Header Row -->
         <tr mat-header-row
-          *matHeaderRowDef="['id','userName','email','mobile','pincode','address','description','date','status','action']">
+          *matHeaderRowDef="['id','userName','email','mobile','pincode','address','description','date','status','action']"
+          class="custom-header-row">
         </tr>
 
         <!-- Data Row -->
         <tr mat-row
-          *matRowDef="let row; columns: ['id','userName','email','mobile','pincode','address','description','date','status','action']">
+          *matRowDef="let row; columns: ['id','userName','email','mobile','pincode','address','description','date','status','action']"
+          class="custom-data-row">
         </tr>
+
 
       </table>
     </mat-card-content>

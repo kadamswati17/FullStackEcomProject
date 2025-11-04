@@ -19,7 +19,7 @@
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.08);
 }
 
-/* ===== Grid Layout for Analytics Cards ===== */
+/* ===== Grid Layout ===== */
 .analytics-grid {
     display: grid;
     gap: 20px;
@@ -28,7 +28,6 @@
     justify-content: center;
 }
 
-/* Responsive grid columns */
 @media (min-width: 1200px) {
     .analytics-grid {
         grid-template-columns: repeat(3, 1fr);
@@ -59,13 +58,13 @@
     }
 }
 
-/* ===== Analytics Card Styles ===== */
+/* ===== Analytics Card ===== */
 .analytics-card {
     background: #ffffff;
     border-radius: 12px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    padding: 10px;
+    padding: 15px;
 }
 
 .analytics-card:hover {
@@ -73,48 +72,24 @@
     box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.15);
 }
 
+/* Avatar Styles */
 .metric-avatar {
-    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
     color: white;
     font-weight: bold;
-    font-size: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
 }
 
-.mat-card-header {
-    display: flex;
-    align-items: center;
-    padding-bottom: 0;
+.metric-avatar.small {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    margin-right: 8px;
 }
 
-.mat-card-title {
-    font-size: 18px;
-    font-weight: bold;
-    margin-left: 10px;
-}
-
-.mat-card-content {
-    padding: 10px 16px;
-    text-align: center;
-}
-
-.metric-value {
-    font-size: 28px;
-    font-weight: bold;
-    color: #333;
-}
-
-.metric-subtext {
-    font-size: 14px;
-    color: #777;
-}
-
-/* Avatar gradients */
+/* Gradient per card */
 .analytics-card:nth-child(1) .metric-avatar {
     background: linear-gradient(135deg, #ff9800, #ffb74d);
 }
@@ -123,43 +98,75 @@
     background: linear-gradient(135deg, #4caf50, #81c784);
 }
 
-/* ===== Responsive Adjustments ===== */
+/* Title Row (O/E + Text inline) */
+.metric-title {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
 
-/* Tablets */
+/* ===== Card Content ===== */
+.metric-details {
+    margin-top: 10px;
+}
+
+.metric-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 8px 0;
+    padding: 6px 10px;
+    border-radius: 6px;
+    background: #f8f9fa;
+}
+
+.metric-subtext {
+    font-size: 16px;
+    color: black;
+}
+
+.metric-value {
+    font-size: 22px;
+    font-weight: bold;
+    color: green;
+}
+
+/* ===== Responsive ===== */
 @media (max-width: 992px) {
-    .metric-value {
-        font-size: 24px;
-    }
-
-    .mat-card-title {
+    .metric-title {
         font-size: 16px;
     }
 
-    .metric-avatar {
-        width: 36px;
-        height: 36px;
-        font-size: 18px;
+    .metric-avatar.small {
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+    }
+
+    .metric-value {
+        font-size: 20px;
     }
 }
 
-/* Mobile */
 @media (max-width: 600px) {
     .analytics-heading {
         font-size: 1.6rem;
         margin: 15px 0;
     }
 
-    .metric-value {
-        font-size: 22px;
-    }
-
-    .mat-card-content {
-        padding: 8px;
-    }
-
     .analytics-card {
         width: 100%;
         max-width: 350px;
         margin: 0 auto;
+    }
+
+    .metric-row {
+        padding: 6px;
+    }
+
+    .metric-value {
+        font-size: 18px;
     }
 }

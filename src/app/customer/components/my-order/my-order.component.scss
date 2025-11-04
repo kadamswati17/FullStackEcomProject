@@ -1,9 +1,12 @@
+/* ===== TABLE CONTAINER ===== */
 .table-container {
     width: 100%;
     overflow-x: auto;
+    /* Horizontal scroll if table is too wide */
     margin: 0 auto;
 }
 
+/* ===== MATERIAL TABLE ===== */
 .mat-elevation-z8 {
     width: 95%;
     margin: 20px auto;
@@ -13,14 +16,23 @@
     background: #fff;
 }
 
-.mat-header-cell {
-    font-weight: bold;
-    color: #1a237e;
-    background-color: #f3e5f5;
-    padding: 12px 16px;
-    text-align: center;
+/* ===== TABLE HEADER ROW ===== */
+.mat-header-row {
+    background-color: #1976d2;
+    /* Blue background */
 }
 
+.mat-header-cell {
+    color: #fff;
+    /* White text */
+    font-weight: bold;
+    text-align: center;
+    padding: 12px 16px;
+    white-space: nowrap;
+    /* Keep header text in one line */
+}
+
+/* ===== TABLE BODY CELLS ===== */
 .mat-cell {
     padding: 12px 16px;
     border-bottom: 1px solid #e0e0e0;
@@ -31,6 +43,7 @@
     background-color: #f9f9f9;
 }
 
+/* ===== TABLE HEADING ===== */
 .table-heading {
     text-align: center;
     font-size: 2rem;
@@ -40,6 +53,7 @@
     text-transform: uppercase;
 }
 
+/* ===== MODAL ===== */
 .modal-title {
     font-size: 1.3rem;
     font-weight: 600;
@@ -64,11 +78,6 @@
     color: #000;
 }
 
-.table-dark {
-    background-color: #212529 !important;
-    color: #fff !important;
-}
-
 .product-img {
     height: 70px;
     width: 70px;
@@ -76,7 +85,15 @@
     border-radius: 6px;
 }
 
-/* ===== Responsive Design ===== */
+/* ===== RESPONSIVE DESIGN ===== */
+
+/* Large screens (Desktop) */
+@media (min-width: 1200px) {
+    .mat-elevation-z8 {
+        width: 90%;
+        margin: 20px auto;
+    }
+}
 
 /* Tablet view */
 @media (max-width: 992px) {
@@ -97,17 +114,37 @@
 }
 
 /* Mobile view */
+/* ===== MOBILE VIEW ===== */
 @media (max-width: 576px) {
-    .table-heading {
-        font-size: 1.4rem;
-        margin: 10px 0;
-        padding-top: 30px;
+    .table-container {
+        overflow-x: auto;
+        /* enable horizontal scroll */
+        -webkit-overflow-scrolling: touch;
+        /* smooth scrolling on iOS */
+    }
+
+    .mat-elevation-z8 {
+        width: 100%;
+        min-width: 600px;
+        /* ensure table doesn’t shrink too much */
     }
 
     .mat-header-cell,
     .mat-cell {
         font-size: 12px;
-        padding: 6px 4px;
+        padding: 6px 8px;
+        white-space: normal;
+        /* allow wrapping for very long text */
+        word-break: break-word;
+        /* break long words */
+        text-align: left;
+        /* optional for readability */
+    }
+
+    .table-heading {
+        font-size: 1.4rem;
+        margin: 10px 0;
+        padding-top: 20px;
     }
 
     .product-img {
@@ -129,4 +166,37 @@
         font-size: 12px;
         padding: 4px 8px;
     }
+}
+
+
+/* ===== SCROLLBAR STYLING ===== */
+.table-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.table-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.custom-header-row {
+    background-color: #007bff;
+    /* Blue background for header */
+    color: white;
+
+    /* Optional: text color */
+}
+
+.custom-row {
+    background-color: #cce5ff;
+    /* Lighter blue background for rows */
 }

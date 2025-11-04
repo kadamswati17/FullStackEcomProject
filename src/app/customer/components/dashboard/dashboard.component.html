@@ -11,6 +11,7 @@
     </mat-form-field>
   </form>
 </div>
+
 <!-- Products by Category -->
 <div *ngFor="let category of groupedProducts" class="category-wrapper">
   <h3 class="category-title">{{ category.name }}</h3>
@@ -38,12 +39,12 @@
 
         <div class="product-info">
           <div class="info-row">
-            <span class="info-label">Price:</span>
-            <span class="info-value">₹{{ product.price }}</span>
+            <span class="info-label price-label">Price:</span>
+            <span class="info-value price-value">₹{{ product.price }}</span>
           </div>
           <div class="info-row">
-            <span class="info-label">Category:</span>
-            <span class="info-value">{{ product.categoryName }}</span>
+            <span class="info-label category-label">Category:</span>
+            <span class="info-value category-value">{{ product.categoryName }}</span>
           </div>
         </div>
 

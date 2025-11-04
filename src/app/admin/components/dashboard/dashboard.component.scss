@@ -17,7 +17,8 @@
 /* Dashboard Header */
 .dashboard-header {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 2fr 1fr;
+    padding-left: 5% !important;
     align-items: center;
     gap: 1rem;
     margin-bottom: 1.5rem;
@@ -127,10 +128,10 @@
     }
 
     /* Combine the category button into same row */
-    .header-right {
-        display: none;
-        /* hide the duplicate right slot */
-    }
+    // .header-right {
+    //     // display: none;
+    //     /* hide the duplicate right slot */
+    // }
 
     .header-left button,
     .header-right button {
@@ -211,7 +212,7 @@
 }
 
 .product-description {
-    color: #666;
+    color: blue;
     font-size: 14px;
     margin-bottom: 10px;
     height: 40px;
@@ -221,14 +222,23 @@
 
 .product-info {
     margin: 10px 0;
+    // color: green;
 }
 
 .product-info .info-row {
     display: flex;
     justify-content: space-between;
     font-size: 14px;
-    color: #444;
+    // color: #555;
     margin: 3px 0;
+}
+
+.info-label {
+    color: red;
+}
+
+.info-value {
+    color: green;
 }
 
 .actions {
