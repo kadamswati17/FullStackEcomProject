@@ -95,3 +95,32 @@ table {
 .table-container::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
+
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+table {
+    width: 100%;
+    min-width: 900px;
+    /* Optional */
+}
+
+.product-img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.modal-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-right: 15px;
+}
