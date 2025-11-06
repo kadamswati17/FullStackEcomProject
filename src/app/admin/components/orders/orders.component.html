@@ -2,17 +2,17 @@
   <mat-card style="overflow: auto;">
     <h1 style="text-align: center; font-size: 30px;">ORDERS</h1>
     <mat-card-content>
-      <table mat-table [dataSource]="orders" class="mat-elevation-z8">
+      <table mat-table [dataSource]="orders">
 
         <!-- Order ID -->
         <ng-container matColumnDef="id">
-          <mat-header-cell *matHeaderCellDef>Order ID</mat-header-cell>
-          <mat-cell *matCellDef="let order">
+          <th header-cell *matHeaderCellDef>Order ID</th>
+          <td mat-cell *matCellDef="let order">
             <a href="#" (click)="getOrderDetailsById(order.id)" data-bs-toggle="modal"
               data-bs-target="#orderDetailsModal">
               {{ order.id }}
             </a>
-          </mat-cell>
+          </td>
         </ng-container>
 
         <!-- User Name -->
