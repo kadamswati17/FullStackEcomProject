@@ -204,7 +204,8 @@
 .product-name {
     font-size: 18px;
     font-weight: 600;
-    color: #333;
+
+    color: blue;
     margin-bottom: 6px;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -212,7 +213,7 @@
 }
 
 .product-description {
-    color: blue;
+    color: #333;
     font-size: 14px;
     margin-bottom: 10px;
     height: 40px;

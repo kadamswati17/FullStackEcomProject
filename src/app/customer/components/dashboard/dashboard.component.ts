@@ -28,6 +28,9 @@ export class DashboardComponent implements OnInit {
 
     this.getAllProducts();
     this.loadUserWishlist();
+    this.searchProductForm.get('title')?.valueChanges.subscribe(value => {
+      if (!value?.trim()) this.getAllProducts();
+    });
   }
 
   // Fetch all products & group by category
@@ -50,6 +53,11 @@ export class DashboardComponent implements OnInit {
   // Search products
   submitForm() {
     const title = this.searchProductForm.get('title')?.value;
+    console.log('Searching for:', title);
+    if (!title) {
+      this.getAllProducts();
+      return;
+    }
     this.customerService.getAllProductsByName(title).subscribe(res => {
       res.forEach(element => element.processedImg = 'data:image/jpeg;base64,' + element.byteImg);
       this.groupedProducts = [{ name: 'Search Results', products: res }];

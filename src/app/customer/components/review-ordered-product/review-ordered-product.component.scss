@@ -5,9 +5,9 @@
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
-    border: 1px solid wheat;
-    border-radius: 5px;
-    background-color: wheat;
+    border: 2px solid wheat;
+    border-radius: 15px;
+    // background-color: wheat;
     margin-top: 45px;
 }
 
@@ -84,9 +84,28 @@ mat-form-field {
     cursor: pointer;
 }
 
-button[type="submit"] {
-    width: auto;
-    /* Avoid full width for buttons except submit */
-    font-size: 18px;
+// button[type="submit"] {
+//     width: auto;
+//     /* Avoid full width for buttons except submit */
+//     font-size: 18px;
+//     margin-top: 20px;
+// }
+
+.button-row {
+    display: flex;
+    justify-content: flex-end;
+    /* aligns buttons to the right */
+    gap: 10px;
+    /* space between buttons */
     margin-top: 20px;
+    /* spacing from form fields */
+}
+
+button[type="submit"],
+button[type="button"] {
+    width: auto;
+    /* prevent full width */
+    font-size: 16px;
+    height: 40px;
+    /* make buttons equal height */
 }

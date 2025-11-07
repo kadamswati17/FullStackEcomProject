@@ -6,12 +6,12 @@ import { UserStorageService } from '../storage/user-storage.service';
 // const BASIC_URL = 'http://localhost:8080/';
 
 
-//const BASIC_URL = 'http://localhost:8080/';
+const BASIC_URL = 'http://localhost:8080/';
 
 //const BASIC_URL = 'http://localhost:8081/';
 //const BASIC_URL = 'http://localhost:8080/ecom';
 // const BASIC_URL = 'https://103.168.19.63:8443/ecom/';
-const BASIC_URL = 'http://103.168.19.63:8080/ecom/';
+// const BASIC_URL = 'http://103.168.19.63:8080/ecom/';
 @Injectable({
   providedIn: 'root'
 })
@@ -47,4 +47,15 @@ export class AuthService {
   getOrderByTrackingId(trackingId: number): Observable<any> {
     return this.http.get(BASIC_URL + `order/${trackingId}`);
   }
+
+  getUserInfo(userId: number): Observable<any> {
+    const token = UserStorageService.getToken(); // get JWT token from storage (static)
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.get(BASIC_URL + `api/user/info?userId=${userId}`, { headers });
+  }
+
+  // api/user/info
 }

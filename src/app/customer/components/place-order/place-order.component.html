@@ -4,6 +4,10 @@
         <mat-card-content>
             <form [formGroup]="orderForm">
 
+                <!-- <mat-form-field appearance="outline">
+                    <mat-label>Name</mat-label>
+                    <input matInput formControlName="name" placeholder="Name">
+                </mat-form-field> -->
 
                 <mat-form-field appearance="outline">
                     <mat-label>E-mail</mat-label>
@@ -18,8 +22,8 @@
                 <mat-form-field appearance="outline">
                     <mat-label>Address</mat-label>
                     <input matInput formControlName="address" placeholder="Address" required>
-                    <mat-error *ngIf="orderForm.get('address').invalid && orderForm.get('address').touched">
-                        This Input Is required!
+                    <mat-error *ngIf="orderForm.get('address')?.invalid && orderForm.get('address')?.touched">
+                        This input is required!
                     </mat-error>
                 </mat-form-field>
 
@@ -34,10 +38,12 @@
 
                 <div class="button-row">
                     <button mat-raised-button color="primary" type="submit" [disabled]="orderForm.invalid"
-                        (click)="placeOrder()" class="order-button">Order</button>
-                    <button mat-stroked-button color="warn" class="close-button" (click)="closeForm()"
-                        class="close-button">Close</button>
-
+                        (click)="placeOrder()" class="order-button">
+                        Order
+                    </button>
+                    <button mat-stroked-button color="warn" (click)="closeForm()" class="close-button">
+                        Close
+                    </button>
                 </div>
 
             </form>

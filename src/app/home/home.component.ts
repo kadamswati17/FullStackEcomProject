@@ -44,7 +44,22 @@ export class HomeComponent implements OnInit {
       if (!value) this.applyCategoryFilter();
       else this.search(value);
     });
+    this.searchProductForm.get('title')?.valueChanges.subscribe(value => {
+      if (!value?.trim()) this.getAllProducts();
+    });
   }
+
+  // getAllProducts() {
+  //   this.products = [];
+  //   this.customerService.getAllProducts().subscribe(res => {
+  //     res.forEach(product => {
+  //       product.processedImg = 'data:image/jpeg;base64,' + product.byteImg;
+  //       this.products.push(product);
+  //     });
+  //     this.allProducts = [...this.products];
+  //     this.applyCategoryFilter();
+  //   });
+  // }
 
   getAllProducts() {
     this.products = [];
@@ -54,6 +69,13 @@ export class HomeComponent implements OnInit {
         this.products.push(product);
       });
       this.allProducts = [...this.products];
+
+      // Set default selected category to the first category (Sofa)
+      if (!this.selectedCategory && this.allProducts.length > 0) {
+        const firstCategory = this.allProducts[0].categoryName;
+        this.selectedCategory = firstCategory;
+      }
+
       this.applyCategoryFilter();
     });
   }
@@ -76,7 +98,7 @@ export class HomeComponent implements OnInit {
   }
 
   submitForm() {
-    const title = this.searchProductForm.get('title')?.value;
+    const title = this.searchProductForm.get('title')?.value?.trim();
     this.customerService.getAllProductsByName(title).subscribe(res => {
       res.forEach(product => {
         product.processedImg = 'data:image/jpeg;base64,' + product.byteImg;

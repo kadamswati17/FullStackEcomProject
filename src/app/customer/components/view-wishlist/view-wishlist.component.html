@@ -1,6 +1,6 @@
 <div class="container-fluid wishlist-container">
-  <div class="row g-0 justify-content-center">
-
+  <!-- If products exist, show product cards -->
+  <div class="row g-0 justify-content-center" *ngIf="products.length > 0; else emptyWishlist">
     <div class="col-6 col-md-4 col-lg-3" *ngFor="let product of products">
       <div class="product-card position-relative">
 
@@ -22,6 +22,17 @@
         </div>
       </div>
     </div>
-
   </div>
+
+  <!-- Empty Wishlist Message -->
+  <ng-template #emptyWishlist>
+    <div class="empty-cart text-center py-5">
+      <!-- <mat-icon class="icon" style="font-size: 60px; color:gray;">favorite</mat-icon> -->
+      <div style="margin-top: 15px; font-size: 18px; color: #757575;">
+        Your wishlist is empty
+      </div>
+    </div>
+  </ng-template>
+
+
 </div>

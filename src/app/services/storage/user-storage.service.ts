@@ -69,7 +69,7 @@ export class UserStorageService {
     console.log("role", role);
     return !!token && role == 'PARENT_ADMIN';
   }
-    public static isChildUserLoggedIn(): boolean {
+  public static isChildUserLoggedIn(): boolean {
     const token = this.getToken();
     const role = this.getUserRole();
     console.log("role", role);
@@ -81,4 +81,6 @@ export class UserStorageService {
     window.sessionStorage.removeItem(TOKEN_KEY);
     window.sessionStorage.removeItem(USER_KEY);
   }
+
+
 }

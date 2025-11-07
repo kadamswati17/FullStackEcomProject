@@ -13,7 +13,9 @@
 
 <!-- Products by Category -->
 <div *ngFor="let category of groupedProducts" class="category-wrapper">
-  <h3 class="category-title">{{ category.name }}</h3>
+  <div class="category-wrapper">
+    <h3 class="category-title">{{ category.name }}</h3>
+  </div>
 
   <!-- Scrollable Row -->
   <div class="category-product-row" [id]="'categoryRow-' + category.name">
@@ -37,10 +39,10 @@
             <span class="info-label">Price:</span>
             <span class="info-value">{{ product.price | currency:'INR' }}</span>
           </div>
-          <div class="info-row">
+          <!-- <div class="info-row">
             <span class="info-label">Category:</span>
             <span class="info-value">{{ product.categoryName }}</span>
-          </div>
+          </div> -->
         </div>
 
         <mat-divider></mat-divider>

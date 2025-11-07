@@ -24,11 +24,16 @@ export class ViewWishlistComponent {
   getWishlistByUserId() {
     this.products = [];
     this.customerService.getWishlistByUserId().subscribe(res => {
-      res.forEach(element => {
-        element.processedImg = 'data:image/jpeg;base64,' + element.returnedImg;
-        this.products.push(element);
+      if (res && res.length > 0) {
+        res.forEach(element => {
+          element.processedImg = 'data:image/jpeg;base64,' + element.returnedImg;
+          this.products.push(element);
+        });
         console.log("products", this.products);
-      });
+      } else {
+        // Empty wishlist case handled by template
+        console.log("Wishlist is empty");
+      }
     });
   }
 
@@ -41,8 +46,7 @@ export class ViewWishlistComponent {
     this.customerService.removeProductFromWishlist(userId, wishlistId).subscribe({
       next: () => {
         this.snackbar.open("Removed from wishlist", "Close", { duration: 3000 });
-        // this.products = this.products.filter(p => p.id !== wishlistId);
-        this.getWishlistByUserId();
+        this.getWishlistByUserId(); // refresh list
       },
       error: (err) => {
         console.error("Error removing from wishlist:", err);
@@ -50,6 +54,4 @@ export class ViewWishlistComponent {
       }
     });
   }
-
-
 }

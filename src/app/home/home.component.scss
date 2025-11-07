@@ -29,11 +29,11 @@ body {
 .category-wrapper .category-title {
     font-size: 20px;
     font-weight: 600;
-    margin: 10px 0;
+    margin: 0px 0;
     color: #fff;
     /* White text for contrast */
     text-transform: capitalize;
-    padding: 5px 25px;
+    padding: 5px 130px;
     /* Space inside the background */
     background: linear-gradient(90deg, #4facfe, #00f2fe);
     /* Gradient background */
@@ -141,7 +141,7 @@ body {
     font-size: 18px;
     font-weight: 600;
     margin-bottom: 6px;
-    color: #333;
+    color: blue;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -149,7 +149,7 @@ body {
 
 .product-card .product-details .product-description {
     font-size: 14px;
-    color: blue;
+    color: black;
     margin-bottom: 10px;
     height: 40px;
     overflow: hidden;
@@ -165,17 +165,20 @@ body {
 
 .product-card .product-details .product-info .info-row {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+
 }
 
-.product-card .product-details .product-info .info-label {
-    font-weight: 500;
-    color: red;
-}
+// .product-card .product-details .product-info .info-label {
+//     font-weight: 500;
+//     color: red;
+// }
 
 .product-card .product-details .product-info .info-value {
     font-weight: bold;
     color: green;
+    padding-left: 70px;
+
 }
 
 /* Actions */
@@ -242,6 +245,7 @@ body {
         gap: 10px;
         font-size: 13px;
         margin-bottom: 8px;
+
     }
 
     .product-card .product-details .info-row {
@@ -262,4 +266,17 @@ body {
     .product-image img {
         border-radius: 8px;
     }
+}
+
+.search-form {
+    display: flex;
+    justify-content: center;
+    /* center horizontally */
+    margin: 0px auto;
+    width: 100%;
+}
+
+.search-input {
+    width: 500px;
+    /* fixed width for form field */
 }

@@ -4,8 +4,9 @@ import { Observable } from 'rxjs';
 import { UserStorageService } from '../../services/storage/user-storage.service';
 
 //const BASIC_URL = 'https://103.168.19.63:8443/ecom/';
-const BASIC_URL = 'http://103.168.19.63:8080/ecom/';
+// const BASIC_URL = 'http://103.168.19.63:8080/ecom/';
 //const BASIC_URL = 'http://localhost:8081/';
+const BASIC_URL = 'http://localhost:8080/';
 //http://103.168.19.63:8080/ecom/api/public/categories
 //const BASIC_URL = 'http://localhost:8080/ecom/';
 

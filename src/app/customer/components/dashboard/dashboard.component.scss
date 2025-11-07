@@ -69,7 +69,7 @@
         color: #fff;
         /* White text for contrast */
         text-transform: capitalize;
-        padding: 10px 20px;
+        padding: 10px 100px;
         /* Space inside the background */
         background: linear-gradient(90deg, #4facfe, #00f2fe);
         /* Gradient background */
@@ -131,13 +131,14 @@
                 .product-name {
                     font-size: 18px;
                     font-weight: bold;
-                    color: black;
+
+                    color: blue;
                     margin-bottom: 8px;
                 }
 
                 .product-description {
                     margin-bottom: 10px;
-                    color: blue;
+                    color: black;
                     /* updated description color */
                 }
 
@@ -161,36 +162,39 @@
                         .info-value {
                             font-weight: bold;
                             color: green;
-                            /* updated value color */
+                            padding-left: 50px;
                         }
 
-                        .price-label,
-                        .category-label {
-                            color: red;
-                            /* price/category label color */
-                        }
+                        /* updated value color */
+                    }
 
-                        .price-value,
-                        .category-value {
-                            color: green;
-                            /* price/category value color */
-                        }
+                    .price-label,
+                    .category-label {
+                        color: red;
+                        /* price/category label color */
+                    }
+
+                    .price-value,
+                    .category-value {
+                        color: green;
+                        /* price/category value color */
                     }
                 }
+            }
 
-                .actions {
-                    display: flex;
-                    justify-content: start;
-                    margin-top: 10px;
+            .actions {
+                display: flex;
+                justify-content: start;
+                margin-top: 10px;
 
-                    .update-button {
-                        margin-right: 10px;
-                    }
+                .update-button {
+                    margin-right: 10px;
                 }
             }
         }
     }
 }
+
 
 /* -------------------- Empty Cart -------------------- */
 .empty-cart {
