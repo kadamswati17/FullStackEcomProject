@@ -3,13 +3,49 @@
 
   <form [formGroup]="searchProductForm" class="search-form" (ngSubmit)="submitForm()">
     <mat-form-field class="search-input" appearance="outline">
-      <mat-label>Enter Keyword to Search Products</mat-label>
+      <mat-label> Search Products</mat-label>
       <input matInput formControlName="title" placeholder="Enter product name" />
       <button mat-icon-button matSuffix color="primary" type="submit" [disabled]="searchProductForm.invalid">
         <mat-icon>search</mat-icon>
       </button>
     </mat-form-field>
   </form>
+  <!-- Button -->
+  <div class="header-right">
+    <button mat-raised-button color="accent" type="button" data-bs-toggle="offcanvas"
+      data-bs-target="#adminCategorySidebar" aria-controls="adminCategorySidebar" (click)="loadCategories()">
+      Category
+    </button>
+  </div>
+
+  <!-- Offcanvas -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="adminCategorySidebar"
+    aria-labelledby="adminCategorySidebarLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="adminCategorySidebarLabel">Categories</h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+
+    <div class="offcanvas-body p-0">
+      <ul class="list-group list-group-flush" *ngIf="categories.length > 0">
+        <li *ngFor="let category of categories" class="list-group-item list-group-item-action"
+          (click)="selectCategory(category.name)">
+          {{ category.name }}
+        </li>
+
+        <!-- Option to show all products -->
+        <li class="list-group-item list-group-item-action" (click)="selectCategory(null)">
+          Show All
+        </li>
+      </ul>
+
+      <div *ngIf="categories.length === 0" class="text-center text-muted my-2">
+        No categories available
+      </div>
+    </div>
+  </div>
+
+
 </div>
 
 <!-- Products by Category -->

@@ -72,7 +72,8 @@ export class MyOrderComponent implements OnInit {
       width: '500px',
       height: '580px',
       disableClose: true,
-      data: { productId: order.id }
+      data: { productId: order.id },
+      panelClass: 'custom-review-dialog'
     });
 
     dialogRef.afterClosed().subscribe(result => {

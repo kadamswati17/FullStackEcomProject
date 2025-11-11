@@ -75,6 +75,10 @@ table {
     .custom-data-row {
         font-size: 12px;
     }
+
+    .modal-content {
+        margin-top: 200px;
+    }
 }
 
 /* Scrollbar styling */
@@ -108,7 +112,7 @@ table {
 
 table {
     width: 100%;
-    min-width: 900px;
+    min-width: 360px;
     /* Optional */
 }
 

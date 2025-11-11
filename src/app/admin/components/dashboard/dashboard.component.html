@@ -1,19 +1,13 @@
 <h2 class="page-title">Products</h2>
 
+<!-- Dashboard Header -->
 <div class="dashboard-header">
-    <!-- Row 1: Add Product + Select Category -->
     <div class="header-left">
         <button mat-raised-button color="primary" (click)="openAddProductModal()">
             <mat-icon>add</mat-icon> Add Product
         </button>
-
-        <!-- <button mat-raised-button color="accent" type="button" data-bs-toggle="offcanvas"
-            data-bs-target="#adminCategorySidebar" aria-controls="adminCategorySidebar">
-            <mat-icon>category</mat-icon> Select Category
-        </button> -->
     </div>
 
-    <!-- Center Search Form -->
     <div class="header-center">
         <form [formGroup]="searchProductForm" class="search-form" (ngSubmit)="submitForm()">
             <mat-form-field class="search-input">
@@ -25,58 +19,63 @@
         </form>
     </div>
 
-    <!-- Right: Select Category -->
     <div class="header-right">
         <button mat-raised-button color="accent" type="button" data-bs-toggle="offcanvas"
-            data-bs-target="#adminCategorySidebar" aria-controls="adminCategorySidebar">
-            <mat-icon>category</mat-icon> Select Category
+            data-bs-target="#adminCategorySidebar" aria-controls="adminCategorySidebar" (click)="loadCategories()">
+            Category
         </button>
     </div>
 </div>
 
-<!-- Product List -->
-<div class="product-grid">
-    <mat-card class="product-card" *ngFor="let product of products">
-        <div class="product-image">
-            <img [src]="product.processedImg" alt="{{ product.name }}">
-        </div>
-        <div class="product-details">
-            <h2 class="product-name">{{ product.name }}</h2>
-            <p class="product-description">{{ product.description }}</p>
+<!-- Products Grouped by Category -->
+<div *ngFor="let category of groupedProducts" class="category-section">
+    <h3 class="category-title">{{ category.name }}</h3>
 
-            <mat-divider></mat-divider>
-
-            <div class="product-info">
-                <div class="info-row">
-                    <span class="info-label">Price:</span>
-                    <span class="info-value">₹{{ product.price }}</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Category:</span>
-                    <span class="info-value">{{ product.categoryName }}</span>
-                </div>
+    <div class="category-product-row">
+        <mat-card class="product-card" *ngFor="let product of category.products">
+            <div class="product-image">
+                <img [src]="product.processedImg" alt="{{ product.name }}">
             </div>
 
-            <mat-divider></mat-divider>
+            <div class="product-details">
+                <h2 class="product-name">{{ product.name }}</h2>
+                <p class="product-description">{{ product.description }}</p>
 
-            <div class="actions">
-                <button mat-raised-button color="primary"
-                    [routerLink]="['/admin/faq', product.id ?? product.productId]">
-                    FAQ
-                </button>
-                <button mat-raised-button color="accent"
-                    [routerLink]="['/admin/update-product', product.id ?? product.productId]">
-                    Update
-                </button>
-                <button mat-raised-button color="warn" (click)="deleteProduct(product.id ?? product.productId)">
-                    Delete
-                </button>
+                <mat-divider></mat-divider>
+
+                <div class="product-info">
+                    <div class="info-row">
+                        <span class="info-label">Price:</span>
+                        <span class="info-value">₹{{ product.price }}</span>
+                    </div>
+                </div>
+
+                <mat-divider></mat-divider>
+
+                <div class="actions">
+                    <button mat-raised-button color="primary"
+                        [routerLink]="['/admin/faq', product.id ?? product.productId]">
+                        FAQ
+                    </button>
+                    <button mat-raised-button color="accent"
+                        [routerLink]="['/admin/update-product', product.id ?? product.productId]">
+                        Update
+                    </button>
+                    <button mat-raised-button color="warn" (click)="deleteProduct(product.id ?? product.productId)">
+                        Delete
+                    </button>
+                </div>
             </div>
-        </div>
-    </mat-card>
+        </mat-card>
+    </div>
 </div>
 
-<!-- Admin Category Sidebar -->
+<!-- Empty Products Message -->
+<div *ngIf="products.length === 0" class="empty-cart">
+    <span>No products available</span>
+</div>
+
+<!-- Category Sidebar -->
 <div class="offcanvas offcanvas-end" tabindex="-1" id="adminCategorySidebar"
     aria-labelledby="adminCategorySidebarLabel">
     <div class="offcanvas-header border-bottom bg-light">
@@ -89,6 +88,9 @@
             <li *ngFor="let category of categories" class="list-group-item list-group-item-action"
                 (click)="selectCategory(category)">
                 {{ category.name }}
+            </li>
+            <li class="list-group-item list-group-item-action" (click)="selectCategory(null)">
+                Show All
             </li>
         </ul>
         <div *ngIf="categories.length === 0" class="text-center text-muted my-2">

@@ -1,4 +1,6 @@
-/* Page Title */
+/* ================================
+   PAGE TITLE
+================================ */
 .page-title {
     font-size: 24px;
     font-weight: 600;
@@ -14,11 +16,12 @@
     }
 }
 
-/* Dashboard Header */
+/* ================================
+   DASHBOARD HEADER
+================================ */
 .dashboard-header {
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
-    padding-left: 5% !important;
     align-items: center;
     gap: 1rem;
     margin-bottom: 1.5rem;
@@ -31,7 +34,6 @@
     align-items: center;
 }
 
-/* Left and Right sections */
 .header-left {
     justify-content: flex-start;
 }
@@ -40,7 +42,6 @@
     justify-content: flex-end;
 }
 
-/* Center Search */
 .search-form {
     width: 100%;
     max-width: 400px;
@@ -62,13 +63,12 @@
     transform: translateY(-50%);
 }
 
-/* ✅ Tablet view - unchanged */
+/* Tablet */
 @media (min-width: 768px) and (max-width: 1024px) {
     .dashboard-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        flex-wrap: nowrap;
         gap: 10px;
         padding: 0 15px;
     }
@@ -92,9 +92,7 @@
     }
 }
 
-/* ✅ Mobile view update:
-   Row 1: Add Product + Select Category (side-by-side)
-   Row 2: Search Form (full width) */
+/* Mobile */
 @media (max-width: 767px) {
     .dashboard-header {
         display: flex;
@@ -103,7 +101,6 @@
         padding: 0 10px;
     }
 
-    /* Row 1: two buttons side-by-side */
     .header-left,
     .header-right {
         width: 100%;
@@ -112,14 +109,12 @@
         gap: 10px;
     }
 
-    /* Hide center section temporarily to reposition */
     .header-center {
         order: 2;
         width: 100%;
         justify-content: center;
     }
 
-    /* Place Add Product + Select Category together */
     .header-left {
         order: 1;
         display: flex;
@@ -127,68 +122,89 @@
         width: 100%;
     }
 
-    /* Combine the category button into same row */
-    // .header-right {
-    //     // display: none;
-    //     /* hide the duplicate right slot */
-    // }
-
     .header-left button,
     .header-right button {
         flex: 1;
         white-space: nowrap;
     }
 
-    /* Search bar full width below */
     .search-form {
         width: 100%;
     }
 }
 
-/* Product Grid */
-.product-grid {
-    display: grid;
-    gap: 20px;
-    padding: 0 10px;
-    grid-template-columns: repeat(2, 1fr);
+/* ================================
+   CATEGORY SECTION
+================================ */
+.category-section {
+    margin-bottom: 30px;
 }
 
-/* Tablet: 3 items */
-@media (min-width: 768px) {
-    .product-grid {
-        grid-template-columns: repeat(3, 1fr);
-        padding: 0 20px;
-    }
+.category-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 10px 0;
+    color: #fff;
+    text-transform: capitalize;
+    padding: 10px 100px;
+    background: linear-gradient(90deg, #4facfe, #00f2fe);
+    border-radius: 5px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    margin-left: 15px;
+    margin-bottom: 10px;
+    display: inline-block;
 }
 
-/* Desktop: 4 items */
-@media (min-width: 1024px) {
-    .product-grid {
-        grid-template-columns: repeat(4, 1fr);
-        padding: 0 40px;
-    }
-}
-
-/* Product Card */
-.product-card {
+/* ================================
+   PRODUCT GRID
+================================ */
+.category-product-row {
     display: flex;
-    flex-direction: column;
-    background: #fff;
+    overflow-x: auto;
+    gap: 20px;
+    padding: 10px 20px;
+    scroll-behavior: smooth;
+}
+
+.category-product-row::-webkit-scrollbar {
+    height: 8px;
+}
+
+.category-product-row::-webkit-scrollbar-thumb {
+    background: #888;
     border-radius: 10px;
-    overflow: hidden;
+}
+
+.category-product-row::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* ================================
+   PRODUCT CARD
+================================ */
+.product-card {
+    flex: 0 0 calc(25% - 20px);
+    /* Desktop 4 per row */
+    min-width: 250px;
+    border-radius: 10px;
+    background: #fff;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+    overflow: hidden;
+    transition: 0.3s;
 }
 
 .product-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .product-image {
-    width: 100%;
     height: 180px;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fafafa;
 }
 
 .product-image img {
@@ -202,9 +218,8 @@
 }
 
 .product-name {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
-
     color: blue;
     margin-bottom: 6px;
     text-overflow: ellipsis;
@@ -213,8 +228,8 @@
 }
 
 .product-description {
-    color: #333;
     font-size: 14px;
+    color: #444;
     margin-bottom: 10px;
     height: 40px;
     overflow: hidden;
@@ -223,14 +238,12 @@
 
 .product-info {
     margin: 10px 0;
-    // color: green;
 }
 
 .product-info .info-row {
     display: flex;
     justify-content: space-between;
     font-size: 14px;
-    // color: #555;
     margin: 3px 0;
 }
 
@@ -254,7 +267,23 @@
     flex: 1;
 }
 
-/* Category Sidebar */
+/* Tablet 3 products */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .product-card {
+        flex: 0 0 calc(33.33% - 20px);
+    }
+}
+
+/* Mobile 2 products */
+@media (max-width: 767px) {
+    .product-card {
+        flex: 0 0 calc(50% - 10px);
+    }
+}
+
+/* ================================
+   CATEGORY SIDEBAR
+================================ */
 .offcanvas-header h1 {
     font-size: 20px;
     margin: 0;
@@ -264,10 +293,37 @@
     background-color: #040607;
     color: white;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 #adminCategorySidebar .list-group-item:hover {
     background-color: #115293;
     color: white;
+    transform: scale(1.02);
+}
+
+/* ================================
+   EMPTY PRODUCT STATE
+================================ */
+.empty-cart {
+    text-align: center;
+    color: #888;
+    font-size: 16px;
+    margin-top: 50px;
+}
+
+/* ================================
+   SCROLLBAR STYLING
+================================ */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }

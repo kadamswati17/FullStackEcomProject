@@ -75,20 +75,23 @@
       </div>
 
       <div class="modal-body" id="invoice-content">
-        <div *ngIf="cartItems.length > 0" class="mb-4">
+
+
+        <div *ngIf="cartItems.length > 0" class="mb-4 cart-info-container">
           <div class="row">
-            <div class="col-md-4 col-6 mb-2"><strong>Order ID:</strong> {{ cartItems[0].orderId }}</div>
-            <div class="col-md-4 col-6 mb-2"><strong>Order Date:</strong> {{ cartItems[0].orderDate | date: 'dd/MM/yyyy'
+            <div class="col-12 col-md-4 mb-2"><strong>Order ID:</strong> {{ cartItems[0].orderId }}</div>
+            <div class="col-12 col-md-4 mb-2"><strong>Order Date:</strong> {{ cartItems[0].orderDate | date:'dd/MM/yyyy'
               }}</div>
-            <div class="col-md-4 col-6 mb-2"><strong>Status:</strong> {{ cartItems[0].orderStatus }}</div>
+            <div class="col-12 col-md-4 mb-2"><strong>Status:</strong> {{ cartItems[0].orderStatus }}</div>
           </div>
 
           <div class="row">
-            <div class="col-md-4 col-6 mb-2"><strong>User ID:</strong> {{ cartItems[0].userId }}</div>
-            <div class="col-md-4 col-6 mb-2"><strong>Email:</strong> {{ cartItems[0].email }}</div>
-            <div class="col-md-4 col-6 mb-2"><strong>Total Amount:</strong> ₹{{ cartItems[0].totalAmount }}</div>
+            <div class="col-12 col-md-4 mb-2"><strong>User ID:</strong> {{ cartItems[0].userId }}</div>
+            <div class="col-12 col-md-4 mb-2"><strong>Email:</strong> {{ cartItems[0].email }}</div>
+            <div class="col-12 col-md-4 mb-2"><strong>Total :</strong> ₹{{ cartItems[0].totalAmount }}</div>
           </div>
         </div>
+
 
         <div *ngIf="cartItems.length === 0" class="text-center text-muted">
           No order details found.

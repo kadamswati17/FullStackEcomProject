@@ -115,3 +115,9 @@ body,
         font-size: 1.1rem;
     }
 }
+
+.custom-review-dialog .mat-mdc-dialog-surface,
+.custom-review-dialog .mdc-dialog__surface,
+.custom-review-dialog .mat-mdc-dialog-container>.mat-mdc-dialog-surface {
+    border-radius: 25px !important;
+}

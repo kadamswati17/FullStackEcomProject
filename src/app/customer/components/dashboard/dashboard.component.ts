@@ -15,6 +15,12 @@ export class DashboardComponent implements OnInit {
   wishlistProducts: Set<number> = new Set(); // Track wishlist products
   groupedProducts: any[] = []; // Category grouped products
 
+  categories: any[] = []; // For category list in sidebar
+  selectedCategory: string | null = null;
+
+  allProducts: any[] = []; // Store all products for filtering
+  products: any[] = []; // Current displayed products
+
   constructor(
     private customerService: CustomerService,
     private fb: FormBuilder,
@@ -28,17 +34,29 @@ export class DashboardComponent implements OnInit {
 
     this.getAllProducts();
     this.loadUserWishlist();
+    this.loadCategories(); // Load categories on init
+
     this.searchProductForm.get('title')?.valueChanges.subscribe(value => {
       if (!value?.trim()) this.getAllProducts();
     });
   }
 
-  // Fetch all products & group by category
+  // ==========================
+  // Existing Product / Wishlist / Cart Functionality
+  // ==========================
+
   getAllProducts() {
     this.customerService.getAllProducts().subscribe(res => {
-      const grouped = new Map<string, any[]>();
       res.forEach(element => {
         element.processedImg = 'data:image/jpeg;base64,' + element.byteImg;
+      });
+
+      this.allProducts = res; // Save all products
+      this.products = [...this.allProducts]; // Display all by default
+
+      // Group products by category
+      const grouped = new Map<string, any[]>();
+      this.allProducts.forEach(element => {
         const category = element.categoryName || 'Others';
         if (!grouped.has(category)) grouped.set(category, []);
         grouped.get(category)!.push(element);
@@ -50,7 +68,6 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  // Search products
   submitForm() {
     const title = this.searchProductForm.get('title')?.value;
     console.log('Searching for:', title);
@@ -61,10 +78,10 @@ export class DashboardComponent implements OnInit {
     this.customerService.getAllProductsByName(title).subscribe(res => {
       res.forEach(element => element.processedImg = 'data:image/jpeg;base64,' + element.byteImg);
       this.groupedProducts = [{ name: 'Search Results', products: res }];
+      this.products = res; // Update current displayed products
     });
   }
 
-  // Add to cart
   addToCart(product: any) {
     const userId = UserStorageService.getUser()?.userId;
     if (!userId) {
@@ -81,7 +98,6 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  // Wishlist operations
   addToWishlist(product: any) {
     const userId = UserStorageService.getUser()?.userId;
     const productId = product?.id ?? product?.productId;
@@ -119,4 +135,43 @@ export class DashboardComponent implements OnInit {
       res.forEach((item: any) => this.wishlistProducts.add(item.productId));
     });
   }
+
+  // ==========================
+  // Category Functionality
+  // ==========================
+  loadCategories() {
+    this.customerService.getAllCategories().subscribe({
+      next: (res: any[]) => {
+        this.categories = res;
+      },
+      error: (err) => {
+        console.error('Error fetching categories', err);
+        this.snackbar.open('Failed to load categories', 'Close', { duration: 5000 });
+      }
+    });
+  }
+  selectCategory(categoryName: string | null) {
+    this.selectedCategory = categoryName;
+    console.log('Selected category:', categoryName);
+
+    // Filter products by category and rebuild groupedProducts
+    this.groupedProducts = this.buildGroupedProducts(categoryName);
+  }
+
+  private buildGroupedProducts(categoryName: string | null) {
+    let filtered = this.allProducts;
+    if (categoryName) {
+      filtered = this.allProducts.filter(p => p.categoryName === categoryName);
+    }
+
+    const grouped = new Map<string, any[]>();
+    filtered.forEach(element => {
+      const category = element.categoryName || 'Others';
+      if (!grouped.has(category)) grouped.set(category, []);
+      grouped.get(category)!.push(element);
+    });
+
+    return Array.from(grouped.entries()).map(([name, products]) => ({ name, products }));
+  }
+
 }

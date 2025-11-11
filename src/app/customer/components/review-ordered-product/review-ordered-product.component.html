@@ -33,7 +33,7 @@
   <!-- Description -->
   <mat-form-field appearance="outline">
     <mat-label>Description</mat-label>
-    <textarea matInput formControlName="description" placeholder="Description" rows="5">
+    <textarea matInput formControlName="description" placeholder="Description" rows="1">
     </textarea>
     <mat-error *ngIf="reviewForm.get('description')?.invalid && reviewForm.get('description')?.touched">
       This input is required!

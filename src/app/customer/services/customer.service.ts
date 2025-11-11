@@ -160,6 +160,13 @@ export class CustomerService {
     });
   }
 
+  // ------------------ Categories ------------------
+  getAllCategories(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.BASE_URL}/categories`, {
+      headers: this.createAuthorizationHeader()
+    });
+  }
+
 
   private createAuthorizationHeader(): HttpHeaders {
     return new HttpHeaders().set('Authorization', 'Bearer ' + UserStorageService.getToken());
