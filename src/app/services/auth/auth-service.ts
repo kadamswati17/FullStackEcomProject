@@ -1,17 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { map, Observable, catchError, throwError } from 'rxjs';
 import { UserStorageService } from '../storage/user-storage.service';
-
-// const BASIC_URL = 'http://localhost:8080/';
-
 
 const BASIC_URL = 'http://localhost:8080/';
 
-//const BASIC_URL = 'http://localhost:8081/';
-//const BASIC_URL = 'http://localhost:8080/ecom';
-// const BASIC_URL = 'https://103.168.19.63:8443/ecom/';
-// const BASIC_URL = 'http://103.168.19.63:8080/ecom/';
 @Injectable({
   providedIn: 'root'
 })
@@ -19,7 +12,7 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private userStorageService: UserStorageService   // ✅ inject here
+    private userStorageService: UserStorageService
   ) { }
 
   register(signupRequest: any): Observable<any> {
@@ -30,9 +23,10 @@ export class AuthService {
   login(username: string, password: string): any {
     const headers = new HttpHeaders().set('content-type', 'application/json');
     const body = { username, password };
+
     return this.http.post(BASIC_URL + "authenticate", body, { headers, observe: 'response' }).pipe(
       map((res) => {
-        const token = res.headers.get('Authorization').substring(7);
+        const token = res.headers.get('Authorization')?.substring(7);
         const user = res.body;
         if (token && user) {
           this.userStorageService.saveToken(token);
@@ -40,6 +34,10 @@ export class AuthService {
           return user;
         }
         return false;
+      }),
+      catchError((error) => {
+        // Pass the error to component for custom handling
+        return throwError(() => error);
       })
     );
   }
@@ -49,11 +47,10 @@ export class AuthService {
   }
 
   getUserInfo(userId: number): Observable<any> {
-    const token = UserStorageService.getToken(); // get JWT token from storage (static)
+    const token = UserStorageService.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-
     return this.http.get(BASIC_URL + `api/user/info?userId=${userId}`, { headers });
   }
 
@@ -66,6 +63,21 @@ export class AuthService {
     return this.http.put(BASIC_URL + 'api/user/update', updatedData, { headers });
   }
 
+  getAllUsers(): Observable<any> {
+    const token = UserStorageService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get(BASIC_URL + 'api/user/all', { headers });
+  }
 
-  // api/user/info
+  // Works with /activate/{id} or /deactivate/{id}
+  toggleUserActivation(userId: number, isActive: boolean): Observable<any> {
+    const token = UserStorageService.getToken();
+    const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
+    const endpoint = isActive
+      ? `api/user/deactivate/${userId}`
+      : `api/user/activate/${userId}`;
+    return this.http.put(BASIC_URL + endpoint, {}, { headers });
+  }
 }

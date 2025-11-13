@@ -23,7 +23,7 @@ export class SignupComponent implements OnInit {
     private router: Router,
     @Optional() public dialogRef?: MatDialogRef<SignupComponent>,
     @Optional() @Inject(MAT_DIALOG_DATA) public data?: any
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.buildForm();
@@ -74,8 +74,8 @@ export class SignupComponent implements OnInit {
       role: this.data?.role
         ? this.data.role // e.g., CHILD_ADMIN (from parent admin)
         : this.isCustomer
-        ? 'CUSTOMER'
-        : 'PARENT_ADMIN',
+          ? 'CUSTOMER'
+          : 'PARENT_ADMIN',
       createdBy: this.data?.createdBy || UserStorageService.getUserId() || null
     };
 
@@ -107,4 +107,7 @@ export class SignupComponent implements OnInit {
       this.router.navigateByUrl('/');
     }
   }
+
+
+
 }

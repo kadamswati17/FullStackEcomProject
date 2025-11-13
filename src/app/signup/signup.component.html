@@ -1,9 +1,14 @@
 <div class="signup-container">
   <mat-card class="signup-card">
-    <mat-card-header>
+    <mat-card-header class="signup-header">
       <mat-card-title>SIGN UP</mat-card-title>
-      <!-- <mat-card-subtitle>Create your account</mat-card-subtitle> -->
+
+      <!-- ✅ Close Button -->
+      <button mat-icon-button color="warn" class="close-btn" (click)="onCancel()">
+        <mat-icon>close</mat-icon>
+      </button>
     </mat-card-header>
+
     <mat-card-content>
       <!-- Hide toggle when creating a child admin -->
       <div class="signup-toggle" *ngIf="!data?.role">
@@ -14,6 +19,7 @@
           Parent Admin
         </button>
       </div>
+
       <h3 *ngIf="data?.role === 'CHILD_ADMIN'" class="text-center text-primary">
         Add Child Admin
       </h3>
@@ -37,7 +43,8 @@
 
         <mat-form-field appearance="outline">
           <mat-label>Password</mat-label>
-          <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" placeholder="Password" required />
+          <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" placeholder="Password"
+            required />
           <button mat-icon-button matSuffix type="button" (click)="togglePasswordVisibility()">
             <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
           </button>
@@ -45,21 +52,20 @@
 
         <mat-form-field appearance="outline">
           <mat-label>Confirm Password</mat-label>
-          <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="confirmPassword" placeholder="Confirm Password" required />
+          <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="confirmPassword"
+            placeholder="Confirm Password" required />
           <button mat-icon-button matSuffix type="button" (click)="togglePasswordVisibility()">
             <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
           </button>
         </mat-form-field>
 
-        <!-- ✅ Updated button label -->
         <button mat-raised-button color="primary" type="button" [disabled]="signupForm.invalid" (click)="onSubmit()">
           {{ data?.role === 'CHILD_ADMIN'
-              ? 'Sign Up as Child Admin'
-              : isCustomer
-              ? 'Sign Up as Customer'
-              : 'Sign Up as Parent Admin' }}
+          ? 'Sign Up as Child Admin'
+          : isCustomer
+          ? 'Sign Up as Customer'
+          : 'Sign Up as Parent Admin' }}
         </button>
-
       </form>
     </mat-card-content>
   </mat-card>

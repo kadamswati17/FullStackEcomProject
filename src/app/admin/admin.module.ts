@@ -33,7 +33,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatDividerModule } from '@angular/material/divider';  // ✅ added
+import { MatDividerModule } from '@angular/material/divider';
+// import { ProfileComponent } from './components/profile/profile.component';
+import { UserManagementComponent } from './components/user-management/user-management.component';  // ✅ added
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import { MatDividerModule } from '@angular/material/divider';  // ✅ added
     UpdateProductComponent,
     AnalyticsComponent,
     OrderByStatusComponent,
-    CategoryComponent
+    CategoryComponent,
+    // ProfileComponent,
+    UserManagementComponent
   ],
   imports: [
     CommonModule,

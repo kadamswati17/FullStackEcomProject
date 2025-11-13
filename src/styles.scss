@@ -121,3 +121,7 @@ body,
 .custom-review-dialog .mat-mdc-dialog-container>.mat-mdc-dialog-surface {
     border-radius: 25px !important;
 }
+
+.mat-mdc-dialog-surface mdc-dialog__surface {
+    margin-top: 50px !important;
+}
