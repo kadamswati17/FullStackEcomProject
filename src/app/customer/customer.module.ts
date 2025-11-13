@@ -28,6 +28,7 @@ import { AngularMaterialDemo } from '../AngularMaterialDemo';
 import { ViewProductDetailComponent } from './components/view-product-detail/view-product-detail.component';
 import { ViewWishlistComponent } from './components/view-wishlist/view-wishlist.component';
 import { OrderDetailsComponent } from './customer/order-details/order-details.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { OrderDetailsComponent } from './customer/order-details/order-details.co
     PlaceOrderComponent,
     ViewProductDetailComponent,
     ViewWishlistComponent,
-    OrderDetailsComponent
+    OrderDetailsComponent,
+    ProfileComponent
   ],
   imports: [
     CommonModule,

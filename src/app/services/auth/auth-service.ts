@@ -57,5 +57,15 @@ export class AuthService {
     return this.http.get(BASIC_URL + `api/user/info?userId=${userId}`, { headers });
   }
 
+  updateUser(updatedData: any): Observable<any> {
+    const token = UserStorageService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+    return this.http.put(BASIC_URL + 'api/user/update', updatedData, { headers });
+  }
+
+
   // api/user/info
 }
