@@ -22,6 +22,7 @@
     <mat-card class="product-card" *ngFor="let product of category.products">
       <div class="product-image">
         <img [src]="product.processedImg" alt="{{ product.name }}">
+
         <mat-icon class="heart-icon" [ngClass]="{'wishlist-active': isInWishlist(product.id)}"
           (click)="toggleWishlist(product.id)">
           {{ isInWishlist(product.id) ? 'favorite' : 'favorite_border' }}
@@ -50,6 +51,9 @@
         <div class="actions">
           <button mat-raised-button color="primary" (click)="addToCart(product.id)">
             Add to Cart
+          </button>
+          <button class="share-icon" (click)="shareProduct(product)">
+            <span class="fa-solid fa-share-nodes"></span>
           </button>
         </div>
       </div>

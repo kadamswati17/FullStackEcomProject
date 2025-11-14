@@ -177,4 +177,23 @@ export class HomeComponent implements OnInit {
     this.allProducts = [...filtered];
     this.applyCategoryFilter();
   }
+
+  shareProduct(product: any) {
+
+    // 1️⃣ Check if user is logged in (same logic as heart icon)
+    const token = localStorage.getItem("jwtToken");
+    if (!token) {
+      // User not logged in → redirect to login
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    // 2️⃣ If logged in → Share on WhatsApp
+    const productUrl = `http://localhost:4200/product-details/${product.id}`;
+    const message = `Check out this product:\n${productUrl}`;
+
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, "_blank");
+  }
+
 }

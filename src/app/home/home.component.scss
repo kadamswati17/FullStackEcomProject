@@ -282,3 +282,16 @@ body {
     width: 500px;
     /* fixed width for form field */
 }
+
+.share-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 25px;
+    color: #25D366;
+    padding-left: 25px;
+}
+
+.share-icon:hover {
+    color: #1da955;
+}

@@ -173,5 +173,39 @@ export class DashboardComponent implements OnInit {
 
     return Array.from(grouped.entries()).map(([name, products]) => ({ name, products }));
   }
+  // shareProduct(product: any) {
+  //   const message = `Check out this product: ${product.name}\nPrice: ₹${product.price}`;
+  //   const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+  //   window.open(whatsappUrl, "_blank");
+  // }
+
+  // shareProduct(product: any) {
+  //   const message = `Check out this product: ${product.name}\nPrice: ₹${product.price}`;
+
+  //   // If the mobile device supports native sharing
+  //   if (navigator.share) {
+  //     navigator.share({
+  //       title: product.name,
+  //       text: message,
+  //     }).catch((err) => console.log("Share cancelled:", err));
+  //   }
+  //   else {
+  //     // Fallback for browsers that don't support native share
+  //     const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+  //     window.open(whatsappUrl, "_blank");
+  //   }
+  // }
+  shareProduct(product: any) {
+    const productUrl = `https://yourwebsite.com/product/${product.id}`;
+
+    const message = `Check out this product:\n${productUrl}`;
+
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+
+    window.open(whatsappUrl, "_blank");
+  }
+
+
+
 
 }

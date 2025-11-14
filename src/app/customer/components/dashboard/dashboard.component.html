@@ -63,6 +63,8 @@
           (click)="toggleWishlist(product)">
           favorite
         </mat-icon>
+
+
       </div>
 
       <div class="product-details">
@@ -90,6 +92,14 @@
           <button mat-raised-button color="primary" class="update-button" (click)="addToCart(product)">
             Add to cart
           </button>
+          <!-- <button class="share-icon" (click)="shareProduct(product)">
+            <i class="fa fa-share"></i>
+          </button> -->
+          <button class="share-icon" (click)="shareProduct(product)">
+            <span class="fa-solid fa-share-nodes"></span>
+          </button>
+
+
         </div>
       </div>
     </mat-card>
