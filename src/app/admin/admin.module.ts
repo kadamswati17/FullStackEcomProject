@@ -35,7 +35,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 // import { ProfileComponent } from './components/profile/profile.component';
-import { UserManagementComponent } from './components/user-management/user-management.component';  // ✅ added
+import { UserManagementComponent } from './components/user-management/user-management.component';
+import { PurchaseOrderComponent } from './components/purchase-order/purchase-order.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { UserManagementComponent } from './components/user-management/user-manag
     OrderByStatusComponent,
     CategoryComponent,
     // ProfileComponent,
-    UserManagementComponent
+    UserManagementComponent,
+    PurchaseOrderComponent,
   ],
   imports: [
     CommonModule,

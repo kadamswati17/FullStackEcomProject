@@ -1,0 +1,216 @@
+<div class="container my-4">
+
+    <!-- Toggle Button -->
+
+
+    <!-- Orders Table -->
+    <div *ngIf="!showOrderForm">
+        <div class="header-top  ">
+            <h2>Purchase Orders</h2>
+            <button class="btn btn-primary mb-3" (click)="showOrderForm = !showOrderForm">
+                {{ showOrderForm ? '← Back to Orders' : '+ Purchase Order' }}
+            </button>
+        </div>
+
+
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered align-middle">
+
+                <thead class="table-dark">
+                    <tr>
+                        <th>Order ID</th>
+                        <th>User</th>
+                        <th>Tracking ID</th>
+                        <th>Amount</th>
+                        <th>Description</th>
+                        <th>Address</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let order of myOrders">
+                        <td>
+                            <a href="#" (click)="viewOrder(order)" data-bs-toggle="modal"
+                                data-bs-target="#orderDetailsModal">
+                                {{ order.id }}
+                            </a>
+                        </td>
+                        <td>{{ order.userName || 'N/A' }}</td>
+                        <td>{{ order.trackingId }}</td>
+                        <td>{{ order.amount | currency:'INR' }}</td>
+                        <td>{{ order.orderDescription }}</td>
+                        <td>{{ order.address }}</td>
+                        <td>{{ order.date | date:'short' }}</td>
+                        <td><span class="badge bg-info mx-3">{{ order.orderStatus }}</span></td>
+                        <td class="btn-group">
+                            <!-- <button class="btn btn-sm btn-success"
+                                (click)="changeOrderStatus(order.id, 'PROCESSING')">Processing</button> -->
+                            <button class="btn btn-sm btn-primary"
+                                (click)="changeOrderStatus(order.id, 'SHIPPED')">Shipped</button>
+                            <button class="btn btn-sm btn-warning mx-3"
+                                (click)="changeOrderStatus(order.id, 'DELIVERED')">Delivered</button>
+                        </td>
+
+                    </tr>
+                    <tr *ngIf="myOrders.length === 0">
+                        <td colspan="9" class="text-center text-muted">No orders found</td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+    <!-- Purchase Order Form -->
+    <div *ngIf="showOrderForm">
+        <!-- TOP SECTION -->
+        <div class="row g-3 align-items-end mb-3">
+            <div class="col-md-4">
+                <label for="orderDate" class="form-label">Order Date</label>
+                <input id="orderDate" type="date" class="form-control" [(ngModel)]="dateValue">
+            </div>
+
+            <div class="col-md-8">
+                <label class="form-label">Select Parent (Supplier)</label>
+                <select class="form-select" (change)="onParentChange($event)" [value]="selectedParentId">
+                    <option value="">-- Select Parent --</option>
+                    <option *ngFor="let p of parents" [value]="p.id">{{ p.name || p.userName }}</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- ADD PRODUCT SECTION -->
+        <!-- <div class="row g-3 align-items-end mt-3 product-add">
+            <div class="col-md-5">
+                <label class="form-label">Product</label>
+                <select class="form-select" formControlName="productId" (change)="onProductChange($event)">
+                    <option value="">-- Select Product --</option>
+                    <option *ngFor="let pr of products" [value]="pr.productId">{{ pr.name || pr.productName }}</option>
+                </select>
+            </div>
+
+            <div class="col-md-2">
+                <label class="form-label">Price</label>
+                <input type="text" class="form-control" [value]="productPrice" readonly>
+            </div>
+
+            <div class="col-md-2">
+                <label class="form-label">Quantity</label>
+                <input type="number" class="form-control" formControlName="quantity" min="1">
+            </div>
+
+            <div class="col-md-3">
+                <button class="btn btn-primary w-100" (click)="addToCart()">Add to Cart</button>
+            </div>
+        </div> -->
+        <form [formGroup]="cartForm">
+            <div class="row g-3 align-items-end mt-3 product-add">
+                <div class="col-md-5">
+                    <label class="form-label">Product</label>
+                    <select class="form-select" formControlName="productId" (change)="onProductChange($event)">
+                        <option value="">-- Select Product --</option>
+                        <option *ngFor="let pr of products" [value]="pr.productId">{{ pr.name || pr.productName }}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <label class="form-label">Price</label>
+                    <input type="text" class="form-control" [value]="productPrice" readonly>
+                </div>
+
+                <div class="col-md-2">
+                    <label class="form-label">Quantity</label>
+                    <input type="number" class="form-control" formControlName="quantity" min="1">
+                </div>
+
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-primary w-100" (click)="addToCart()">Add to Cart</button>
+                </div>
+            </div>
+        </form>
+
+
+        <hr class="my-4">
+
+        <!-- CART TABLE -->
+        <div class="cart-table table-responsive">
+            <table class="table table-striped table-bordered align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Qty</th>
+                        <th>Total</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let it of cartItems; let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ it.productName }}</td>
+                        <td>{{ it.price | currency:'INR' }}</td>
+                        <td>{{ it.quantity }}</td>
+                        <td>{{ it.total | currency:'INR' }}</td>
+                        <td>
+                            <button class="btn btn-sm btn-danger" (click)="removeItem(i)">
+                                <i class="bi bi-trash"></i> Remove
+                            </button>
+                        </td>
+                    </tr>
+
+                    <tr *ngIf="cartItems.length === 0">
+                        <td colspan="6" class="text-center text-muted">Cart is empty</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- FOOTER SECTION -->
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            <button class="btn btn-success" (click)="placeOrder()">Place Order</button>
+            <div>
+                <strong>Total Amount:</strong> {{ totalAmount | currency:'INR' }}
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Order Details -->
+    <div class="modal fade" id="orderDetailsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Order Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Tracking ID:</strong> {{ selectedOrder?.trackingId }}</p>
+                    <p><strong>Status:</strong> {{ selectedOrder?.orderStatus }}</p>
+                    <p><strong>Total Amount:</strong> {{ selectedOrder?.amount | currency:'INR' }}</p>
+
+                    <h6>Cart Items:</h6>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of selectedOrder?.cartItems">
+                                <td>{{ item.productName }}</td>
+                                <td>{{ item.quantity }}</td>
+                                <td>{{ item.price | currency:'INR' }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

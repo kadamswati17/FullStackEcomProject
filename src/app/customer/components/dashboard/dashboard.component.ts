@@ -196,13 +196,25 @@ export class DashboardComponent implements OnInit {
   //   }
   // }
   shareProduct(product: any) {
-    const productUrl = `https://yourwebsite.com/product/${product.id}`;
+    const url = `https://yourwebsite.com/product/${product.id || product.productId}`;
+    const message = `Check out this product: ${product.name}\n${url}`;
 
-    const message = `Check out this product:\n${productUrl}`;
-
-    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
-
-    window.open(whatsappUrl, "_blank");
+    // Check if Web Share API is available (mobile/tablet)
+    if (navigator.share) {
+      navigator.share({
+        title: product.name,
+        text: message,
+        url: url
+      }).then(() => {
+        console.log('Product shared successfully');
+      }).catch((error) => {
+        console.error('Error sharing:', error);
+      });
+    } else {
+      // Fallback for desktop: open WhatsApp web or email
+      const whatsapp = `https://wa.me/?text=${encodeURIComponent(message)}`;
+      window.open(whatsapp, "_blank");
+    }
   }
 
 

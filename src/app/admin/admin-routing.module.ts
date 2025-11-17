@@ -14,6 +14,7 @@ import { AnalyticsComponent } from './components/analytics/analytics.component';
 import { CategoryComponent } from './components/category/category.component';
 
 import { UserManagementComponent } from './components/user-management/user-management.component';
+import { PurchaseOrderComponent } from './components/purchase-order/purchase-order.component';
 
 // const routes: Routes = [
 //     { path: '', redirectTo: 'analytics', pathMatch: 'full' },
@@ -48,6 +49,8 @@ const routes: Routes = [
   { path: 'analytics', component: AnalyticsComponent },
   // { path: 'profile', component: ProfileComponent },
   { path: 'user-management', component: UserManagementComponent },
+  { path: 'purchase-order', component: PurchaseOrderComponent },
+
 
 ];
 

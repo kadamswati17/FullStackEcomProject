@@ -69,6 +69,12 @@ export class AdminService {
     });
   }
 
+  getAllProductsByUserId(userId: number): Observable<any> {
+    return this.http.get(BASIC_URL + `api/admin/products/${userId}`, {
+      headers: this.createAuthorizationHeader(),
+    });
+  }
+
 
   getProductById(productId): Observable<any> {
     return this.http.get(BASIC_URL + `api/admin/product/${productId}`, {

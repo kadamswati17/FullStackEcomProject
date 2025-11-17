@@ -58,11 +58,9 @@
     /* glowing green shadow */
 }
 
-/* Optional: add effect on hover */
 .heart-icon:hover {
     text-shadow: 0 0 12px #00ff00, 0 0 20px #00cc00;
 }
-
 
 .heart-icon.wishlist-active {
     color: red;
@@ -78,11 +76,9 @@
     font-weight: 600;
     margin: 10px 0;
     color: #fff;
-    /* White text */
     text-transform: capitalize;
     padding: 10px 100px;
     background: linear-gradient(90deg, #4facfe, #00f2fe);
-    /* Gradient blue */
     display: inline-block;
     border-radius: 5px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
@@ -210,13 +206,9 @@
 /* -------------------- Offcanvas Category Sidebar -------------------- */
 #adminCategorySidebar {
     background-color: #1976d2;
-    /* Blue background */
     color: white;
-    /* White text */
     width: 350px;
-    /* Default width */
     max-width: 90%;
-    /* Responsive for small screens */
 }
 
 #adminCategorySidebar .offcanvas-header {
@@ -227,12 +219,10 @@
 #adminCategorySidebar .offcanvas-title {
     color: white;
     font-weight: 800;
-    // background-color: #fff;
 }
 
 #adminCategorySidebar .btn-close {
     filter: invert(1);
-    /* White close button */
 }
 
 #adminCategorySidebar ul {
@@ -251,7 +241,6 @@
 #adminCategorySidebar ul li:hover {
     background: rgba(255, 255, 255, 0.2);
     row-gap: 10px;
-    /* Hover effect */
 }
 
 #adminCategorySidebar p {
@@ -283,7 +272,6 @@
 
     #adminCategorySidebar {
         width: 100%;
-        /* Take full width on mobile */
     }
 }
 
@@ -294,7 +282,6 @@
 
     #adminCategorySidebar {
         width: 300px;
-        /* Slightly smaller on tablets */
     }
 }
 
@@ -305,19 +292,55 @@
 
     #adminCategorySidebar {
         width: 350px;
-        /* Default for laptop/desktop */
     }
 }
 
+/* -------------------- Share Buttons -------------------- */
 .share-icon {
     background: none;
     border: none;
     cursor: pointer;
     font-size: 25px;
-    color: #25D366;
-    padding-left: 25px; // WhatsApp green
+    padding-left: 15px;
+    transition: transform 0.2s;
 }
 
-.share-icon:hover {
-    color: #1da955;
+/* WhatsApp */
+.share-icon.whatsapp {
+    color: #25D366;
+}
+
+.share-icon.whatsapp:hover {
+    color: #128C7E;
+    transform: scale(1.2);
+}
+
+/* Instagram */
+.share-icon.instagram {
+    color: #C13584;
+}
+
+.share-icon.instagram:hover {
+    color: #833AB4;
+    transform: scale(1.2);
+}
+
+/* Email */
+.share-icon.mail {
+    color: #EA4335;
+}
+
+.share-icon.mail:hover {
+    color: #C5221F;
+    transform: scale(1.2);
+}
+
+/* SMS */
+.share-icon.sms {
+    color: #34B7F1;
+}
+
+.share-icon.sms:hover {
+    color: #0072C6;
+    transform: scale(1.2);
 }
