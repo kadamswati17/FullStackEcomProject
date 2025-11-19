@@ -12,6 +12,7 @@ export class CartItem {
   price: number;
   quantity: number;
   total: number;
+  productImg?: string;
 
   constructor(init?: Partial<CartItem>) {
     Object.assign(this, init);
@@ -86,4 +87,12 @@ export class PurchaseService {
   changeOrderStatus(orderId: number, status: string): Observable<any> {
     return this.http.put(`${BASIC_URL}/purchase-order/status/${orderId}?status=${status}`, {});
   }
+
+  getPurchaseOrderDetails(orderId: number): Observable<PlacePurchaseOrderDto> {
+    return this.http.get<PlacePurchaseOrderDto>(
+      `${BASIC_URL}/purchase-order/details/${orderId}`
+    );
+  }
+
 }
+

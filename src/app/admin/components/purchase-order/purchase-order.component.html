@@ -4,12 +4,13 @@
 
 
     <!-- Orders Table -->
+    <button class="d-flex justify-content-between align-items-center mb-3" class="btn btn-primary mb-3"
+        (click)="showOrderForm = !showOrderForm">
+        {{ showOrderForm ? '← Back to Orders' : '+ Purchase Order' }}
+    </button>
     <div *ngIf="!showOrderForm">
         <div class="header-top  ">
             <h2>Purchase Orders</h2>
-            <button class="btn btn-primary mb-3" (click)="showOrderForm = !showOrderForm">
-                {{ showOrderForm ? '← Back to Orders' : '+ Purchase Order' }}
-            </button>
         </div>
 
 
@@ -33,7 +34,7 @@
                 <tbody>
                     <tr *ngFor="let order of myOrders">
                         <td>
-                            <a href="#" (click)="viewOrder(order)" data-bs-toggle="modal"
+                            <a href="#" (click)="getOrderDetailsById(order.id)" data-bs-toggle="modal"
                                 data-bs-target="#orderDetailsModal">
                                 {{ order.id }}
                             </a>
@@ -197,6 +198,7 @@
                         <thead>
                             <tr>
                                 <th>Product</th>
+                                <th>Image</th>
                                 <th>Quantity</th>
                                 <th>Price</th>
                             </tr>
@@ -204,6 +206,9 @@
                         <tbody>
                             <tr *ngFor="let item of selectedOrder?.cartItems">
                                 <td>{{ item.productName }}</td>
+                                <td>
+                                    <img *ngIf="item.productImg" [src]="item.productImg" width="60" height="60" />
+                                </td>
                                 <td>{{ item.quantity }}</td>
                                 <td>{{ item.price | currency:'INR' }}</td>
                             </tr>

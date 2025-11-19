@@ -75,7 +75,7 @@ export class PurchaseOrderComponent implements OnInit {
       res.forEach(prod => {
         prod.processedImg = 'data:image/jpeg;base64,' + prod.byteImg;
         this.products.push(prod);
-        this.loadCartItems();
+        // this.loadCartItems();
       });
     });
   }
@@ -89,18 +89,18 @@ export class PurchaseOrderComponent implements OnInit {
   }
 
 
-  loadCartItems() {
-    this.purchaseService.getCartItems().subscribe({
-      next: (res: CartItem[]) => {
-        this.cartItems = res.map(item => {
-          item.total = item.price * item.quantity;
-          return item;
-        });
-        this.recalculateTotal();
-      },
-      error: err => console.error('Failed to load cart', err)
-    });
-  }
+  // loadCartItems() {
+  //   this.purchaseService.getCartItems().subscribe({
+  //     next: (res: CartItem[]) => {
+  //       this.cartItems = res.map(item => {
+  //         item.total = item.price * item.quantity;
+  //         return item;
+  //       });
+  //       this.recalculateTotal();
+  //     },
+  //     error: err => console.error('Failed to load cart', err)
+  //   });
+  // }
 
   // --------------------- Cart ---------------------
   addToCart() {
@@ -115,39 +115,40 @@ export class PurchaseOrderComponent implements OnInit {
       item => item.productId === (this.selectedProduct.productId || this.selectedProduct.id)
     );
 
-    if (existingItem) {
-      // Update existing item's quantity and total
-      existingItem.quantity += quantity;
-      existingItem.total = existingItem.price * existingItem.quantity;
+    // if (existingItem) {
+    //   // Update existing item's quantity and total
+    //   existingItem.quantity += quantity;
+    //   existingItem.total = existingItem.price * existingItem.quantity;
 
-      // Update in backend
-      this.purchaseService.updateCartItem(existingItem).subscribe({
-        next: res => {
-          if (res && res.id) existingItem.id = res.id;
-        },
-        error: err => console.error('Failed to update cart item', err)
-      });
+    //   // Update in backend
+    //   this.purchaseService.updateCartItem(existingItem).subscribe({
+    //     next: res => {
+    //       if (res && res.id) existingItem.id = res.id;
+    //     },
+    //     error: err => console.error('Failed to update cart item', err)
+    //   });
 
-    } else {
-      // Add new item to cart
-      const item = new CartItem({
-        productId: this.selectedProduct.productId || this.selectedProduct.id,
-        productName: this.selectedProduct.name || this.selectedProduct.productName,
-        price,
-        quantity,
-        total: price * quantity
-      });
+    // } else {
+    // Add new item to cart
+    const item = new CartItem({
+      productId: this.selectedProduct.productId || this.selectedProduct.id,
+      productName: this.selectedProduct.name || this.selectedProduct.productName,
+      price,
+      quantity,
+      total: price * quantity,
+      productImg: this.selectedProduct.processedImg || null // <-- add this
+    });
 
-      this.cartItems.push(item);
+    this.cartItems.push(item);
 
-      // Save to backend
-      this.purchaseService.saveCartItem(item).subscribe({
-        next: res => {
-          if (res && res.id) item.id = res.id;
-        },
-        error: err => console.error('Failed to save cart item', err)
-      });
-    }
+    // Save to backend
+    this.purchaseService.saveCartItem(item).subscribe({
+      next: res => {
+        if (res && res.id) item.id = res.id;
+      },
+      error: err => console.error('Failed to save cart item', err)
+    });
+    // }
 
     this.recalculateTotal();
 
@@ -196,17 +197,23 @@ export class PurchaseOrderComponent implements OnInit {
 
     this.purchaseService.placeOrder(dto).subscribe({
       next: () => {
+        alert('Order placed successfully');
+        this.loadOrders();
+        this.showOrderForm = false;
+        this.cartItems = [];
+        this.totalAmount = 0;
+        this.productPrice = 0;
         // Delete cart items from backend
-        this.purchaseService.clearCartItems().subscribe({
-          next: () => {
-            this.cartItems = [];
-            this.totalAmount = 0;
-            alert('Order placed successfully');
-            this.loadOrders();
-            this.showOrderForm = false;
-          },
-          error: err => console.error('Failed to clear cart', err)
-        });
+        // this.purchaseService.clearCartItems().subscribe({
+        //   next: () => {
+        //     this.cartItems = [];
+        //     this.totalAmount = 0;
+        //     alert('Order placed successfully');
+        //     this.loadOrders();
+        //     this.showOrderForm = false;
+        //   },
+        //   error: err => console.error('Failed to clear cart', err)
+        // });
       },
       error: (err) => {
         alert('Order failed: ' + (err?.error?.message || err.message));
@@ -243,4 +250,82 @@ export class PurchaseOrderComponent implements OnInit {
   toggleOrderForm() {
     this.showOrderForm = !this.showOrderForm;
   }
+  // getOrderDetailsById(orderId: number) {
+  //   this.adminService.getPurchaseOrderDetailsById(orderId).subscribe({
+  //     next: (res) => {
+  //       // Backend sends: { data: [...] }
+  //       if (res && res.data) {
+  //         this.selectedOrder = {
+  //           ...this.selectedOrder,
+  //           cartItems: res.data.map((item: any) => ({
+  //             productId: item.productId,
+  //             productName: item.productName,
+  //             price: item.productPrice,
+  //             quantity: item.quantity,
+  //             productImg: item.productImg ? 'data:image/jpeg;base64,' + item.productImg : null
+  //           })),
+  //           trackingId: res.data[0]?.trackingId,
+  //           orderStatus: res.data[0]?.orderStatus,
+  //           amount: res.data[0]?.totalAmount
+  //         };
+  //       }
+  //       console.log('🧾 Admin Order Details:', this.selectedOrder);
+  //     },
+  //     error: (err) => console.error('❌ Error fetching order details:', err)
+  //   });
+  // }
+  getOrderDetailsById(orderId: number) {
+    this.purchaseService.getPurchaseOrderDetails(orderId).subscribe({
+      next: (res: any) => {
+
+        this.selectedOrder = {
+          id: res.id,
+          userId: res.userId,
+          userName: res.userName,
+          trackingId: res.trackingId,
+          amount: res.amount,
+          orderDescription: res.orderDescription,
+          address: res.address,
+          email: res.email,
+          mobile: res.mobile,
+          pincode: res.pincode,
+          orderStatus: res.orderStatus,
+          date: res.date,
+          cartItems: res.cartItems?.map((item: any) => ({
+            productId: item.productId,
+            productName: item.productName,
+            price: item.price,
+            quantity: item.quantity,
+            productImg: item.productImg
+              ? 'data:image/jpeg;base64,' + item.productImg
+              : null
+          })) || []
+        };
+
+        console.log('Order Loaded:', this.selectedOrder);
+
+        // 👉 OPEN MODAL AFTER DATA IS READY
+        setTimeout(() => {
+          const modal = document.getElementById('orderDetailsModal');
+          if (modal) {
+            (window as any).bootstrap.Modal.getOrCreateInstance(modal).show();
+          }
+        }, 100);
+      },
+
+      error: (err) => console.error('Error fetching order details:', err)
+    });
+  }
+
+  getCleanBase64(base64String: string) {
+    return base64String.replace(/^data:image\/\w+;base64,/, '');
+  }
+  getImgSrc(img: string): string {
+    if (!img) return ''; // fallback if empty
+    if (img.startsWith('data:image')) {
+      return img; // already full data URI
+    }
+    return 'data:image/jpeg;base64,' + img; // prepend if just Base64
+  }
+
 }
