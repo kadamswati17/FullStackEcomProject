@@ -1,0 +1,78 @@
+<div class="payment-container">
+
+    <!-- CLOSE BUTTON -->
+    <button class="close-btn" (click)="closeForm()">✖</button>
+
+    <!-- HEADER -->
+    <div class="header-box">
+        <h2 class="title">Add Payment</h2>
+        <!-- <p class="subtitle">Fill the details below to record a new payment</p> -->
+    </div>
+
+    <div class="payment-box">
+
+        <!-- RIGHT SIDE FORM -->
+        <form [formGroup]="form" (ngSubmit)="submit()" class="form-right">
+
+            <!-- CUSTOMER ID -->
+            <div class="floating-group"
+                [ngClass]="{'error': form.get('customerId')?.touched && form.get('customerId')?.invalid}">
+                <input formControlName="customerId" class="floating-input" placeholder=" " />
+                <label class="floating-label">Customer ID</label>
+                <p class="error-text" *ngIf="form.get('customerId')?.touched && form.get('customerId')?.invalid">
+                    Customer ID is required</p>
+            </div>
+
+            <!-- PARENT ID -->
+            <div class="floating-group"
+                [ngClass]="{'error': form.get('parentId')?.touched && form.get('parentId')?.invalid}">
+                <input formControlName="parentId" class="floating-input" placeholder=" " />
+                <label class="floating-label">Parent/Admin ID</label>
+                <p class="error-text" *ngIf="form.get('parentId')?.touched && form.get('parentId')?.invalid">
+                    Parent/Admin ID is required</p>
+            </div>
+
+            <!-- AMOUNT -->
+            <div class="floating-group"
+                [ngClass]="{'error': form.get('amount')?.touched && form.get('amount')?.invalid}">
+                <input formControlName="amount" type="number" class="floating-input" placeholder=" " />
+                <label class="floating-label">Amount</label>
+
+                <p class="error-text" *ngIf="form.get('amount')?.errors?.['required']">Amount is required</p>
+                <p class="error-text" *ngIf="form.get('amount')?.errors?.['min']">Amount must be greater than 0</p>
+            </div>
+
+            <!-- DATE -->
+            <div class="floating-group"
+                [ngClass]="{'error': form.get('paymentDate')?.touched && form.get('paymentDate')?.invalid}">
+                <input type="date" formControlName="paymentDate" class="floating-input" placeholder=" " />
+                <label class="floating-label">Payment Date</label>
+                <p class="error-text" *ngIf="form.get('paymentDate')?.touched && form.get('paymentDate')?.invalid">Date
+                    is required</p>
+            </div>
+
+            <!-- MODE -->
+            <div class="floating-group" [ngClass]="{'error': form.get('mode')?.touched && form.get('mode')?.invalid}">
+                <select formControlName="mode" class="floating-input select-input">
+                    <option value="" disabled selected></option>
+                    <option *ngFor="let m of modes" [value]="m">{{ m }}</option>
+                </select>
+                <label class="floating-label">Payment Mode</label>
+                <p class="error-text" *ngIf="form.get('mode')?.touched && form.get('mode')?.invalid">Payment mode
+                    required</p>
+            </div>
+
+            <!-- NOTES -->
+            <div class="floating-group textarea-group"
+                [ngClass]="{'error': form.get('note')?.touched && form.get('note')?.invalid}">
+                <textarea formControlName="note" class="floating-input textarea" placeholder=" "></textarea>
+                <label class="floating-label">Notes</label>
+                <p class="error-text" *ngIf="form.get('note')?.touched && form.get('note')?.invalid">Notes required</p>
+            </div>
+
+            <button class="submit-btn" type="submit">Save Payment</button>
+
+        </form>
+
+    </div>
+</div>

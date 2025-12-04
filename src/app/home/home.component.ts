@@ -65,6 +65,7 @@ export class HomeComponent implements OnInit {
     this.products = [];
     this.customerService.getAllProducts().subscribe(res => {
       res.forEach(product => {
+        console.log('Product Category:', product); // Debug log
         product.processedImg = 'data:image/jpeg;base64,' + product.byteImg;
         this.products.push(product);
       });

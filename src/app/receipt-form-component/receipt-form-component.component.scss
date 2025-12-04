@@ -1,0 +1,196 @@
+/* ======================================
+   CONTAINER & CARD
+====================================== */
+.receipt-container {
+    max-width: 700px;
+    margin: 20px auto;
+    padding: 25px;
+    position: relative;
+}
+
+.title {
+    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.receipt-box {
+    display: flex;
+    gap: 25px;
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* ======================================
+   CLOSE BUTTON STYLING
+====================================== */
+.close-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: #ff4d4d;
+    border: none;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 99;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    transition: 0.25s ease-in-out;
+}
+
+.close-btn:hover {
+    background: #cc0000;
+    transform: scale(1.08);
+}
+
+/* ======================================
+   LEFT IMAGE SECTION
+====================================== */
+.left-image {
+    width: 40%;
+    text-align: center;
+}
+
+.upload-preview {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 3px solid #3f51b5;
+    object-fit: cover;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.upload-preview:hover {
+    transform: scale(1.06);
+}
+
+.hint-text {
+    font-size: 13px;
+    color: gray;
+    margin-top: 8px;
+}
+
+/* ======================================
+   RIGHT SIDE FORM
+====================================== */
+.form-right {
+    width: 60%;
+}
+
+/* ======================================
+   FLOATING INPUT DESIGN
+====================================== */
+.floating-group {
+    position: relative;
+    margin-bottom: 22px;
+}
+
+.floating-input {
+    width: 100%;
+    padding: 14px 12px 6px 12px;
+    font-size: 15px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    transition: 0.25s;
+}
+
+.floating-input:focus {
+    border-color: #3f51b5;
+    box-shadow: 0px 0px 6px rgba(63, 81, 181, 0.3);
+}
+
+.floating-label {
+    position: absolute;
+    left: 12px;
+    top: 14px;
+    font-size: 14px;
+    color: gray;
+    pointer-events: none;
+    transition: 0.25s ease;
+}
+
+.floating-input:focus+.floating-label,
+.floating-input:not(:placeholder-shown)+.floating-label {
+    top: -8px;
+    left: 8px;
+    padding: 0 6px;
+    background: white;
+    font-size: 12px;
+    color: #3f51b5;
+}
+
+/* Textarea */
+.textarea {
+    height: 90px;
+    resize: none;
+}
+
+/* ======================================
+   SUBMIT BUTTON
+====================================== */
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    background: #3f51b5;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+.submit-btn:hover {
+    background: #2c3c96;
+    cursor: pointer;
+}
+
+/* ======================================
+   RESPONSIVE
+====================================== */
+@media (max-width: 768px) {
+    .receipt-box {
+        flex-direction: column;
+    }
+
+    .left-image,
+    .form-right {
+        width: 100%;
+    }
+}
+
+/* ERROR STATE */
+.error .floating-input {
+    border-color: #ff4d4d !important;
+    box-shadow: 0 0 4px rgba(255, 77, 77, 0.4);
+}
+
+.error .floating-label {
+    color: #ff4d4d !important;
+}
+
+/* ERROR TEXT */
+.error-text {
+    color: #ff4d4d;
+    font-size: 12px;
+    margin-top: 4px;
+    margin-left: 4px;
+}
+
+/* For image validation */
+.image-error {
+    margin-bottom: 15px;
+}

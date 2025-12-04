@@ -1,0 +1,93 @@
+<div class="receipt-container">
+
+    <!-- CLOSE BUTTON (TOP RIGHT) -->
+    <button class="close-btn" (click)="closeForm()">✖</button>
+
+    <h2 class="title">Add Receipt</h2>
+
+    <div class="receipt-box">
+
+        <!-- LEFT SIDE IMAGE -->
+        <div class="left-image">
+            <label class="image-upload">
+                <input type="file" accept="image/*" hidden (change)="onImageSelected($event)">
+                <img [src]="previewImage || 'https://cdn-icons-png.flaticon.com/512/1829/1829586.png'"
+                    class="upload-preview">
+            </label>
+            <p class="hint-text">Click to upload receipt</p>
+        </div>
+
+        <!-- RIGHT SIDE FORM -->
+        <form [formGroup]="form" (ngSubmit)="submit()" class="form-right">
+
+            <!-- CUSTOMER ID -->
+            <div class="floating-group"
+                [ngClass]="{'error': form.get('customerId')?.invalid && form.get('customerId')?.touched}">
+                <input formControlName="customerId" class="floating-input" placeholder=" " />
+                <label class="floating-label">Customer ID</label>
+
+                <p class="error-text" *ngIf="form.get('customerId')?.invalid && form.get('customerId')?.touched">
+                    Customer ID is required.
+                </p>
+            </div>
+
+            <!-- PARENT ID -->
+            <div class="floating-group"
+                [ngClass]="{'error': form.get('parentId')?.invalid && form.get('parentId')?.touched}">
+                <input formControlName="parentId" class="floating-input" placeholder=" " />
+                <label class="floating-label">Parent/Admin ID</label>
+
+                <p class="error-text" *ngIf="form.get('parentId')?.invalid && form.get('parentId')?.touched">
+                    Parent/Admin ID is required.
+                </p>
+            </div>
+
+            <!-- AMOUNT -->
+            <div class="floating-group"
+                [ngClass]="{'error': form.get('amount')?.invalid && form.get('amount')?.touched}">
+                <input formControlName="amount" class="floating-input" type="number" placeholder=" " />
+                <label class="floating-label">Amount</label>
+
+                <p class="error-text" *ngIf="form.get('amount')?.errors?.['required'] && form.get('amount')?.touched">
+                    Amount is required.
+                </p>
+
+                <p class="error-text" *ngIf="form.get('amount')?.errors?.['min'] && form.get('amount')?.touched">
+                    Amount must be greater than 0.
+                </p>
+            </div>
+
+            <!-- DATE -->
+            <div class="floating-group"
+                [ngClass]="{'error': form.get('receiptDate')?.invalid && form.get('receiptDate')?.touched}">
+                <input formControlName="receiptDate" class="floating-input" type="date" placeholder=" " />
+                <label class="floating-label">Receipt Date</label>
+
+                <p class="error-text" *ngIf="form.get('receiptDate')?.invalid && form.get('receiptDate')?.touched">
+                    Receipt Date is required.
+                </p>
+            </div>
+
+            <!-- REMARKS -->
+            <div class="floating-group textarea-group"
+                [ngClass]="{'error': form.get('remarks')?.invalid && form.get('remarks')?.touched}">
+                <textarea formControlName="remarks" class="floating-input textarea" placeholder=" "></textarea>
+                <label class="floating-label">Remarks</label>
+
+                <p class="error-text" *ngIf="form.get('remarks')?.invalid && form.get('remarks')?.touched">
+                    Remarks are required.
+                </p>
+            </div>
+
+            <!-- IMAGE ERROR -->
+            <p class="error-text image-error"
+                *ngIf="form.get('receiptImage')?.invalid && form.get('receiptImage')?.touched">
+                Receipt image is required.
+            </p>
+
+            <button class="submit-btn" type="submit">Save Receipt</button>
+        </form>
+
+
+    </div>
+</div>

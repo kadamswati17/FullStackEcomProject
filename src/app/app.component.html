@@ -90,6 +90,7 @@
   </div>
   <div class="offcanvas-body p-0">
     <ul class="list-group list-group-flush">
+
       <li class="list-group-item list-group-item-action" routerLink="/admin/analytics">Dashboard</li>
       <li class="list-group-item list-group-item-action" routerLink="/admin/dashboard">Products</li>
       <li class="list-group-item list-group-item-action" routerLink="/admin/orders">Orders</li>
@@ -97,9 +98,30 @@
       <li class="list-group-item list-group-item-action" routerLink="/admin/coupons">Coupons</li>
       <li class="list-group-item list-group-item-action" routerLink="/customer/profile">Profile</li>
       <li class="list-group-item list-group-item-action" routerLink="/admin/user-management">User Management</li>
-      <!-- <li class="list-group-item list-group-item-action" routerLink="/admin/purchase-cart">Purchase Cart</li> -->
       <li class="list-group-item list-group-item-action" routerLink="/admin/purchase-order">Purchase Order</li>
+
+      <!-- ⭐ PAYMENT & RECEIPT MENU START -->
+      <li class="list-group-item list-group-item-action fw-bold text-primary">
+        Finance Management
+      </li>
+
+      <!-- <li class="list-group-item list-group-item-action" routerLink="/payment/new">
+        + Add Payment
+      </li> -->
+      <li class="list-group-item list-group-item-action" routerLink="/payment/list">
+        Payment List
+      </li>
+
+      <!-- <li class="list-group-item list-group-item-action" routerLink="/receipt/new">
+        + Add Receipt
+      </li> -->
+      <li class="list-group-item list-group-item-action" routerLink="/receipt/list">
+        Receipt List
+      </li>
+      <!-- ⭐ PAYMENT & RECEIPT MENU END -->
+
     </ul>
+
   </div>
 </div>
 

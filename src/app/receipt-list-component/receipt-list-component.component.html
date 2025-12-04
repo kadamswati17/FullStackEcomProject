@@ -1,0 +1,45 @@
+<div class="receipt-list-container">
+
+    <div class="header-section">
+        <h2>Receipts</h2>
+        <button class="add-btn" routerLink="/receipt/new">+ Add Receipt</button>
+    </div>
+
+    <div class="table-wrapper">
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Image</th>
+                    <th>Customer</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                    <th>Remarks</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let r of receipts">
+                    <td>{{ r.id }}</td>
+
+                    <td>
+                        <img *ngIf="r.receiptImage" [src]="r.receiptImage" class="receipt-img" />
+                    </td>
+
+                    <td>{{ r.customerId }}</td>
+                    <td>{{ r.amount }}</td>
+                    <td>{{ r.receiptDate }}</td>
+                    <td>{{ r.remarks }}</td>
+
+                    <td>
+                        <button class="edit-btn" routerLink="/receipt/edit/{{r.id}}">Edit</button>
+                        <button class="delete-btn" (click)="delete(r.id)">Delete</button>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

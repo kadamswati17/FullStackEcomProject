@@ -1,0 +1,153 @@
+.payment-container {
+    max-width: 700px;
+    margin: 20px auto;
+    padding: 25px;
+    position: relative;
+}
+
+.title {
+    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.payment-box {
+    display: flex;
+    width: 100%;
+    gap: 25px;
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* CLOSE BUTTON */
+.close-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: #ff4d4d;
+    border: none;
+    color: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    transition: 0.3s;
+}
+
+.close-btn:hover {
+    background: #cc0000;
+    transform: scale(1.1);
+}
+
+/* LEFT ICON */
+.left-icon {
+    width: 40%;
+    text-align: center;
+}
+
+.payment-icon {
+    width: 140px;
+    height: 140px;
+    border-radius: 12px;
+    object-fit: contain;
+}
+
+.hint-text {
+    font-size: 13px;
+    color: gray;
+    margin-top: 8px;
+}
+
+/* FORM */
+.form-right {
+    width: 100%;
+}
+
+/* FLOATING INPUT */
+.floating-group {
+    position: relative;
+    margin-bottom: 22px;
+}
+
+.floating-input {
+    width: 100%;
+    padding: 14px 12px 6px 12px;
+    font-size: 15px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    transition: 0.3s;
+    appearance: none;
+}
+
+.select-input {
+    height: 48px;
+}
+
+.floating-input:focus {
+    border-color: #3f51b5;
+}
+
+.floating-label {
+    position: absolute;
+    top: 14px;
+    left: 12px;
+    color: gray;
+    transition: 0.25s;
+    pointer-events: none;
+}
+
+.floating-input:not(:placeholder-shown)+.floating-label,
+.floating-input:focus+.floating-label {
+    top: -8px;
+    left: 8px;
+    background: white;
+    color: #3f51b5;
+    font-size: 20px;
+    padding: 0 6px;
+}
+
+/* TEXTAREA */
+.textarea {
+    height: 80px;
+    resize: none;
+}
+
+/* SUBMIT BUTTON */
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    background: #3f51b5;
+    color: white;
+    border: none;
+    font-size: 16px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.submit-btn:hover {
+    background: #2c3c96;
+    cursor: pointer;
+}
+
+/* ERROR STYLES */
+.error .floating-input {
+    border-color: #ff4d4d !important;
+}
+
+.error .floating-label {
+    color: #ff4d4d !important;
+}
+
+.error-text {
+    color: #ff4d4d;
+    font-size: 12px;
+    margin-top: 4px;
+}

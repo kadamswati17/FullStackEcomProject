@@ -1,0 +1,45 @@
+<div class="payment-list-container">
+
+    <!-- HEADER -->
+    <div class="header-section">
+        <h2>Payments</h2>
+        <button class="add-btn" routerLink="/payment/new">+ Add Payment</button>
+    </div>
+
+    <!-- TABLE -->
+    <div class="table-wrapper">
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Customer</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                    <th>Mode</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let p of payments">
+                    <td>{{ p.id }}</td>
+                    <td>{{ p.customerId }}</td>
+                    <td>₹ {{ p.amount }}</td>
+                    <td>{{ p.paymentDate }}</td>
+                    <td>
+                        <span class="mode-tag" [ngClass]="p.mode.toLowerCase()">
+                            {{ p.mode }}
+                        </span>
+                    </td>
+
+                    <td>
+                        <button class="edit-btn" routerLink="/payment/edit/{{p.id}}">Edit</button>
+                        <button class="delete-btn" (click)="delete(p.id)">Delete</button>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
