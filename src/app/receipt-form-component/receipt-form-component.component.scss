@@ -1,196 +1,188 @@
-/* ======================================
-   CONTAINER & CARD
-====================================== */
+/* ------------ MAIN CONTAINER ------------ */
 .receipt-container {
-    max-width: 700px;
-    margin: 20px auto;
+    max-width: 880px;
+    margin: 30px auto;
     padding: 25px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
     position: relative;
+    transition: background-color 0.3s ease;
 }
 
+/* Full GREEN background when Receipt selected */
+.full-receipt {
+    background-color: #d4f8d4 !important;
+}
+
+/* Full RED background when Payment selected */
+.full-payment {
+    background-color: #ffd6d6 !important;
+}
+
+/* ------------ TITLE ------------ */
 .title {
     text-align: center;
-    font-size: 26px;
-    font-weight: bold;
-    margin-bottom: 20px;
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: #2d2d2d;
 }
 
-.receipt-box {
+/* ------------ LAYOUT ------------ */
+.receipt-layout {
     display: flex;
-    gap: 25px;
-    background: #ffffff;
-    border-radius: 15px;
-    padding: 25px;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+    gap: 40px;
 }
 
-/* ======================================
-   CLOSE BUTTON STYLING
-====================================== */
-.close-btn {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    background: #ff4d4d;
-    border: none;
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 99;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-    transition: 0.25s ease-in-out;
-}
-
-.close-btn:hover {
-    background: #cc0000;
-    transform: scale(1.08);
-}
-
-/* ======================================
-   LEFT IMAGE SECTION
-====================================== */
-.left-image {
-    width: 40%;
+/* ------------ LEFT IMAGE ------------ */
+.left-section {
+    width: 35%;
     text-align: center;
 }
 
 .upload-preview {
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
+    width: 180px;
+    height: 180px;
+    border-radius: 16px;
     border: 3px solid #3f51b5;
     object-fit: cover;
     cursor: pointer;
-    transition: 0.3s;
+    transition: 0.25s;
+    box-shadow: 0 6px 20px rgba(63, 81, 181, 0.25);
 }
 
 .upload-preview:hover {
-    transform: scale(1.06);
+    transform: scale(1.03);
 }
 
 .hint-text {
-    font-size: 13px;
-    color: gray;
-    margin-top: 8px;
+    margin-top: 10px;
+    color: #667;
+    font-size: 15px;
 }
 
-/* ======================================
-   RIGHT SIDE FORM
-====================================== */
-.form-right {
-    width: 60%;
+/* ------------ RIGHT FORM ------------ */
+.form-section {
+    width: 65%;
 }
 
-/* ======================================
-   FLOATING INPUT DESIGN
-====================================== */
-.floating-group {
-    position: relative;
+/* ------------ ROWS ------------ */
+.row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
     margin-bottom: 22px;
 }
 
-.floating-input {
+.full-width {
+    grid-column: span 2;
+}
+
+/* ------------ FLOATING FIELD ------------ */
+.field {
+    position: relative;
+}
+
+.field input,
+.field select {
     width: 100%;
-    padding: 14px 12px 6px 12px;
-    font-size: 15px;
-    border: 2px solid #ccc;
-    border-radius: 8px;
+    padding: 14px 12px;
+    font-size: 16px;
+    border: 2px solid #dcdcdc;
+    border-radius: 12px;
+    background: transparent;
     outline: none;
-    transition: 0.25s;
+    transition: .25s;
 }
 
-.floating-input:focus {
+.field input:focus,
+.field select:focus {
     border-color: #3f51b5;
-    box-shadow: 0px 0px 6px rgba(63, 81, 181, 0.3);
+    box-shadow: 0 0 10px rgba(63, 81, 181, 0.25);
 }
 
-.floating-label {
+/* Floating label */
+.field label {
     position: absolute;
-    left: 12px;
+    left: 15px;
     top: 14px;
     font-size: 14px;
-    color: gray;
+    color: #888;
     pointer-events: none;
-    transition: 0.25s ease;
+    background: white;
+    padding: 0 6px;
+    transition: .25s ease;
 }
 
-.floating-input:focus+.floating-label,
-.floating-input:not(:placeholder-shown)+.floating-label {
-    top: -8px;
-    left: 8px;
-    padding: 0 6px;
-    background: white;
+.field input:not(:placeholder-shown)+label,
+.field input:focus+label,
+.field select:focus+label,
+.field select:not([value=""])+label {
+    top: -9px;
     font-size: 12px;
     color: #3f51b5;
 }
 
-/* Textarea */
-.textarea {
-    height: 90px;
-    resize: none;
-}
-
-/* ======================================
-   SUBMIT BUTTON
-====================================== */
+/* ------------ SUBMIT BUTTON ------------ */
 .submit-btn {
     width: 100%;
-    padding: 12px;
     background: #3f51b5;
     border: none;
+    padding: 15px;
     color: white;
-    border-radius: 8px;
-    font-size: 16px;
+    border-radius: 12px;
+    font-size: 18px;
     font-weight: 600;
+    transition: .3s;
     margin-top: 10px;
-    transition: 0.3s;
 }
 
 .submit-btn:hover {
-    background: #2c3c96;
-    cursor: pointer;
+    background: #2e3fa0;
 }
 
-/* ======================================
-   RESPONSIVE
-====================================== */
-@media (max-width: 768px) {
-    .receipt-box {
+/* ------------ CLOSE BUTTON ------------ */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    padding: 9px 12px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.close-btn:hover {
+    background: #d80000;
+}
+
+/* ------------ RESPONSIVE ------------ */
+@media (max-width: 900px) {
+    .receipt-layout {
         flex-direction: column;
     }
 
-    .left-image,
-    .form-right {
+    .row {
+        grid-template-columns: 1fr;
+    }
+
+    .left-section,
+    .form-section {
         width: 100%;
     }
 }
 
-/* ERROR STATE */
-.error .floating-input {
-    border-color: #ff4d4d !important;
-    box-shadow: 0 0 4px rgba(255, 77, 77, 0.4);
+.full-receipt {
+    background-color: #e8ffe8 !important;
+    /* Light green */
 }
 
-.error .floating-label {
-    color: #ff4d4d !important;
-}
-
-/* ERROR TEXT */
-.error-text {
-    color: #ff4d4d;
-    font-size: 12px;
-    margin-top: 4px;
-    margin-left: 4px;
-}
-
-/* For image validation */
-.image-error {
-    margin-bottom: 15px;
+.full-payment {
+    background-color: #ffe8e8 !important;
+    /* Light red */
 }

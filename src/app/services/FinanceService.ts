@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { UserStorageService } from '../services/storage/user-storage.service'; // ⭐ import storage service
+import { UserStorageService } from '../services/storage/user-storage.service';
 
 @Injectable({
     providedIn: 'root'
@@ -70,20 +70,11 @@ export class FinanceService {
         });
     }
 
-
-
     updateReceipt(id: number, data: any) {
         return this.http.put(`${this.API}/receipts/${id}`, data, {
             headers: this.getHeaders()
         });
     }
-
-
-    // getPayments() {
-    //     return this.http.get(`${this.API}/payments`, {
-    //         headers: this.getHeaders()
-    //     });
-    // }
 
     getPaymentById(id: number) {
         return this.http.get(`${this.API}/payments/single/${id}`, {
@@ -93,6 +84,16 @@ export class FinanceService {
 
     updatePayment(id: number, data: any) {
         return this.http.put(`${this.API}/payments/${id}`, data, {
+            headers: this.getHeaders()
+        });
+    }
+
+    // ============================
+    //          USERS (for party dropdown)
+    // ============================
+    getUsers() {
+        // controller endpoint: GET /api/user/all
+        return this.http.get(`${this.API}/user/all`, {
             headers: this.getHeaders()
         });
     }
