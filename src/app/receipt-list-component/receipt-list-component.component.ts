@@ -21,7 +21,7 @@ export class ReceiptListComponent implements OnInit {
   customerInfo: any = {};
 
   page = 1;
-  pageSize = 7;
+  pageSize = 6;
   totalPages = 1;
 
   constructor(private finance: FinanceService) { }
@@ -167,8 +167,9 @@ export class ReceiptListComponent implements OnInit {
 
 
   // ============================
-  // PDF GENERATION
-  // ============================
+  // ================================
+  // PDF GENERATION (WITH PADDING)
+  // ================================
   generatePDF() {
     const elem = document.getElementById("ledger-content");
     if (!elem) return;
@@ -180,12 +181,29 @@ export class ReceiptListComponent implements OnInit {
 
     html2canvas(clone, { scale: 3 }).then(canvas => {
       const pdf = new jsPDF('p', 'mm', 'a4');
+
+      // PDF page size
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+
+      // ⭐ Padding values
+      const paddingLeft = 10;
+      const paddingTop = 10;
+      const paddingRight = 10;
+
+      // ⭐ New width after padding
+      const imgWidth = pageWidth - paddingLeft - paddingRight;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
       const img = canvas.toDataURL('image/png');
-      const width = pdf.internal.pageSize.getWidth();
-      const height = (canvas.height * width) / canvas.width;
-      pdf.addImage(img, 'PNG', 0, 0, width, height);
+
+      // ⭐ Add image with padding
+      pdf.addImage(img, 'PNG', paddingLeft, paddingTop, imgWidth, imgHeight);
+
       pdf.save(`ledger_${this.customerInfo.id}.pdf`);
-    }).finally(() => document.body.removeChild(clone));
+    })
+      .finally(() => document.body.removeChild(clone));
   }
+
 
 }

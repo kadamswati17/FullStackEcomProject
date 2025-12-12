@@ -9,14 +9,14 @@
         <table class="styled-table">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th class="numeric">ID</th>
                     <th>Image</th>
-                    <th>Customer ID</th>
+                    <th class="numeric">Customer ID</th>
                     <th>Party Name</th>
                     <th>Type</th>
                     <th>Mode</th>
-                    <th>Txn ID</th>
-                    <th>Amount</th>
+                    <th class="numeric">Txn ID</th>
+                    <th class="numeric">Amount</th>
                     <th>Date</th>
                     <th>Action</th>
                     <th>AC</th>
@@ -25,13 +25,14 @@
 
             <tbody>
                 <tr *ngFor="let r of paginatedReceipts">
-                    <td>{{ r.id }}</td>
+
+                    <td class="numeric">{{ r.id }}</td>
 
                     <td>
                         <img *ngIf="r.receiptImage" [src]="normalizeImageForView(r.receiptImage)" class="receipt-img" />
                     </td>
 
-                    <td>
+                    <td class="numeric">
                         <a href="#" (click)="openCustomerReceipts(r.customerId)" data-bs-toggle="modal"
                             data-bs-target="#customerReceiptsModal">
                             {{ r.customerId }}
@@ -51,8 +52,8 @@
                         }}
                     </td>
 
-                    <td>{{ r.transactionId }}</td>
-                    <td>{{ r.amount }}</td>
+                    <td class="numeric">{{ r.transactionId }}</td>
+                    <td class="numeric">{{ r.amount }}</td>
                     <td>{{ r.receiptDate }}</td>
 
                     <td class="action-buttons">
@@ -70,6 +71,7 @@
                             <i class="bi bi-download"></i> PDF
                         </button>
                     </td>
+
                 </tr>
             </tbody>
         </table>
@@ -92,7 +94,7 @@
             <div class="modal-header premium-header d-flex align-items-center">
                 <h4 class="modal-title">Customer Ledger Report</h4>
 
-                <button class="btn btn-outline-primary ms-auto me-3" (click)="generatePDF()">
+                <button class="btn btn-outline-primary pdf-btn" (click)="generatePDF()">
                     <i class="bi bi-download"></i> Download PDF
                 </button>
 
@@ -101,32 +103,39 @@
 
             <div class="modal-body" id="ledger-content">
 
-                <!-- ⭐ LOGGED-IN USER'S PARENT -->
-                <div class="text-center mb-3">
+                <!-- ⭐ IMAGE + NAME SIDE BY SIDE -->
+                <div class="parent-box mb-3">
                     <img *ngIf="customerInfo.parentImage" [src]="customerInfo.parentImage" class="customer-img">
 
-                    <div *ngIf="!customerInfo.parentImage" class="no-image-box">
-                        Parent Image Missing
+                    <div class="parent-details">
+                        <h5 class="parentName">
+                            {{ customerInfo.parentName || 'Parent Name Missing' }}
+                        </h5>
                     </div>
-
-                    <h5 class="mt-2">
-                        {{ customerInfo.parentName || 'Parent Name Missing' }}
-                    </h5>
                 </div>
 
-                <hr />
 
                 <!-- CUSTOMER INFO -->
                 <div class="info-box">
+
                     <div class="info-row">
-                        <div><strong>ID:</strong> {{ customerInfo.id }}</div>
-                        <div><strong>Mobile:</strong> {{ customerInfo.mobile }}</div>
+                        <div class="info-item">
+                            <span class="label">ID:</span> {{ customerInfo.id }}
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Mobile:</span> {{ customerInfo.mobile }}
+                        </div>
                     </div>
 
                     <div class="info-row">
-                        <div><strong>Name:</strong> {{ customerInfo.name }}</div>
-                        <div><strong>Email:</strong> {{ customerInfo.email }}</div>
+                        <div class="info-item">
+                            <span class="label">Name:</span> {{ customerInfo.name }}
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Email:</span> {{ customerInfo.email }}
+                        </div>
                     </div>
+
                 </div>
 
                 <!-- LEDGER TABLE -->
@@ -135,11 +144,11 @@
                         <tr>
                             <th>Sr</th>
                             <th>Date</th>
-                            <th>Txn ID</th>
+                            <th class="numeric">Txn ID</th>
                             <th>Type</th>
                             <th>Mode</th>
-                            <th>Amount</th>
-                            <th>Closing Balance</th>
+                            <th class="numeric">Amount</th>
+                            <th class="numeric">Closing Balance</th>
                         </tr>
                     </thead>
 
@@ -147,11 +156,11 @@
                         <tr *ngFor="let row of ledger">
                             <td>{{ row.srNo }}</td>
                             <td>{{ row.receiptDate }}</td>
-                            <td>{{ row.transactionId }}</td>
+                            <td class="numeric">{{ row.transactionId }}</td>
                             <td>{{ row.transactionTypeLabel }}</td>
                             <td>{{ row.paymentModeLabel }}</td>
-                            <td>₹{{ row.amount }}</td>
-                            <td>₹{{ row.closingBalance }}</td>
+                            <td class="numeric">₹{{ row.amount }}</td>
+                            <td class="numeric">₹{{ row.closingBalance }}</td>
                         </tr>
                     </tbody>
                 </table>
