@@ -19,6 +19,7 @@
                     <th>Amount</th>
                     <th>Date</th>
                     <th>Action</th>
+                    <th>AC</th>
                 </tr>
             </thead>
 
@@ -27,12 +28,17 @@
                     <td>{{ r.id }}</td>
 
                     <td>
-                        <img *ngIf="r.receiptImage" [src]="r.receiptImage" class="receipt-img" />
+                        <img *ngIf="r.receiptImage" [src]="normalizeImageForView(r.receiptImage)" class="receipt-img" />
                     </td>
 
-                    <td>{{ r.customerId }}</td>
+                    <td>
+                        <a href="#" (click)="openCustomerReceipts(r.customerId)" data-bs-toggle="modal"
+                            data-bs-target="#customerReceiptsModal">
+                            {{ r.customerId }}
+                        </a>
+                    </td>
 
-                    <td>{{ r.partyName ? r.partyName : r.partyType }}</td>
+                    <td>{{ r.partyName }}</td>
 
                     <td>{{ r.transactionType == 1 ? 'Receipt' : 'Payment' }}</td>
 
@@ -49,22 +55,109 @@
                     <td>{{ r.amount }}</td>
                     <td>{{ r.receiptDate }}</td>
 
+                    <td class="action-buttons">
+                        <button class="icon-clean edit-icon" routerLink="/receipt/edit/{{ r.id }}">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+
+                        <button class="icon-clean delete-icon" (click)="delete(r.id)">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </td>
+
                     <td>
-                        <button class="edit-btn" routerLink="/receipt/edit/{{r.id}}">Edit</button>
-                        <button class="delete-btn" (click)="delete(r.id)">Delete</button>
+                        <button class="btn btn-outline-primary ms-auto me-3" (click)="downloadLedgerPDF(r.customerId)">
+                            <i class="bi bi-download"></i> PDF
+                        </button>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
 
-    <!-- PAGINATION -->
     <div class="pagination-container">
         <button (click)="prevPage()" [disabled]="page === 1">◀ Prev</button>
-
         <span>Page {{ page }} / {{ totalPages }}</span>
-
         <button (click)="nextPage()" [disabled]="page === totalPages">Next ▶</button>
     </div>
+</div>
 
+<!-- ================================
+     LEDGER MODAL
+================================ -->
+<div class="modal fade" id="customerReceiptsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content premium-modal">
+
+            <div class="modal-header premium-header d-flex align-items-center">
+                <h4 class="modal-title">Customer Ledger Report</h4>
+
+                <button class="btn btn-outline-primary ms-auto me-3" (click)="generatePDF()">
+                    <i class="bi bi-download"></i> Download PDF
+                </button>
+
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body" id="ledger-content">
+
+                <!-- ⭐ LOGGED-IN USER'S PARENT -->
+                <div class="text-center mb-3">
+                    <img *ngIf="customerInfo.parentImage" [src]="customerInfo.parentImage" class="customer-img">
+
+                    <div *ngIf="!customerInfo.parentImage" class="no-image-box">
+                        Parent Image Missing
+                    </div>
+
+                    <h5 class="mt-2">
+                        {{ customerInfo.parentName || 'Parent Name Missing' }}
+                    </h5>
+                </div>
+
+                <hr />
+
+                <!-- CUSTOMER INFO -->
+                <div class="info-box">
+                    <div class="info-row">
+                        <div><strong>ID:</strong> {{ customerInfo.id }}</div>
+                        <div><strong>Mobile:</strong> {{ customerInfo.mobile }}</div>
+                    </div>
+
+                    <div class="info-row">
+                        <div><strong>Name:</strong> {{ customerInfo.name }}</div>
+                        <div><strong>Email:</strong> {{ customerInfo.email }}</div>
+                    </div>
+                </div>
+
+                <!-- LEDGER TABLE -->
+                <table class="premium-table" *ngIf="ledger.length > 0">
+                    <thead>
+                        <tr>
+                            <th>Sr</th>
+                            <th>Date</th>
+                            <th>Txn ID</th>
+                            <th>Type</th>
+                            <th>Mode</th>
+                            <th>Amount</th>
+                            <th>Closing Balance</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr *ngFor="let row of ledger">
+                            <td>{{ row.srNo }}</td>
+                            <td>{{ row.receiptDate }}</td>
+                            <td>{{ row.transactionId }}</td>
+                            <td>{{ row.transactionTypeLabel }}</td>
+                            <td>{{ row.paymentModeLabel }}</td>
+                            <td>₹{{ row.amount }}</td>
+                            <td>₹{{ row.closingBalance }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+    </div>
 </div>

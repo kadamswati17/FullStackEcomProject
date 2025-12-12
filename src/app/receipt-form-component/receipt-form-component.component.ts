@@ -70,32 +70,33 @@ export class ReceiptFormComponent implements OnInit {
       // ⭐ Store logged-in user BEFORE filtering
       this.loggedInUser = mappedUsers.find(u => u.id === loggedInId);
 
-      // Apply role-based filtering
       this.users = mappedUsers.filter(u => {
 
-        // Never show logged-in user
+        const loggedInId = Number(UserStorageService.getUserId());
+        const loggedInRole = UserStorageService.getUserRole();
+
+        // 🚫 RULE: NEVER show the logged-in user
         if (u.id === loggedInId) return false;
 
-        // CASE 1: PARENT_ADMIN
+        // 🚫 RULE: NEVER show CHILD_ADMIN to ANYONE
+        if (u.userRole === 'CHILD_ADMIN') return false;
+
+        // ⭐ ROLE-BASED FILTERING
         if (loggedInRole === 'PARENT_ADMIN') {
-          if (u.userRole === 'CHILD_ADMIN') return false;
           return ['ADMIN', 'CUSTOMER', 'PARENT_ADMIN'].includes(u.userRole);
         }
 
-        // CASE 2: CHILD_ADMIN
         if (loggedInRole === 'CHILD_ADMIN') {
-          if (u.userRole === 'CHILD_ADMIN') return false;
-
-          // ⭐ Hide its own parent
+          // Hide its own parent
           if (u.id === this.loggedInUser?.createdBy) return false;
 
           return ['ADMIN', 'CUSTOMER', 'PARENT_ADMIN'].includes(u.userRole);
         }
 
-        // CASE 3: ADMIN
-        if (loggedInRole === 'ADMIN') return true;
+        if (loggedInRole === 'ADMIN') {
+          return ['ADMIN', 'CUSTOMER', 'PARENT_ADMIN'].includes(u.userRole);
+        }
 
-        // CASE 4: CUSTOMER
         if (loggedInRole === 'CUSTOMER') {
           return ['ADMIN', 'PARENT_ADMIN'].includes(u.userRole);
         }
@@ -243,6 +244,32 @@ export class ReceiptFormComponent implements OnInit {
 
     return ''; // Default white
   }
+  maxWords = 50;
+  currentWords = 0;
+
+  limitWords(event: any) {
+    let value = event.target.value;
+
+
+    let words = value.trim().split(/\s+/);
+
+
+    this.currentWords = words[0] === "" ? 0 : words.length;
+
+
+    if (this.currentWords > this.maxWords) {
+
+      words = words.slice(0, this.maxWords);
+      const newValue = words.join(" ");
+
+
+      event.target.value = newValue;
+      this.form.patchValue({ description: newValue });
+
+      this.currentWords = this.maxWords;
+    }
+  }
+
 
 
 

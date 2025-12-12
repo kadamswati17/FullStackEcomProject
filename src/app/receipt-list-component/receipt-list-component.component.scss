@@ -1,4 +1,4 @@
-/* FULL WIDTH CONTAINER */
+/* MAIN CONTAINER */
 .receipt-list-container {
     width: 100%;
     padding: 2px 40px;
@@ -6,73 +6,45 @@
     margin: 0;
 }
 
-/* Header */
 .header-section {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
-    margin-bottom: 0px;
 }
 
-.header-section h2 {
-    font-size: 28px;
-    font-weight: bold;
-    margin: 0;
-}
-
-/* Add Button */
 .add-btn {
     background: #3f51b5;
     color: white;
     padding: 10px 20px;
-    border: none;
     border-radius: 8px;
     font-size: 15px;
     font-weight: 600;
-    transition: 0.3s;
 }
 
-.add-btn:hover {
-    background: #2c3c96;
-    cursor: pointer;
-}
-
-/* Table Wrapper */
+/* Tables */
 .table-wrapper {
-    width: 100%;
-    overflow-x: auto;
     background: white;
     padding: 15px;
     border-radius: 12px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Table */
 .styled-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 15px;
 }
 
-.styled-table thead tr {
-    background-color: #3f51b5;
+.styled-table thead {
+    background: #3f51b5;
     color: white;
 }
 
 .styled-table th,
 .styled-table td {
     padding: 10px 16px;
-    text-align: left;
-    border-bottom: 1px solid #e2e2e2;
 }
 
-.styled-table tbody tr:hover {
-    background-color: #f4f6ff;
-    transition: 0.2s;
-}
-
-/* Receipt Image */
+/* Receipt image */
 .receipt-img {
     width: 60px;
     height: 60px;
@@ -81,83 +53,123 @@
     border: 2px solid #3f51b5;
 }
 
-/* ACTION BUTTONS */
-.edit-btn,
-.delete-btn {
-    padding: 6px 12px;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
+/* Modal */
+.premium-modal {
+    border-radius: 12px;
+}
+
+.premium-header {
+    background: #f5f6ff;
+    border-bottom: 2px solid #e2e2e2;
+    padding: 14px 20px;
+}
+
+.modal-header .modal-title {
+    font-size: 20px;
     font-weight: 600;
 }
 
-.edit-btn {
-    background: #2196F3;
+/* Profile Image */
+.customer-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid #3f51b5;
+    object-fit: cover;
+}
+
+.no-image-box {
+    text-align: center;
+    padding: 10px;
+    color: #888;
+}
+
+/* CUSTOMER INFO */
+.info-box {
+    background: #f9f9ff;
+    padding: 16px 20px;
+    border-radius: 8px;
+    border: 1px solid #e3e3e3;
+    margin-bottom: 20px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 15px;
+    padding: 4px 0;
+}
+
+.info-row div {
+    width: 48%;
+}
+
+/* Table inside modal */
+.premium-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.premium-table th {
+    background: #3f51b5;
     color: white;
-    margin-right: 8px;
+    padding: 10px;
 }
 
-.edit-btn:hover {
-    background: #0b7dda;
+.premium-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
 }
 
-.delete-btn {
-    background: #e53935;
-    color: white;
+.premium-table tr:nth-child(even) {
+    background: #fafbff;
 }
 
-.delete-btn:hover {
-    background: #b71c1c;
+.empty-text {
+    text-align: center;
+    margin-top: 20px;
+    color: #777;
 }
 
-/* PAGINATION */
+/* Pagination */
 .pagination-container {
-    margin-top: 6px;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 16px;
 }
 
-.pagination-container button {
-    background: #3f51b5;
-    color: white;
+.action-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.icon-clean {
+    background: transparent;
     border: none;
-    padding: 8px 18px;
-    border-radius: 6px;
     cursor: pointer;
-    font-size: 14px;
+    padding: 6px;
+    font-size: 20px;
+    transition: 0.2s ease-in-out;
 }
 
-.pagination-container button:disabled {
-    background: #ccc;
-    cursor: not-allowed;
+/* EDIT ICON */
+.edit-icon i {
+    color: #1976d2;
 }
 
-.pagination-container span {
-    font-size: 16px;
-    font-weight: 600;
+.edit-icon:hover i {
+    color: #0b5eb5;
+    transform: scale(1.2);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .receipt-list-container {
-        padding: 15px;
-    }
+/* DELETE ICON */
+.delete-icon i {
+    color: #d32f2f;
+}
 
-    .header-section {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-    }
-
-    .add-btn {
-        width: 100%;
-        text-align: center;
-    }
-
-    .receipt-img {
-        width: 50px;
-        height: 50px;
-    }
+.delete-icon:hover i {
+    color: #b71c1c;
+    transform: scale(1.2);
 }

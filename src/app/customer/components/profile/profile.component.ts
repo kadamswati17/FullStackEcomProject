@@ -10,16 +10,18 @@ import { UserStorageService } from '../../../services/storage/user-storage.servi
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
+
   profileForm!: FormGroup;
   userId!: number;
   loading = false;
+
   showPassword = false;
 
-  togglePassword() {
-    this.showPassword = !this.showPassword;
-  }
+  // Profile image
+  previewImage: string | null = null;
+  selectedImageFile: File | null = null;
 
-  // Track editable fields
+  // Track fields to edit
   editableFields: any = {
     name: false,
     email: false,
@@ -38,6 +40,9 @@ export class ProfileComponent implements OnInit {
 
     this.userId = user.userId;
 
+    // Load initial stored image OR default
+    this.previewImage = user.image ? 'data:image/jpeg;base64,' + user.image : null;
+
     this.profileForm = this.fb.group({
       name: [user.name || '', Validators.required],
       email: [user.email || '', [Validators.required, Validators.email]],
@@ -45,48 +50,120 @@ export class ProfileComponent implements OnInit {
       role: [{ value: user.role, disabled: true }]
     });
 
-    // Fetch latest info from backend
+    // Fetch from backend (latest details)
     this.authService.getUserInfo(this.userId).subscribe({
-      next: (res) => this.profileForm.patchValue(res),
-      error: () => this.snackBar.open('Failed to load user info', 'Close', { duration: 3000 })
+      next: (res) => {
+        this.profileForm.patchValue(res);
+        if (res.image) {
+          this.previewImage = 'data:image/jpeg;base64,' + res.image;
+        }
+      },
+      error: () =>
+        this.snackBar.open('Failed to load user info', 'Close', { duration: 3000 })
     });
   }
 
-  // Toggle edit mode for a field
+  togglePassword() {
+    this.showPassword = !this.showPassword;
+  }
+
   toggleEdit(field: string) {
+    this.editableFields[field] = !this.editableFields[field];
+
     if (this.editableFields[field]) {
-      // If check icon clicked, stop editing
-      this.editableFields[field] = false;
-    } else {
-      this.editableFields[field] = true;
-      // Optionally focus the input
       setTimeout(() => {
-        const input = document.querySelector<HTMLInputElement>(`input[formcontrolname=${field}]`);
+        const input = document.querySelector<HTMLInputElement>(
+          `input[formcontrolname=${field}]`
+        );
         input?.focus();
       });
     }
   }
 
-  // Update only changed fields
+
+
+  // =========== IMAGE SELECT WITH COMPRESSION =============
+  onImageSelected(event: any) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onload = (e: any) => {
+      const img = new Image();
+      img.src = e.target.result;
+
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const MAX_WIDTH = 600; // 🔥 compress width (reduce as needed)
+        const scaleSize = MAX_WIDTH / img.width;
+
+        canvas.width = MAX_WIDTH;
+        canvas.height = img.height * scaleSize;
+
+        const ctx = canvas.getContext('2d');
+        ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        // 🔥 COMPRESS to JPEG (quality 0.7 recommended)
+        const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
+
+        // For preview
+        this.previewImage = compressedBase64;
+
+        // Convert Base64 → File (Multipart upload requires file)
+        this.selectedImageFile = this.base64ToFile(compressedBase64, file.name);
+      };
+    };
+  }
+
+  // Utility: Convert base64 to File object
+  base64ToFile(base64: string, filename: string) {
+    const arr = base64.split(',');
+    const mime = arr[0].match(/:(.*?);/)![1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+
+    return new File([u8arr], filename, { type: mime });
+  }
+
+  // =========== UPDATE PROFILE =============
   updateProfile(): void {
-    const payload: any = { id: this.userId };
+    const formData = new FormData();
+    formData.append('id', this.userId.toString());
 
-    Object.keys(this.editableFields).forEach(field => {
-      if (this.editableFields[field] && this.profileForm.get(field)?.value) {
-        payload[field] = this.profileForm.get(field)?.value;
-      }
-    });
+    // Append updated fields only
+    if (this.editableFields.name)
+      formData.append('name', this.profileForm.get('name')?.value);
 
-    if (Object.keys(payload).length === 1) {
+    if (this.editableFields.email)
+      formData.append('email', this.profileForm.get('email')?.value);
+
+    if (this.editableFields.password && this.profileForm.get('password')?.value)
+      formData.append('password', this.profileForm.get('password')?.value);
+
+    // Append image if uploaded
+    if (this.selectedImageFile)
+      formData.append('image', this.selectedImageFile);
+
+    // If no updates
+    if (formData.keys().next().done) {
       this.snackBar.open('No changes detected', 'Close', { duration: 3000 });
       return;
     }
 
     this.loading = true;
-    this.authService.updateUser(payload).subscribe({
+
+    this.authService.updateUser(formData).subscribe({
       next: () => {
         this.snackBar.open('Profile updated successfully!', 'Close', { duration: 3000 });
         this.loading = false;
+
         // Reset editable flags
         Object.keys(this.editableFields).forEach(f => this.editableFields[f] = false);
       },
@@ -96,4 +173,5 @@ export class ProfileComponent implements OnInit {
       }
     });
   }
+
 }

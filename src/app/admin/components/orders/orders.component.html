@@ -1,6 +1,7 @@
 <div class="container">
   <mat-card style="overflow: auto;">
     <h1 style="text-align: center; font-size: 30px;">ORDERS</h1>
+
     <mat-card-content>
       <table mat-table [dataSource]="orders">
 
@@ -18,49 +19,49 @@
         <!-- User Name -->
         <ng-container matColumnDef="userName">
           <th mat-header-cell *matHeaderCellDef>User Name</th>
-          <td mat-cell *matCellDef="let order">{{order.userName}}</td>
+          <td mat-cell *matCellDef="let order">{{ order.userName }}</td>
         </ng-container>
 
         <!-- Email -->
         <ng-container matColumnDef="email">
           <th mat-header-cell *matHeaderCellDef>Email</th>
-          <td mat-cell *matCellDef="let order">{{order.email}}</td>
+          <td mat-cell *matCellDef="let order">{{ order.email }}</td>
         </ng-container>
 
         <!-- Mobile -->
         <ng-container matColumnDef="mobile">
           <th mat-header-cell *matHeaderCellDef>Mobile</th>
-          <td mat-cell *matCellDef="let order">{{order.mobile}}</td>
+          <td mat-cell *matCellDef="let order">{{ order.mobile }}</td>
         </ng-container>
 
         <!-- Pincode -->
         <ng-container matColumnDef="pincode">
           <th mat-header-cell *matHeaderCellDef>Pincode</th>
-          <td mat-cell *matCellDef="let order">{{order.pincode}}</td>
+          <td mat-cell *matCellDef="let order">{{ order.pincode }}</td>
         </ng-container>
 
         <!-- Address -->
         <ng-container matColumnDef="address">
           <th mat-header-cell *matHeaderCellDef>Address</th>
-          <td mat-cell *matCellDef="let order">{{order.address}}</td>
+          <td mat-cell *matCellDef="let order">{{ order.address }}</td>
         </ng-container>
 
         <!-- Description -->
         <ng-container matColumnDef="description">
           <th mat-header-cell *matHeaderCellDef>Description</th>
-          <td mat-cell *matCellDef="let order">{{order.description}}</td>
+          <td mat-cell *matCellDef="let order">{{ order.description }}</td>
         </ng-container>
 
         <!-- Date -->
         <ng-container matColumnDef="date">
           <th mat-header-cell *matHeaderCellDef>Date</th>
-          <td mat-cell *matCellDef="let order">{{order.date | date:'dd/MM/yyyy' }}</td>
+          <td mat-cell *matCellDef="let order">{{ order.date | date:'dd/MM/yyyy' }}</td>
         </ng-container>
 
         <!-- Status -->
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef>Status</th>
-          <td mat-cell *matCellDef="let order">{{order.orderStatus}}</td>
+          <td mat-cell *matCellDef="let order">{{ order.orderStatus }}</td>
         </ng-container>
 
         <!-- Action -->
@@ -78,77 +79,87 @@
         <!-- Header Row -->
         <tr mat-header-row
           *matHeaderRowDef="['id','userName','email','mobile','pincode','address','description','date','status','action']"
-          class="custom-header-row">
-        </tr>
+          class="custom-header-row"></tr>
 
         <!-- Data Row -->
         <tr mat-row
           *matRowDef="let row; columns: ['id','userName','email','mobile','pincode','address','description','date','status','action']"
-          class="custom-data-row">
-        </tr>
+          class="custom-data-row"></tr>
       </table>
     </mat-card-content>
   </mat-card>
 </div>
 
+
 <!-- 🧾 ORDER DETAILS MODAL -->
-<div class="modal fade" id="orderDetailsModal" tabindex="-1" aria-labelledby="orderDetailsModalLabel"
-  aria-hidden="true">
+<div class="modal fade" id="orderDetailsModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-xl modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Order Details</h5>
-        <button class="btn btn-sm btn-success" (click)="downloadInvoicePDF()">Download PDF</button>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
+    <div class="modal-content invoice-container">
 
-      <div class="modal-body" id="invoice-content">
-        <div *ngIf="cartItems.length > 0" class="mb-4">
-          <div class="row">
-            <div class="col-md-4"><strong>Order ID:</strong> {{ cartItems[0].orderId }}</div>
-            <div class="col-md-4"><strong>Order Date:</strong> {{ cartItems[0].orderDate | date:'dd/MM/yyyy' }}</div>
-            <div class="col-md-4"><strong>Status:</strong> {{ cartItems[0].orderStatus }}</div>
-          </div>
+      <!-- HEADER -->
+      <div class="modal-header d-flex justify-content-between align-items-center">
+        <h5 class="modal-title order-title">ORDER DETAILS</h5>
 
-          <div class="row">
-            <div class="col-md-4"><strong>User ID:</strong> {{ cartItems[0].userId }}</div>
-            <div class="col-md-4"><strong>Email:</strong> {{ cartItems[0].email }}</div>
-            <div class="col-md-4"><strong>Total Amount:</strong> ₹{{ cartItems[0].totalAmount }}</div>
-          </div>
-        </div>
-
-        <div *ngIf="cartItems.length === 0" class="text-center text-muted">
-          No order details found.
-        </div>
-
-        <div class="table-responsive" *ngIf="cartItems.length > 0">
-          <table class="table table-bordered table-hover">
-            <thead class="table-dark">
-              <tr>
-                <th>#</th>
-                <th>Image</th>
-                <th>Product</th>
-                <th>Price</th>
-                <th>Qty</th>
-                <th>Amount</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of cartItems; let i = index">
-                <td>{{ i + 1 }}</td>
-                <td>
-                  <img *ngIf="item.productImg" [src]="'data:image/jpeg;base64,' + item.productImg" alt="Product Image"
-                    class="product-img" />
-                </td>
-                <td>{{ item.productName }}</td>
-                <td>₹{{ item.productPrice }}</td>
-                <td>{{ item.quantity }}</td>
-                <td>₹{{ item.productPrice * item.quantity }}</td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="d-flex align-items-center gap-2">
+          <button class="btn btn-success btn-sm" (click)="downloadInvoicePDF()">Download PDF</button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
       </div>
+
+      <!-- PDF CONTENT WRAPPER -->
+      <div id="invoice-content" class="invoice-wrapper">
+
+        <!-- LOGO -->
+        <div class="logo-box">
+          <img src="assets/logo.jpg" class="invoice-logo" />
+        </div>
+
+        <!-- ORDER INFO CLEAN LAYOUT -->
+        <table class="info-table">
+          <tr>
+            <td><strong>Order ID:</strong> {{ cartItems[0]?.orderId }}</td>
+            <td><strong>Order Date:</strong> {{ cartItems[0]?.orderDate | date:'dd/MM/yyyy' }}</td>
+            <td><strong>Status:</strong> {{ cartItems[0]?.orderStatus }}</td>
+          </tr>
+          <tr>
+            <td><strong>User ID:</strong> {{ cartItems[0]?.userId }}</td>
+            <td><strong>Email:</strong> {{ cartItems[0]?.email }}</td>
+            <td><strong>Total Amount:</strong> ₹{{ cartItems[0]?.totalAmount }}</td>
+          </tr>
+        </table>
+
+        <!-- PRODUCT TABLE -->
+        <table class="product-table" *ngIf="cartItems.length > 0">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Image</th>
+              <th>Product</th>
+              <th>Price</th>
+              <th>Qty</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let item of cartItems; let i = index">
+              <td>{{ i + 1 }}</td>
+
+              <td>
+                <img *ngIf="item.productImg" [src]="'data:image/jpeg;base64,' + item.productImg" class="product-img" />
+              </td>
+
+              <td>{{ item.productName }}</td>
+              <td>₹{{ item.productPrice }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>₹{{ item.productPrice * item.quantity }}</td>
+            </tr>
+          </tbody>
+
+        </table>
+
+      </div><!-- END INVOICE CONTENT -->
+
     </div>
   </div>
 </div>

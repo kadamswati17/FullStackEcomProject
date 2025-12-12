@@ -73,13 +73,13 @@
                 </div>
             </div>
 
-            <!-- Row 4 -->
-            <div class="row">
-                <div class="field full-width">
-                    <input formControlName="description" placeholder=" " />
-                    <label>Description</label>
-                </div>
+            <div class="field full-width textarea-field">
+                <textarea formControlName="description" rows="4" placeholder=" "
+                    (input)="limitWords($event)"></textarea>
+                <label>Description</label>
             </div>
+
+
 
             <button class="submit-btn" type="submit">
                 {{ isEdit ? 'Update' : 'Save' }}

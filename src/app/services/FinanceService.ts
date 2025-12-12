@@ -13,7 +13,7 @@ export class FinanceService {
 
     // ⭐ Get JWT Token Headers
     private getHeaders() {
-        const token = UserStorageService.getToken();  // <-- token from local storage
+        const token = UserStorageService.getToken();
         return new HttpHeaders({
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
@@ -42,6 +42,17 @@ export class FinanceService {
         });
     }
 
+    getPaymentById(id: number) {
+        return this.http.get(`${this.API}/payments/single/${id}`, {
+            headers: this.getHeaders()
+        });
+    }
+
+    updatePayment(id: number, data: any) {
+        return this.http.put(`${this.API}/payments/${id}`, data, {
+            headers: this.getHeaders()
+        });
+    }
 
     // ============================
     //          RECEIPTS
@@ -64,6 +75,7 @@ export class FinanceService {
             headers: this.getHeaders()
         });
     }
+
     getReceiptById(id: number) {
         return this.http.get(`${this.API}/receipts/single/${id}`, {
             headers: this.getHeaders()
@@ -76,26 +88,30 @@ export class FinanceService {
         });
     }
 
-    getPaymentById(id: number) {
-        return this.http.get(`${this.API}/payments/single/${id}`, {
-            headers: this.getHeaders()
-        });
-    }
-
-    updatePayment(id: number, data: any) {
-        return this.http.put(`${this.API}/payments/${id}`, data, {
+    getCustomerLedger(customerId: number) {
+        return this.http.get(`${this.API}/receipts/ledger/${customerId}`, {
             headers: this.getHeaders()
         });
     }
 
     // ============================
-    //          USERS (for party dropdown)
+    //          USERS
     // ============================
     getUsers() {
-        // controller endpoint: GET /api/user/all
         return this.http.get(`${this.API}/user/all`, {
             headers: this.getHeaders()
         });
     }
+
+    // ⭐ REQUIRED FOR PARENT IMAGE & NAME
+    getUserById(id: number) {
+        return this.http.get(`${this.API}/user/${id}`, {
+            headers: this.getHeaders()
+        });
+    }
+
+
+
+
 
 }

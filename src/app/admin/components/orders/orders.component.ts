@@ -59,16 +59,20 @@ export class OrdersComponent implements OnInit {
   }
 
   downloadInvoicePDF() {
-    const invoiceElement = document.getElementById('invoice-content');
-    if (!invoiceElement) return;
+    const element = document.getElementById('invoice-content');
+    if (!element) return;
 
-    html2canvas(invoiceElement, { scale: 2 }).then(canvas => {
+    html2canvas(element, { scale: 2, useCORS: true }).then(canvas => {
       const imgData = canvas.toDataURL('image/png');
+
       const pdf = new jsPDF('p', 'mm', 'a4');
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
       pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-      pdf.save(`invoice_${this.cartItems[0]?.orderId || 'order'}.pdf`);
+      pdf.save(`invoice_${this.cartItems[0]?.orderId}.pdf`);
     });
   }
+
+
 }
