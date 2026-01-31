@@ -36,6 +36,7 @@ import { ReceiptListComponent } from './receipt-list-component/receipt-list-comp
 // Other
 import { NgxImageCompressService } from 'ngx-image-compress';
 import { AdminModule } from './admin/admin.module';
+import { ProductionEntryComponent } from './production-entry/production-entry.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { AdminModule } from './admin/admin.module';
     PaymentFormComponent,
     PaymentListComponent,
     ReceiptFormComponent,
-    ReceiptListComponent
+    ReceiptListComponent,
+    ProductionEntryComponent
   ],
   imports: [
     BrowserModule,

@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable, catchError, throwError, switchMap } from 'rxjs';
 import { UserStorageService } from '../storage/user-storage.service';
+import { TokenStorageService } from '../token-storage.service';
 
 const BASIC_URL = 'http://localhost:8080/';
 
@@ -12,7 +13,8 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private userStorageService: UserStorageService
+    private userStorageService: UserStorageService,
+    private tokenStorage: TokenStorageService,
   ) { }
 
   register(signupRequest: any): Observable<any> {
@@ -49,6 +51,7 @@ export class AuthService {
     return this.http.post(BASIC_URL + "authenticate", body, { headers })
       .pipe(
         switchMap((res: any) => {
+          console.log("AUTH RESPONSE =", res);
 
           const token = res.token;
           const userId = res.userId;
@@ -59,7 +62,7 @@ export class AuthService {
           this.userStorageService.saveToken(token);
 
           // STEP 2 → Load full user details
-          return this.http.get(`${BASIC_URL}api/user/${userId}`).pipe(
+          return this.http.get(`${BASIC_URL}api/user/info?userId=${userId}`).pipe(
             map((fullUser: any) => {
 
               console.log("FULL USER LOADED =", fullUser);
@@ -77,7 +80,12 @@ export class AuthService {
 
               this.userStorageService.saveUser(finalUser);
 
+              // ⭐ CRITICAL
+              localStorage.setItem('role', finalUser.role);
+              localStorage.setItem('userId', finalUser.userId.toString());
+
               return finalUser;
+
             })
           );
         })
@@ -124,5 +132,13 @@ export class AuthService {
       ? `api/user/deactivate/${userId}`
       : `api/user/activate/${userId}`;
     return this.http.put(BASIC_URL + endpoint, {}, { headers });
+  }
+
+  getLoggedInUserId(): number | null {
+    const token = this.tokenStorage.getToken();
+    if (!token) return null;
+
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return payload.userId || null;
   }
 }

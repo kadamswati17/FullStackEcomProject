@@ -10,6 +10,7 @@ import { PaymentFormComponent } from './payment-form-component/payment-form-comp
 import { PaymentListComponent } from './payment-list-component/payment-list-component.component';
 import { ReceiptFormComponent } from './receipt-form-component/receipt-form-component.component';
 import { ReceiptListComponent } from './receipt-list-component/receipt-list-component.component';
+import { ProductionEntryComponent } from './production-entry/production-entry.component';
 
 
 export const routes: Routes = [
@@ -28,6 +29,8 @@ export const routes: Routes = [
   { path: 'receipt/list', component: ReceiptListComponent },
   { path: "receipt/edit/:id", component: ReceiptFormComponent }
   ,
+  { path: 'production-entry', component: ProductionEntryComponent },
+
   { path: 'payment/edit/:id', component: PaymentFormComponent }
   ,
   { path: 'customer', loadChildren: () => import('./customer/customer.module').then(m => m.CustomerModule) },
